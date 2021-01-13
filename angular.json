@@ -125,6 +125,46 @@
           }
         }
       }
+    },
+    "angular-matecu": {
+      "projectType": "library",
+      "root": "projects/angular-matecu",
+      "sourceRoot": "projects/angular-matecu/src",
+      "prefix": "matecu",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/angular-matecu/tsconfig.lib.json",
+            "project": "projects/angular-matecu/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/angular-matecu/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/angular-matecu/src/test.ts",
+            "tsConfig": "projects/angular-matecu/tsconfig.spec.json",
+            "karmaConfig": "projects/angular-matecu/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/angular-matecu/tsconfig.lib.json",
+              "projects/angular-matecu/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "angular-matecu-project"
