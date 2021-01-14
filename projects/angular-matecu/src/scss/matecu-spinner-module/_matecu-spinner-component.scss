@@ -1,12 +1,7 @@
-$size: 80px;
 .matecu-spinner {
-    display: flex;
-    align-items: center;
+    display: inline-flex;
     justify-content: center;
-    > svg {
-        width: $size;
-        height: $size;
-    }
+    align-content: center;
     &__hidden {
         display: none;
     }

@@ -15,7 +15,7 @@
 <h3>Ejemplo matecu-spinner</h3>
 <div class="spinner-container">
     <mat-checkbox [(ngModel)]="active"> Demo para activar y desactivar un spiner utilizando una propiedad del componente</mat-checkbox>
-    <matecu-spinner [active]="active"></matecu-spinner>
+    <matecu-spinner [active]="active" [size]="'50px'"></matecu-spinner>
     
 </div>
 <div >
@@ -24,8 +24,8 @@
     <button type="button" (click)="activateSpinner(10)"> Desactivar en 10 segundos</button>
     <button type="button" (click)="activateSpinner(20)"> Desactivar en 20 segundos</button>
     <p>Si se da click a mas de una opción el espiner no se desactivará hasta cumplir con todas las solicitudes</p>
-    <matecu-spinner [global]="true" ></matecu-spinner>
-    <matecu-spinner [global]="true" [active]="active"></matecu-spinner>
+    <matecu-spinner [global]="true" [color]="'orange'"></matecu-spinner>
+    <matecu-spinner [global]="true" [active]="active" [color]="'red'" [size]="'30px'" ></matecu-spinner>
     
 </div>
 

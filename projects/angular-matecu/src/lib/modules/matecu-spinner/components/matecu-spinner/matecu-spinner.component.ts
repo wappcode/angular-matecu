@@ -13,6 +13,7 @@ export class MatecuSpinnerComponent implements OnInit, OnDestroy {
   private hiddenClass = 'matecu-spinner--hidden';
   private activeCache = false;
   @HostBinding('class') className = 'matecu-spinner';
+  @Input() color = '#2196F3';
   @Input() global = false;
   get active(): boolean{
     return this.activeCache;
@@ -26,8 +27,10 @@ export class MatecuSpinnerComponent implements OnInit, OnDestroy {
       ? this.className.replace(` ${this.hiddenClass}`, '')
       : (this.className += ` ${this.hiddenClass}`);
   }
+  @Input() size = '70px';
+
   constructor(
-    private spinnerService: MatecuSpinnerService
+    private spinnerService: MatecuSpinnerService,
   ) {}
   ngOnDestroy(): void {
     this.destroy$.next();
