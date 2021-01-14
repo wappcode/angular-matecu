@@ -10,7 +10,7 @@ import { MatecuSpinnerComponent } from './components/matecu-spinner/matecu-spinn
     CommonModule
   ],
   exports: [
-    // MatecuSpinnerComponent
+    MatecuSpinnerComponent
   ]
 })
 export class MatecuSpinnerModule { }

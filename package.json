@@ -4,7 +4,12 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "compile:sass": "node-sass projects/angular-matecu/src/scss/main.scss projects/angular-matecu/src/css/main.css --output-style compressed",
+    "compile:sass-watch": "node-sass projects/angular-matecu/src/scss/main.scss projects/angular-matecu/src/css/main.css -w",
+    "build:library-watch": "ng build --prod --watch angular-matecu",
+    "build:library": "ng build --prod angular-matecu",
+    "build": "npm-run-all compile:sass build:library",
+    "build-watch": "npm-run-all --parallel compile:sass-watch build:library-watch",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -20,6 +25,7 @@
     "@angular/platform-browser": "~11.0.3",
     "@angular/platform-browser-dynamic": "~11.0.3",
     "@angular/router": "~11.0.3",
+    "angular-matecu": "file:dist/angular-matecu",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
@@ -39,6 +45,8 @@
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
     "ng-packagr": "^11.0.0",
+    "node-sass": "^5.0.0",
+    "npm-run-all": "^4.1.5",
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
