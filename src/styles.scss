@@ -1,1 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+@import '../projects/angular-matecu/src/scss/main.scss';
+
+// base
+@import './scss/base/base';
+
+
+// components 
+
+@import 'scss/components/matecu-spinner';
+

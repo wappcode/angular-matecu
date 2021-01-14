@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatecuSpinnerService } from 'angular-matecu';
+import { timer } from 'rxjs';
+import { tap, timeout } from 'rxjs/operators';
 
 @Component({
   selector: 'app-spinner',
@@ -7,9 +10,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SpinnerComponent implements OnInit {
 
-  constructor() { }
+  active = true;
+  constructor(
+    private spinner: MatecuSpinnerService
+  ) { }
 
   ngOnInit(): void {
+
   }
+
+  activateSpinner(seconds: number): void {
+    const spinnerKey = this.spinner.add();
+    setTimeout(() => {
+      this.spinner.remove(spinnerKey);
+      console.log("desactivando clave", spinnerKey);
+    } , seconds * 1000);
+  }
+
+
 
 }

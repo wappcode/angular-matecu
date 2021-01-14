@@ -1,4 +1,4 @@
-<h2>Spinner Módule</h2>
+<h2>Módulo Spinner</h2>
 
 <p>Importar el módulo MatecuSpinner y agregar en los imports.</p>
 <pre>
@@ -8,5 +8,25 @@
      ... 
      MatecuSpinnerModule
     ]
+
+    En el componente insertar 
+    &lt;matecu-spinner [active]="true"&gt;&lt;/matecu-spinner&gt; 
 </pre>
-<p>Ejemplo de spinner básico</p>
+<h3>Ejemplo matecu-spinner</h3>
+<div class="spinner-container">
+    <mat-checkbox [(ngModel)]="active"> Demo para activar y desactivar un spiner utilizando una propiedad del componente</mat-checkbox>
+    <matecu-spinner [active]="active"></matecu-spinner>
+    
+</div>
+<div >
+    <p>Demo para activar y desactivar un spiner utilizando un servicio</p>
+    <button type="button" (click)="activateSpinner(5)"> Desactivar en 5 segundos</button>
+    <button type="button" (click)="activateSpinner(10)"> Desactivar en 10 segundos</button>
+    <button type="button" (click)="activateSpinner(20)"> Desactivar en 20 segundos</button>
+    <p>Si se da click a mas de una opción el espiner no se desactivará hasta cumplir con todas las solicitudes</p>
+    <matecu-spinner [global]="true" ></matecu-spinner>
+    <matecu-spinner [global]="true" [active]="active"></matecu-spinner>
+    
+</div>
+
+<p></p>

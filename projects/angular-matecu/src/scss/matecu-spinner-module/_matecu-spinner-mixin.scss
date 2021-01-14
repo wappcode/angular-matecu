@@ -7,6 +7,7 @@
         width: $size !important;
         height: $size !important; 
     }
+    // cambia los estilos de los elementos que componen el spiner no afecta al contenedor principal
     .matecu-spinner {
         &__100 {
             fill: $color;
@@ -33,5 +34,6 @@
             fill: rgba($color, $alpha: 3.0);
         }
     }
+    // inserta los estilos para el contenedor principal
     @content;
 }
