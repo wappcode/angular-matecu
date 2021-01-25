@@ -1,24 +1,58 @@
-# AngularMatecu
+# Angular-Matecu
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.6.
+Libreria con complementos y utilidades  para el desarrollo de aps
 
-## Code scaffolding
 
-Run `ng generate component component-name --project angular-matecu` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project angular-matecu`.
-> Note: Don't forget to add `--project angular-matecu` or else it will be added to the default project in your `angular.json` file. 
+# Instalar
 
-## Build
+    npm install angular-matecu
 
-Run `ng build angular-matecu` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Publishing
+## matecu-spinner (Componente)
+ 
 
-After building your library with `ng build angular-matecu`, go to the dist folder `cd dist/angular-matecu` and run `npm publish`.
+Componente que genera un spiner que se puede utilizar para indicar que la app esta realizando algún proceso
 
-## Running unit tests
+Uso:
 
-Run `ng test angular-matecu` to execute the unit tests via [Karma](https://karma-runner.github.io).
+    <matecu-spinner [active]="true" [color]="'red'" [size]="'30px'" ></matecu-spinner>
+    <matecu-spinner [global]="true" [color]="'orange'"></matecu-spinner>
 
-## Further help
+Propiedades:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+- active: (boolean) True muestra el spinner, False lo oculta
+- color: (string) Color del spinner
+- size: (string) Tamaño del spinner
+- global: (boolean) True indica que el cambio de visible a oculto será aplicado utilizando el servicio del spinner y aplicará a todos los que tengan asignada esta propiedad como True sin importar el valor asignado a "active"
+
+## Servicio (MatecuSpinnerService)
+
+Uso:
+
+    // import { MatecuSpinnerService } from 'angular-matecu';
+    ....
+    key: string; // 
+    construct( private spinnerService: MatecuSpinnerService) {}
+    ....
+    // mostrar el spinner
+    show() {
+        this.key = this.spinnerService.add();
+    } 
+    // ocultar el spinner
+    hide() {
+        this.spinnerService.remove(this.key);
+    }
+    
+Métodos:
+
+- watch: Retorna un observable boolean indicando si el spinner esta activo. El espiner se mantendrá activo mientras haya elementos en la lista de claves del servico. No es necesario usar este método, el componente spinner lo usa de forma transparente.
+
+- add: Crea y agrega una clave en la lista del servico. Se puede pasar como parámetro una clave personalizada.
+
+- remove: Elimina de la lista del servicio las claves que sean igual a la clave pasada como parámetro 
+
+- clear: Elimina todas las claves forzando a que el spinner pase al estado inactivo.
+
+
+
+
