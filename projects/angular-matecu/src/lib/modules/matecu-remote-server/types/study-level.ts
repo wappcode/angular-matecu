@@ -1,0 +1,6 @@
+export enum StudyLevel {
+    PRIMARIA = 'PRIMARIA',
+    SECUNDARIA = 'SECUNDARIA',
+    MEDIO_SUPERIOR = 'MEDIO_SUPERIOR',
+    SUPERIOR = 'SUPERIOR'
+}

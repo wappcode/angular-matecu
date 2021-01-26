@@ -1,0 +1,23 @@
+<ng-content></ng-content>
+
+<mat-paginator (page)="changePage($event)" #paginator [length]="count$ | async" [pageSize]="size"
+    [pageSizeOptions]="sizeOptions">
+</mat-paginator>
+
+
+<!-- Ejemplo de contenido-->
+
+<!-- paginatedList es el tag que representa al componente-->
+<!-- <div class="list">
+    <div matSort (matSortChange)="paginatedList.orderBy($event)" class="list__header">
+        <span mat-sort-header="order_key" class="list__subject">column_title</span>
+        ...
+
+    </div>
+    <div class="list__item" *ngFor="let item of paginatedList.list$ | async">
+        <span class="list__column">cell_value</span>
+        ...
+    </div>
+
+</div> -->
+
