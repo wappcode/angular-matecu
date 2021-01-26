@@ -15,5 +15,5 @@ export interface ListDataModel<T> {
 }
 
 export interface ListFilter {
-    groups: ListFilterGroup[];
+    groups: any[];
 }

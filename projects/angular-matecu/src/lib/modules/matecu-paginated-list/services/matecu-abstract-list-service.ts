@@ -10,7 +10,7 @@ import { SortDirection } from '../../matecu-remote-server/types/sort';
 @Injectable({
   providedIn: 'root'
 })
-export abstract class MatecuAbstractListServiceService<T> {
+export abstract class MatecuAbstractListService<T> {
 
 
   public pageInfo$ = new BehaviorSubject<PaginationInfo | null>(null);
@@ -26,21 +26,12 @@ export abstract class MatecuAbstractListServiceService<T> {
   protected filter: ListFilter | null = null;
   protected filterGroups: ListFilterGroup[] = [];
 
-  /**
-   * Redirecciona para al la sección para crear
-   */
-  abstract create(route?: ActivatedRoute): void;
-  /**
-   * Redirecciona para al la sección para actualizar
-   */
-  abstract update(item: T, route?: ActivatedRoute): void;
-  abstract delete(item: T): void;
 
   /**
    * Recupera la lista de elementos aplicando filtros, orden y paginacion,
    * Utilizar  las variables: {pagination: this.pagination, orderBy: this.orderBy, filter: this.filter},
    * para generar la solicitud al servidor.
-   * ejemplo: {
+   * ejemplo graphql: {
    * return this.apollo.query({
    *   query: this.query,
    *   variables: {pagination: this.pagination, orderBy: this.orderBy, filter: this.filter},
@@ -59,18 +50,19 @@ export abstract class MatecuAbstractListServiceService<T> {
     this.destroy$.next();
     this.destroy$.complete();
   }
-  init(limit: number): void {
+  init(limit: number): Observable<boolean> {
     this.limit = limit || this.limit;
     this.pagination = { first: this.limit };
-    this.updateList$.pipe(
+    return this.updateList$.pipe(
       filter(ok => !!ok),
       debounceTime(1000),
       switchMap(() => this.getData()),
       tap((data) => this.pageInfo$.next(data.pageInfo)),
       tap((data) => this.count$.next(data.totalCount)),
-      map((data) => this.list$.next(data.edges)),
+      tap((data) => this.list$.next(data.edges)),
+      map(() => true),
       takeUntil(this.destroy$)
-    ).subscribe();
+    );
   }
 
   setLimit(limit: number): void {
@@ -127,7 +119,7 @@ export abstract class MatecuAbstractListServiceService<T> {
   /**
    * Funcion para hacer busquedas o filtrar los registros de la lista
    */
-  addFilterGroup<G>(key: string, group: G): void {
+  addFilterGroup<G>(key: string, group: any): void {
     this.removeFilterGroup(key);
     this.filterGroups.push({ key, group });
     this.setFilter();

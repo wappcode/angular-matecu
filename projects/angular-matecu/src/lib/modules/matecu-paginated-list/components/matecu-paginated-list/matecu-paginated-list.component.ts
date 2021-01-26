@@ -3,7 +3,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { Observable } from 'rxjs';
 import { changePage, orderBy } from '../../functions/matecu-paginated-list.fn';
-import { MatecuAbstractListServiceService } from '../../services/matecu-abstract-list-service.service';
+import { MatecuAbstractListService } from '../../services/matecu-abstract-list-service';
 
 @Component({
   selector: 'matecu-paginated-list',
@@ -17,7 +17,7 @@ export class MatecuPaginatedListComponent<T> implements OnInit{
   @Input() size = 25;
   count$: Observable<number> | null = null;
   @ViewChild('paginator', { static: true }) public paginator: MatPaginator | null = null;
-  @Input() listService: MatecuAbstractListServiceService<T> | null = null;
+  @Input() listService: MatecuAbstractListService<T> | null = null;
   constructor() {
   }
 
