@@ -1,0 +1,16 @@
+<matecu-topbar-layout 
+[searchController]="searchCtrl" 
+[actionMenu]="actionMenu" 
+(clickNavMenu)="clickNavMenu()" 
+(clickActionMenu)="clickActionMenu()">
+
+    <matecu-topbar-title>Topbar Layout</matecu-topbar-title>
+    <matecu-topbar-fab (clickAction)="clickFabButton()">
+        <mat-icon>add</mat-icon>
+    </matecu-topbar-fab>
+
+    <matecu-topbar-body>
+        <mat-checkbox (change)="toogleSearch($event)">Activar búsqueda</mat-checkbox>
+        <mat-checkbox [(ngModel)]="actionMenu">Activar menú acciones</mat-checkbox>
+    </matecu-topbar-body>
+</matecu-topbar-layout>

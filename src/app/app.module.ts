@@ -10,9 +10,12 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatecuSpinnerModule } from 'projects/angular-matecu/src/public-api';
+import { TopbarComponent } from './components/topbar/topbar.component';
+import { MatecuTopbarLayoutModule } from 'projects/angular-matecu/src/lib/modules/matecu-topbar-layout/matecu-topbar-layout.module';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
-  declarations: [AppComponent, IndexComponent, SpinnerComponent],
+  declarations: [AppComponent, IndexComponent, SpinnerComponent, TopbarComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -22,6 +25,8 @@ import { MatecuSpinnerModule } from 'projects/angular-matecu/src/public-api';
     FormsModule,
     ReactiveFormsModule,
     MatInputModule,
+    MatecuTopbarLayoutModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent],
