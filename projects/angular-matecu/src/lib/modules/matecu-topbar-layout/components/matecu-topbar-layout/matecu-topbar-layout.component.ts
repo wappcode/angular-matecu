@@ -15,11 +15,11 @@ export class MatecuTopbarLayoutComponent implements OnInit {
   showSearchInput = false;
   search = false;
   placeholder = 'Buscar';
-  color = 'primary';
   searchInput: FormControl = new FormControl();
   isProminent = false;
   private scrollingClass = 'matecu-topbar-layout--scrolling';
   private prominentClass = 'matecu-topbar-layout--prominent';
+  @Input() color = 'primary';
   @Input() navMenu = true;
   @Input() actionMenu = false;
   @Output() clickNavMenu = new EventEmitter<void>();
