@@ -33,7 +33,7 @@ export class MatecuTopbarLayoutComponent implements OnInit {
       this.className = this.className.replace(regex, '').trim();
     }
   }
-  @Input() set searchController(value: FormControl | null) {
+  @Input() set searchControl(value: FormControl | null) {
     if (!!value) {
       this.searchInput = value;
       this.search = true;
