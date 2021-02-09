@@ -3,12 +3,11 @@
   "version": "0.0.101",
   "peerDependencies": {
     "@angular/common": "^11.0.6",
-    "@angular/core": "^11.0.6"
+    "@angular/core": "^11.0.6",
+    "@angular/material": "^11.0.3"
   },
   "dependencies": {
-    
   },
   "devDependencies": {
-    "tslib": "^2.0.0"
   }
 }

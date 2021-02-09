@@ -11,7 +11,7 @@ Libreria con complementos y utilidades  para el desarrollo de aps
 ## matecu-spinner (Componente)
  
 
-Componente que genera un spiner que se puede utilizar para indicar que la app esta realizando algún proceso
+Componente que genera un spinner que se puede utilizar para indicar que la app esta realizando algún proceso
 
 Uso:
 
@@ -45,7 +45,7 @@ Uso:
     
 Métodos:
 
-- watch: Retorna un observable boolean indicando si el spinner esta activo. El espiner se mantendrá activo mientras haya elementos en la lista de claves del servico. No es necesario usar este método, el componente spinner lo usa de forma transparente.
+- watch: Retorna un observable boolean indicando si el spinner esta activo. El espinner se mantendrá activo mientras haya elementos en la lista de claves del servico. No es necesario usar este método, el componente spinner lo usa de forma transparente.
 
 - add: Crea y agrega una clave en la lista del servico. Se puede pasar como parámetro una clave personalizada.
 
