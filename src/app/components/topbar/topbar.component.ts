@@ -9,8 +9,10 @@ import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
 })
 export class TopbarComponent implements OnInit {
 
-  searchCtrl: FormControl | null = null;
-  actionMenu = false;
+  searchCtrl: FormControl | null = new FormControl();
+  actionMenu = true;
+  prominent = true;
+  showFab = true;
   constructor() { }
 
   ngOnInit(): void {

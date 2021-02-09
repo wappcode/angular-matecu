@@ -1,5 +1,8 @@
-import { Component, ElementRef, EventEmitter, HostBinding, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostBinding, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { ParamMap } from '@angular/router';
+import { fromEvent, Observable, of } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'matecu-topbar-layout',
@@ -14,11 +17,22 @@ export class MatecuTopbarLayoutComponent implements OnInit {
   placeholder = 'Buscar';
   color = 'primary';
   searchInput: FormControl = new FormControl();
+  isProminent = false;
+  private scrollingClass = 'matecu-topbar-layout--scrolling';
+  private prominentClass = 'matecu-topbar-layout--prominent';
   @Input() navMenu = true;
   @Input() actionMenu = false;
   @Output() clickNavMenu = new EventEmitter<void>();
   @Output() clickActionMenu = new EventEmitter<void>();
-
+  @Input() set prominent(value: boolean) {
+    this.isProminent = value;
+    if (value) {
+      this.className += ' ' + this.prominentClass;
+    } else {
+      const regex = new RegExp(this.prominentClass, 'ig');
+      this.className = this.className.replace(regex, '').trim();
+    }
+  }
   @Input() set searchController(value: FormControl | null) {
     if (!!value) {
       this.searchInput = value;
@@ -28,10 +42,10 @@ export class MatecuTopbarLayoutComponent implements OnInit {
       this.search = false;
     }
   }
-
   constructor() { }
 
   ngOnInit(): void {
+    this.spyScroll().subscribe();
   }
 
   toogleSearch(): void {
@@ -48,5 +62,28 @@ export class MatecuTopbarLayoutComponent implements OnInit {
   }
   onClickActionMenu(): void {
     this.clickActionMenu.emit();
+  }
+  spyScroll(): Observable<HTMLElement | null> {
+    const scrollabe: HTMLElement | null = document.querySelector('.matecu-topbar-layout__body');
+    if (!scrollabe) {
+      return of(null);
+    }
+    return fromEvent(scrollabe, 'scroll').pipe(
+      tap(() => this.applyScrollStyles(scrollabe)),
+      map(() => scrollabe)
+    );
+  }
+  applyScrollStyles(scrollabe: HTMLElement): void {
+    if (!scrollabe) {
+      return;
+    }
+    const scrollPosition = scrollabe.scrollTop;
+    if (scrollPosition > 30) {
+      this.className += ' ' + this.scrollingClass;
+    }
+    if (scrollPosition < 10) {
+      const regexp = new RegExp(this.scrollingClass, 'ig');
+      this.className = this.className.replace(regexp, '').trim();
+    }
   }
 }
