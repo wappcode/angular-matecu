@@ -1,0 +1,57 @@
+<matecu-topbar-layout
+  [prominent]="prominent"
+  [searchController]="searchCtrl"
+  [actionMenu]="actionMenu"
+  (clickNavMenu)="clickNavMenu()"
+  (clickActionMenu)="clickActionMenu()"
+>
+  <matecu-topbar-title>Topbar Layout</matecu-topbar-title>
+  
+    <matecu-topbar-fab *ngIf="showFab" (clickAction)="clickFabButton()">
+      <mat-icon>add</mat-icon>
+    </matecu-topbar-fab>
+
+  <matecu-topbar-body>
+    <ul>
+      <li>
+        <mat-checkbox [(ngModel)]="prominent"
+          >Cambiar a barra prominente</mat-checkbox
+        >
+      </li>
+      <li>
+        <mat-checkbox (change)="toogleSearch($event)"
+          >Activar búsqueda</mat-checkbox
+        >
+      </li>
+      <li>
+        <mat-checkbox [(ngModel)]="actionMenu"
+          >Activar menú acciones</mat-checkbox
+        >
+      </li>
+      <li>
+        <mat-checkbox [(ngModel)]="showFab">Activar boton FAB</mat-checkbox>
+      </li>
+    </ul>
+
+
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam consectetur assumenda libero accusamus.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam consectetur assumenda libero accusamus.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam consectetur assumenda libero accusamus.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam consectetur assumenda libero accusamus.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam consectetur assumenda libero accusamus.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam consectetur assumenda libero accusamus.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam consectetur assumenda libero accusamus.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam consectetur assumenda libero accusamus.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam consectetur assumenda libero accusamus.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam consectetur assumenda libero accusamus.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam consectetur assumenda libero accusamus.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam consectetur assumenda libero accusamus.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam consectetur assumenda libero accusamus.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam consectetur assumenda libero accusamus.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam consectetur assumenda libero accusamus.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam consectetur assumenda libero accusamus.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam consectetur assumenda libero accusamus.</p>
+
+
+  </matecu-topbar-body>
+</matecu-topbar-layout>
