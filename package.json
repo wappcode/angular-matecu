@@ -7,7 +7,7 @@
     "compile:sass": "node-sass projects/angular-matecu/src/scss/main.scss projects/angular-matecu/src/css/main.css --output-style compressed",
     "compile:sass-watch": "node-sass projects/angular-matecu/src/scss/main.scss projects/angular-matecu/src/css/main.css -w",
     "build:library-watch": "ng build --prod --watch angular-matecu",
-    "build:library": "ng build --prod angular-matecu",
+    "build:library": "ng build --configuration production angular-matecu",
     "build": "npm-run-all compile:sass build:library",
     "build-watch": "npm-run-all --parallel compile:sass-watch build:library-watch",
     "test": "ng test",

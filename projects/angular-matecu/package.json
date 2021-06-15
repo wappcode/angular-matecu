@@ -2,9 +2,9 @@
   "name": "angular-matecu",
   "version": "0.0.103",
   "peerDependencies": {
-    "@angular/common": "^11.0.6",
-    "@angular/core": "^11.0.6",
-    "@angular/material": "^11.0.3"
+    "@angular/common": "~12.0.4",
+    "@angular/core": "~12.0.4",
+    "@angular/material": "^12.0.4"
   },
   "dependencies": {
   },
