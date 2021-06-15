@@ -1,6 +1,6 @@
 <div>
     <mat-toolbar [color]="color">
-            <div>
+            <div *ngIf="navMenu">
               <button
                 mat-icon-button
                 type="button"
@@ -35,9 +35,9 @@
               <input
                 type="text"
                 [formControl]="searchInput"
-                [placeholder]="placeholder"
+                [placeholder]="searchPlaceholder"
               />
-              <button mat-icon-button type="button" aria-label="Buscar" (click)="closeSearch()">
+              <button mat-icon-button type="button"  (click)="closeSearch()">
                 <mat-icon>close</mat-icon>
               </button>
             </div>

@@ -3,7 +3,6 @@ import { FormControl } from '@angular/forms';
 import { ParamMap } from '@angular/router';
 import { fromEvent, Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-
 @Component({
   selector: 'matecu-topbar-layout',
   templateUrl: './matecu-topbar-layout.component.html',
@@ -14,11 +13,11 @@ export class MatecuTopbarLayoutComponent implements OnInit {
   @HostBinding('class') className = 'matecu-topbar-layout';
   showSearchInput = false;
   search = false;
-  placeholder = 'Buscar';
   searchInput: FormControl = new FormControl();
   isProminent = false;
   private scrollingClass = 'matecu-topbar-layout--scrolling';
   private prominentClass = 'matecu-topbar-layout--prominent';
+  @Input() searchPlaceholder = 'Buscar';
   @Input() color = 'primary';
   @Input() navMenu = true;
   @Input() actionMenu = false;

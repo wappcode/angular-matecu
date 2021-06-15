@@ -13,6 +13,8 @@ export class TopbarComponent implements OnInit {
   actionMenu = true;
   prominent = true;
   showFab = true;
+  navMenu = true;
+  searchPlaceholder = 'Buscar';
   constructor() { }
 
   ngOnInit(): void {
