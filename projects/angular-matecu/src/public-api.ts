@@ -3,7 +3,7 @@
  */
 
 /**
- * Modulo Spinner
+ * Modulo spinner
  */
 export * from './lib/modules/matecu-spinner/matecu-spinner.module';
 export * from './lib/modules/matecu-spinner/components/matecu-spinner/matecu-spinner.component';
@@ -20,8 +20,8 @@ export * from './lib/modules/matecu-topbar-layout/components/matecu-topbar-layou
 export * from './lib/modules/matecu-topbar-layout/components/matecu-topbar-title/matecu-topbar-title.component';
 
 /**
- * Modulo paginated-list
+ * Módulo alert-box
  */
-// export * from './lib/modules/matecu-paginated-list/matecu-paginated-list.module';
-// export * from './lib/modules/matecu-paginated-list/components/matecu-paginated-list/matecu-paginated-list.component';
-// export * from './lib/modules/matecu-paginated-list/services/matecu-abstract-list-service';
+
+export * from './lib/modules/matecu-alert-box/matecu-alert-box.module';
+export * from './lib/modules/matecu-alert-box/components/matecu-alert-box/matecu-alert-box.component';
