@@ -1,7 +1,6 @@
 export enum MatecuAlertBoxType {
-    warning = 'warging',
-    success = 'success',
-    danger = 'danger',
-    info = 'info',
-
+  warning = 'warning',
+  success = 'success',
+  danger = 'danger',
+  info = 'info',
 }

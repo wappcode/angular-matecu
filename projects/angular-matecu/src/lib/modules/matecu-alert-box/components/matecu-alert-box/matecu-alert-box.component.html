@@ -1,3 +1,11 @@
-<ng-content>
-    
-</ng-content>
+<ng-container *ngIf="icon && iconValue">
+  <div class="matecu-alert-box__icon">
+    <mat-icon>{{iconValue}}</mat-icon>
+  </div>
+</ng-container>
+<div class="matecu-alert-box__content">
+  <ng-content>
+
+
+  </ng-content>
+</div>
