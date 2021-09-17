@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AlertBoxComponent } from './components/alert-box/alert-box.component';
+import { AlertDialogComponent } from './components/alert-dialog/alert-dialog.component';
 import { IndexComponent } from './components/index/index.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { TopbarComponent } from './components/topbar/topbar.component';
@@ -8,24 +9,28 @@ import { TopbarComponent } from './components/topbar/topbar.component';
 const routes: Routes = [
   {
     path: '',
-    component: IndexComponent
+    component: IndexComponent,
   },
   {
     path: 'spinner',
-    component: SpinnerComponent
+    component: SpinnerComponent,
   },
   {
     path: 'topbar',
-    component: TopbarComponent
+    component: TopbarComponent,
   },
   {
     path: 'alert-box',
-    component: AlertBoxComponent
-  }
+    component: AlertBoxComponent,
+  },
+  {
+    path: 'alert-dialog',
+    component: AlertDialogComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

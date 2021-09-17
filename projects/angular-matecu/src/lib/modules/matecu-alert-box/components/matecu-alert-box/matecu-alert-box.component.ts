@@ -8,13 +8,13 @@ import { MatecuAlertBoxType } from '../../types/matecu-altert-box-type';
 })
 export class MatecuAlertBoxComponent implements OnInit {
   classNameBase = 'matecu-alert-box';
-  alertColor?: MatecuAlertBoxType | undefined | string;
+  alertColor?: MatecuAlertBoxType | undefined | string | null;
   iconValue?: string | null | undefined;
   private alertIcon = false;
-  get color(): MatecuAlertBoxType | undefined | string {
+  get color(): MatecuAlertBoxType | undefined | string | null {
     return this.alertColor;
   }
-  @Input() set color(value: MatecuAlertBoxType | undefined | string) {
+  @Input() set color(value: MatecuAlertBoxType | undefined | string | null) {
     this.alertColor = value;
     if (!!value) {
       this.className = `${this.classNameBase} ${this.classNameBase}--${value}`;

@@ -1,0 +1,14 @@
+<h2 mat-dialog-title *ngIf="hasTitle">{{dialogData.title}}</h2>
+<mat-dialog-content>
+
+  <matecu-alert-box [color]="dialogData.type" [icon]="!!dialogData.icon">
+    {{dialogData.message}}
+  </matecu-alert-box>
+
+</mat-dialog-content>
+<mat-dialog-actions *ngIf="showActions" align="end">
+  <button mat-button color="primary" tabindex="-1" mat-dialog-close
+    *ngIf="hasDismissBtn">{{dialogData.dismissText}}</button>
+  <button mat-button color="primary" tabindex="-2" (click)="activateAction()"
+    *ngIf="hasActionBtn">{{dialogData.action}}</button>
+</mat-dialog-actions>
