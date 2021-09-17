@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { filter } from 'rxjs/operators';
 import { MatecuAlertBoxType } from '../../../../dist/angular-matecu/lib/modules/matecu-alert-box/types/matecu-altert-box-type';
 import { MatecuAlertDialogComponent } from '../../../../projects/angular-matecu/src/lib/modules/matecu-alert-box/components/matecu-alert-dialog/matecu-alert-dialog.component';
 
@@ -26,8 +27,12 @@ export class AlertDialogComponent implements OnInit {
     const dismissText = this.dismissText;
     const action = this.action;
     const title = this.title;
-    this.dialog.open(MatecuAlertDialogComponent, {
+    const dialogRef = this.dialog.open(MatecuAlertDialogComponent, {
       data: { message, type, icon, dismissText, action, title },
     });
+    dialogRef
+      .afterClosed()
+      .pipe(filter((execAction) => !!execAction))
+      .subscribe();
   }
 }

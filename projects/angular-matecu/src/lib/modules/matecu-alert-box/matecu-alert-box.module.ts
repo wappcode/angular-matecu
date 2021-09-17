@@ -10,5 +10,6 @@ import { MatButtonModule } from '@angular/material/button';
   declarations: [MatecuAlertBoxComponent, MatecuAlertDialogComponent],
   imports: [CommonModule, MatIconModule, MatDialogModule, MatButtonModule],
   exports: [MatecuAlertBoxComponent],
+  entryComponents: [MatecuAlertDialogComponent],
 })
 export class MatecuAlertBoxModule {}

@@ -81,6 +81,43 @@ Colores:
     - success
     - info
 
+## matecu-alert-dialog (Componente)
+
+Dialogo de alerta o confirmación
+
+### Uso:
+
+Importar módulo
+
+    import { MatecuAlertBoxModule } from 'angular-matecu';
+
+En el componente
+
+    import { MatDialog } from '@angular/material/dialog';
+    import { MatecuAlertDialogComponent, MatecuAlertBoxType } from 'angular-matecu';
+    import { filter } from 'rxjs/operators';
+
+    // .... 
+    constructor(private dialog: MatDialog) {}
+
+    openBasicDialog(): void {
+    const message = 'Mensaje a mostrar';
+    const type = 'warning'; // warning, danger, success, info
+    const icon = true
+    const dismissText = 'Cancelar'; // texto del boton para cerrar el diálogo (opcional)
+    const action = 'Confirmar'; // texto del boton para activar la acción pricipal del diálogo (opcional)
+    const title = 'Titulo del diálogo';
+    const dialogRef = this.dialog.open(MatecuAlertDialogComponent, {
+      data: { message, type, icon, dismissText, action, title },
+    });
+    // afterClosed retorna un valor boolean o null que se puede utilizar para determinar si se va a ejecutar alguna acción
+    dialogRef.afterClosed().pipe(
+      filter(execAction => !!execAction)
+    ).subscribe();
+
+  }
+
+
 # matecu-topbar-layout (Componente)
 
 ### Uso:

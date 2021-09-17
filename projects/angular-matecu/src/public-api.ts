@@ -25,3 +25,6 @@ export * from './lib/modules/matecu-topbar-layout/components/matecu-topbar-title
 
 export * from './lib/modules/matecu-alert-box/matecu-alert-box.module';
 export * from './lib/modules/matecu-alert-box/components/matecu-alert-box/matecu-alert-box.component';
+export * from './lib/modules/matecu-alert-box/components/matecu-alert-dialog/matecu-alert-dialog.component';
+export * from './lib/modules/matecu-alert-box/types/matecu-altert-box-type';
+export * from './lib/modules/matecu-alert-box/types/matecu-alert-dialog';
