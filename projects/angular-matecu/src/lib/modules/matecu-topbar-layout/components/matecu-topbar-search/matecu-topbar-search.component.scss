@@ -6,24 +6,80 @@
   padding: 7px;
   min-height: $toolbar-height;
   box-sizing: border-box;
-  input {
-    border: transparent;
-    border-radius: 4px;
-    padding: 5px 10px 5px 35px;
-    background-color: rgba($color: #ffffff, $alpha: 0.3);
-    min-width: 10rem;
-    transition: all 300ms ease-in-out;
-    height: 39px;
-    color: currentColor;
-    &:focus {
-      min-width: 17rem;
-    }
-    &::placeholder {
-      color: currentColor;
+  .matecu-topbar-search {
+    &__input {
+      display: block;
+      position: relative;
+      z-index: 2;
+      input {
+        border: transparent;
+        border-radius: 4px;
+        padding: 5px 10px 5px 40px;
+        background-color: rgba($color: #ffffff, $alpha: 0.3);
+        min-width: 10rem;
+        transition: all 300ms ease-in-out;
+        height: 39px;
+        color: currentColor;
+        &:focus {
+          min-width: 17rem;
+        }
+        &::placeholder {
+          color: currentColor;
+        }
+      }
+      > mat-icon {
+        position: absolute;
+        left: 12px;
+        top: 10px;
+      }
+      @media screen and (max-width: 768px) {
+        display: none;
+      }
+      &.mobile-input-active {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: $toolbar-height;
+        color: #333;
+        animation: searchAnimation 300ms ease-in-out;
+        input {
+          width: 100%;
+          height: 100%;
+          background-color: #ffffff;
+          border-radius: 0;
+          padding-right: 40px;
+          &:focus {
+            min-width: 100%;
+          }
+        }
+        > mat-icon {
+          top: 20px;
+        }
+        button {
+          position: absolute;
+          right: 5px;
+          top: 10px;
+        }
+        @media screen and (max-width: 768px) {
+          display: block;
+        }
+      }
     }
   }
-  mat-icon {
-    position: absolute;
-    left: 12px;
+
+  .only-mobile {
+    display: none;
+    @media screen and (max-width: 768px) {
+      display: block;
+    }
+  }
+}
+@keyframes searchAnimation {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0%);
   }
 }

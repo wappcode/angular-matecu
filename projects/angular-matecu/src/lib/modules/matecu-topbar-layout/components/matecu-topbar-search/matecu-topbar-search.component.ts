@@ -22,13 +22,14 @@ import {
   styleUrls: ['./matecu-topbar-search.component.scss'],
 })
 export class MatecuTopbarSearchComponent implements OnInit {
-  showInput = false;
+  showMobileInput = false;
   searchInput = new FormControl();
   private destroy = new Subject();
   @Input() searchPlaceholder = 'Buscar';
   @Input() debounceTime = 500;
   @Input() inputType: 'text' | 'search' = 'text';
   @Output() whenSearchChanges = new EventEmitter<string>();
+  @Output() whenCloseMobile = new EventEmitter<boolean>();
   @HostBinding('class') className = 'matecu-topbar-search';
   constructor() {}
 
@@ -37,7 +38,11 @@ export class MatecuTopbarSearchComponent implements OnInit {
   }
 
   toogleSearch(): void {
-    this.showInput = !this.showInput;
+    this.showMobileInput = !this.showMobileInput;
+  }
+  closeMobile(): void {
+    this.whenCloseMobile.emit(true);
+    this.showMobileInput = false;
   }
 
   private watchSearch(): void {

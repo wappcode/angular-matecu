@@ -13,4 +13,14 @@
       padding: 0 1rem !important;
     }
   }
+  @media screen and (max-width: 768px) {
+    height: auto;
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    transform: initial;
+    button {
+      transform: translateY(0);
+    }
+  }
 }
