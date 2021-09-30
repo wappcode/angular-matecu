@@ -14,6 +14,7 @@ import {
 })
 export class MatecuTopbarFabComponent implements OnInit {
   @Input() color = 'accent';
+  @Input() extended = false;
   @Output() clickAction = new EventEmitter<void>();
   constructor() {}
 
