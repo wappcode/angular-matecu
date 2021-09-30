@@ -1,14 +1,10 @@
-:host, .matecu-topbar-fab {
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    button {
-        transform: translateY(50%);
-        @media screen and (max-width: 425px) {
-            transform: translateY(0);
-        }
-        height: 4rem;
-        box-sizing: border-box;
-        border-radius: 4rem;
-    }
+:host {
+  display: flex;
+  align-items: flex-end;
+  height: 100%;
+  position: relative;
+  button {
+    transform: translateY(50%);
+    z-index: 2;
+  }
 }

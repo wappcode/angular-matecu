@@ -5,20 +5,19 @@ import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
 @Component({
   selector: 'app-topbar',
   templateUrl: './topbar.component.html',
-  styleUrls: ['./topbar.component.scss']
+  styleUrls: ['./topbar.component.scss'],
 })
 export class TopbarComponent implements OnInit {
-
   searchCtrl: FormControl | null = new FormControl();
   actionMenu = true;
   prominent = true;
   showFab = true;
   navMenu = true;
+  fabLarge = false;
   searchPlaceholder = 'Buscar';
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   toogleSearch(event: MatCheckboxChange): void {
     if (event.checked) {
@@ -27,7 +26,7 @@ export class TopbarComponent implements OnInit {
       this.searchCtrl = null;
     }
   }
-  clickNavMenu(): void{
+  clickNavMenu(): void {
     alert('click nav menu');
   }
   clickActionMenu(): void {
@@ -35,5 +34,8 @@ export class TopbarComponent implements OnInit {
   }
   clickFabButton(): void {
     alert('click fab button');
+  }
+  searching(search: string): void {
+    console.log('resultado search: ', search);
   }
 }

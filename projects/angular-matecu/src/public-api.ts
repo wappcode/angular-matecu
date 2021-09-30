@@ -18,6 +18,8 @@ export * from './lib/modules/matecu-topbar-layout/components/matecu-topbar-body/
 export * from './lib/modules/matecu-topbar-layout/components/matecu-topbar-fab/matecu-topbar-fab.component';
 export * from './lib/modules/matecu-topbar-layout/components/matecu-topbar-layout/matecu-topbar-layout.component';
 export * from './lib/modules/matecu-topbar-layout/components/matecu-topbar-title/matecu-topbar-title.component';
+export * from './lib/modules/matecu-topbar-layout/components/matecu-topbar-search/matecu-topbar-search.component';
+export * from './lib/modules/matecu-topbar-layout/components/matecu-topbar-actions/matecu-topbar-actions.component';
 
 /**
  * Módulo alert-box

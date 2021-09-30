@@ -1,50 +1,23 @@
-<div>
-    <mat-toolbar [color]="color">
-            <div *ngIf="navMenu">
-              <button
-                mat-icon-button
-                type="button"
-                (click)="onClickNavMenu()"
-              >
-                <mat-icon>menu</mat-icon>
-              </button>
-            </div>
-            <div class="matecu-topbar-layout__fab">
-              <ng-content select="matecu-topbar-fab"></ng-content>
-            </div>
-            <div class="matecu-topbar-layout__title">
-              <ng-content select="matecu-topbar-title"></ng-content>
-            </div>
-          
-            <div *ngIf="search">
-              <button type="button" (click)="toogleSearch()" mat-icon-button>
-                <mat-icon>search</mat-icon>
-              </button>
-            </div>
-            
-            <div *ngIf="actionMenu">
-              <button type="button" (click)="onClickActionMenu()" mat-icon-button>
-                <mat-icon>more_vert</mat-icon>
-              </button>
-            </div>
-           
-            <div
-              class="matecu-topbar-layout__search"
-              [ngClass]="{ active: showSearchInput }"
-            >
-              <input
-                type="text"
-                [formControl]="searchInput"
-                [placeholder]="searchPlaceholder"
-              />
-              <button mat-icon-button type="button"  (click)="closeSearch()">
-                <mat-icon>close</mat-icon>
-              </button>
-            </div>
-    </mat-toolbar>
-  
-  
-</div>
-<div class="matecu-topbar-layout__body" >
+  <mat-toolbar [color]="color">
+    <ng-container *ngIf="navMenu">
+      <div class="matecu-topbar-layout__menu-btn">
+        <button mat-icon-button type="button" (click)="onClickNavMenu()">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </div>
+    </ng-container>
+    <ng-content select="matecu-topbar-fab"></ng-content>
+    <ng-content select="matecu-topbar-title"></ng-content>
+    <ng-content select="matecu-topbar-search"></ng-content>
+    <ng-content select="matecu-topbar-actions"></ng-content>
+    <ng-container *ngIf="actionMenu">
+      <div class="matecu-topbar-layout__more-actions-btn">
+        <button type="button" (click)="onClickActionMenu()" mat-icon-button>
+          <mat-icon>more_vert</mat-icon>
+        </button>
+      </div>
+    </ng-container>
+
+
+  </mat-toolbar>
   <ng-content select="matecu-topbar-body"></ng-content>
-</div>

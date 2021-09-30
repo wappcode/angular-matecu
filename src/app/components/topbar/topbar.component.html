@@ -1,42 +1,37 @@
-<matecu-topbar-layout
-  [prominent]="prominent"
-  [searchControl]="searchCtrl"
-  [searchPlaceholder]="searchPlaceholder"
-  [actionMenu]="actionMenu"
-  [navMenu]="navMenu"
-  (clickNavMenu)="clickNavMenu()"
-  (clickActionMenu)="clickActionMenu()"
->
+<matecu-topbar-layout [prominent]="prominent" [actionMenu]="actionMenu" [navMenu]="navMenu"
+  (clickNavMenu)="clickNavMenu()" (clickActionMenu)="clickActionMenu()">
   <matecu-topbar-title>Topbar Layout</matecu-topbar-title>
-  
-    <matecu-topbar-fab *ngIf="showFab" (clickAction)="clickFabButton()">
-      <mat-icon>add</mat-icon> el pueblo unido
-    </matecu-topbar-fab>
 
-  <matecu-topbar-body>
+  <matecu-topbar-fab *ngIf="showFab" (clickAction)="clickFabButton()" toolTip="">
+    <mat-icon>add</mat-icon>
+    <ng-container *ngIf="fabLarge"> el pueblo unido</ng-container>
+  </matecu-topbar-fab>
+
+  <matecu-topbar-search (whenSearchChanges)="searching($event)"></matecu-topbar-search>
+  <matecu-topbar-actions>
+    <mat-icon>notifications</mat-icon>
+  </matecu-topbar-actions>
+
+  <matecu-topbar-body #tobarBody>
     <ul>
       <li>
-        <mat-checkbox [(ngModel)]="prominent"
-          >Cambiar a barra prominente</mat-checkbox
-        >
+        <mat-checkbox [(ngModel)]="prominent">Cambiar a barra prominente</mat-checkbox>
+      </li>
+
+      <li>
+        <mat-checkbox (change)="toogleSearch($event)">Activar búsqueda</mat-checkbox>
       </li>
       <li>
-        <mat-checkbox (change)="toogleSearch($event)"
-          >Activar búsqueda</mat-checkbox
-        >
+        <mat-checkbox [(ngModel)]="navMenu">Activar menú lateral</mat-checkbox>
       </li>
       <li>
-        <mat-checkbox [(ngModel)]="navMenu"
-          >Activar menú lateral</mat-checkbox
-        >
-      </li>
-      <li>
-        <mat-checkbox [(ngModel)]="actionMenu"
-          >Activar menú acciones</mat-checkbox
-        >
+        <mat-checkbox [(ngModel)]="actionMenu">Activar menú acciones</mat-checkbox>
       </li>
       <li>
         <mat-checkbox [(ngModel)]="showFab">Activar boton FAB</mat-checkbox>
+      </li>
+      <li>
+        <mat-checkbox [(ngModel)]="fabLarge">FAB largo</mat-checkbox>
       </li>
       <li>
         <mat-form-field>
@@ -47,24 +42,60 @@
     </ul>
 
 
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam consectetur assumenda libero accusamus.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam consectetur assumenda libero accusamus.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam consectetur assumenda libero accusamus.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam consectetur assumenda libero accusamus.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam consectetur assumenda libero accusamus.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam consectetur assumenda libero accusamus.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam consectetur assumenda libero accusamus.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam consectetur assumenda libero accusamus.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam consectetur assumenda libero accusamus.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam consectetur assumenda libero accusamus.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam consectetur assumenda libero accusamus.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam consectetur assumenda libero accusamus.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam consectetur assumenda libero accusamus.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam consectetur assumenda libero accusamus.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam consectetur assumenda libero accusamus.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam consectetur assumenda libero accusamus.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam consectetur assumenda libero accusamus.</p>
-
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis
+      aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
+      consectetur assumenda libero accusamus.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis
+      aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
+      consectetur assumenda libero accusamus.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis
+      aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
+      consectetur assumenda libero accusamus.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis
+      aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
+      consectetur assumenda libero accusamus.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis
+      aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
+      consectetur assumenda libero accusamus.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis
+      aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
+      consectetur assumenda libero accusamus.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis
+      aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
+      consectetur assumenda libero accusamus.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis
+      aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
+      consectetur assumenda libero accusamus.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis
+      aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
+      consectetur assumenda libero accusamus.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis
+      aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
+      consectetur assumenda libero accusamus.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis
+      aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
+      consectetur assumenda libero accusamus.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis
+      aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
+      consectetur assumenda libero accusamus.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis
+      aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
+      consectetur assumenda libero accusamus.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis
+      aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
+      consectetur assumenda libero accusamus.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis
+      aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
+      consectetur assumenda libero accusamus.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis
+      aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
+      consectetur assumenda libero accusamus.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis
+      aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
+      consectetur assumenda libero accusamus.</p>
+    <button (click)="tobarBody.scrollTop()">
+      Subir
+    </button>
 
   </matecu-topbar-body>
 </matecu-topbar-layout>

@@ -1,4 +1,14 @@
-import { Component, ElementRef, EventEmitter, HostBinding, Input, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ParamMap } from '@angular/router';
 import { fromEvent, Observable, of } from 'rxjs';
@@ -6,10 +16,9 @@ import { map, tap } from 'rxjs/operators';
 @Component({
   selector: 'matecu-topbar-layout',
   templateUrl: './matecu-topbar-layout.component.html',
-  styleUrls: ['./matecu-topbar-layout.component.scss']
+  styleUrls: ['./matecu-topbar-layout.component.scss'],
 })
-export class MatecuTopbarLayoutComponent implements OnInit {
-
+export class MatecuTopbarLayoutComponent implements AfterViewInit {
   @HostBinding('class') className = 'matecu-topbar-layout';
   showSearchInput = false;
   search = false;
@@ -17,7 +26,6 @@ export class MatecuTopbarLayoutComponent implements OnInit {
   isProminent = false;
   private scrollingClass = 'matecu-topbar-layout--scrolling';
   private prominentClass = 'matecu-topbar-layout--prominent';
-  @Input() searchPlaceholder = 'Buscar';
   @Input() color = 'primary';
   @Input() navMenu = true;
   @Input() actionMenu = false;
@@ -32,18 +40,9 @@ export class MatecuTopbarLayoutComponent implements OnInit {
       this.className = this.className.replace(regex, '').trim();
     }
   }
-  @Input() set searchControl(value: FormControl | null) {
-    if (!!value) {
-      this.searchInput = value;
-      this.search = true;
-    } else {
-      this.searchInput = new FormControl();
-      this.search = false;
-    }
-  }
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.spyScroll().subscribe();
   }
 
@@ -54,8 +53,7 @@ export class MatecuTopbarLayoutComponent implements OnInit {
     this.showSearchInput = false;
     this.searchInput.reset();
   }
-  onMenuClick(): void {
-  }
+  onMenuClick(): void {}
   onClickNavMenu(): void {
     this.clickNavMenu.emit();
   }
@@ -63,7 +61,9 @@ export class MatecuTopbarLayoutComponent implements OnInit {
     this.clickActionMenu.emit();
   }
   spyScroll(): Observable<HTMLElement | null> {
-    const scrollabe: HTMLElement | null = document.querySelector('.matecu-topbar-layout__body');
+    const scrollabe: HTMLElement | null = document.querySelector(
+      '.matecu-topbar-body'
+    );
     if (!scrollabe) {
       return of(null);
     }

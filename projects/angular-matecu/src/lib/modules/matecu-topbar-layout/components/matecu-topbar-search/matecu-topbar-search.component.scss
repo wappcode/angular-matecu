@@ -1,0 +1,29 @@
+@import '../../scss/variables.scss';
+:host {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 7px;
+  min-height: $toolbar-height;
+  box-sizing: border-box;
+  input {
+    border: transparent;
+    border-radius: 4px;
+    padding: 5px 10px 5px 35px;
+    background-color: rgba($color: #ffffff, $alpha: 0.3);
+    min-width: 10rem;
+    transition: all 300ms ease-in-out;
+    height: 39px;
+    color: currentColor;
+    &:focus {
+      min-width: 17rem;
+    }
+    &::placeholder {
+      color: currentColor;
+    }
+  }
+  mat-icon {
+    position: absolute;
+    left: 12px;
+  }
+}
