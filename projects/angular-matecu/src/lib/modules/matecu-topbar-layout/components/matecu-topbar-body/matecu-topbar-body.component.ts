@@ -14,7 +14,10 @@ export class MatecuTopbarBodyComponent implements OnInit {
   scrollTop(): void {
     const element = this.elementRef.nativeElement;
     if (!!element) {
-      element.scrollTop = 10;
+      element.scroll({
+        top: 0,
+        behavior: 'smooth',
+      });
     }
   }
 }

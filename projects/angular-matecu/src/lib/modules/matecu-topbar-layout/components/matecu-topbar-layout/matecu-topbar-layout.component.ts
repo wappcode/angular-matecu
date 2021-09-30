@@ -76,8 +76,13 @@ export class MatecuTopbarLayoutComponent implements AfterViewInit {
     if (!scrollabe) {
       return;
     }
+    const maxScrollHeight = scrollabe.scrollHeight;
+    const screenHeight = screen.availHeight;
+    if (screenHeight > maxScrollHeight) {
+      return;
+    }
     const scrollPosition = scrollabe.scrollTop;
-    if (scrollPosition > 30) {
+    if (scrollPosition > 20) {
       this.className += ' ' + this.scrollingClass;
     }
     if (scrollPosition < 10) {
