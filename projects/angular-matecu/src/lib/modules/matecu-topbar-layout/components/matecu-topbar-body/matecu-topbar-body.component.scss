@@ -1,6 +1,10 @@
 :host {
   display: block;
-  padding-top: 50px;
-  padding-bottom: 50px;
+  padding-top: 2rem;
+
   overflow-y: auto;
+  @media screen and (max-width: 425px) {
+    padding: 0;
+    padding-bottom: 2rem;
+  }
 }
