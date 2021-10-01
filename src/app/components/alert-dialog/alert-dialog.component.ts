@@ -10,7 +10,8 @@ import { MatecuAlertDialogComponent } from '../../../../projects/angular-matecu/
   styleUrls: ['./alert-dialog.component.scss'],
 })
 export class AlertDialogComponent implements OnInit {
-  defaultMessage = 'Mensaje de prueba para el díalogo';
+  defaultMessage =
+    'Mensaje de prueba para el díalogo. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Assumenda accusamus magni rerum aut ducimus ab. Illum numquam molestias voluptates enim nisi, nemo ab perferendis autem iure corrupti modi ducimus sequi?';
   alertDialogType: MatecuAlertBoxType | string | null | undefined;
   showIcon = false;
   dismissText?: string;
