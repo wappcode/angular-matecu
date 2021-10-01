@@ -28,8 +28,8 @@ export class MatecuTopbarSearchComponent implements OnInit {
   @Input() searchPlaceholder = 'Buscar';
   @Input() debounceTime = 500;
   @Input() inputType: 'text' | 'search' = 'text';
+  @Input() cleanWhenClose = true;
   @Output() whenSearchChanges = new EventEmitter<string>();
-  @Output() whenCloseMobile = new EventEmitter<boolean>();
   @HostBinding('class') className = 'matecu-topbar-search';
   constructor() {}
 
@@ -41,7 +41,9 @@ export class MatecuTopbarSearchComponent implements OnInit {
     this.showMobileInput = !this.showMobileInput;
   }
   closeMobile(): void {
-    this.whenCloseMobile.emit(true);
+    if (this.cleanWhenClose) {
+      this.searchInput.reset();
+    }
     this.showMobileInput = false;
   }
 

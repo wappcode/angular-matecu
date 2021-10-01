@@ -187,9 +187,9 @@ Propiedades
 
 - Input() searchPlaceholder: El valor del placeholder del input (default 'Buscar')
 - Input() debounceTime: (number) El tiempo en milisegundos de espera antes de emitir el evento de que el valor del input a cambiado (default 500)
+- Output() cleanWhenClose: (boolean) Determina si se quita el valor del input cuando se cierra en módo mobil (default true)
 - Input() inputType: ('text'|'search') El tipo de input que se va a utilizar (default 'text')
 - Output() whenSearchChanges: (function) Acción que se ejecuta cuando el valor del input cambia requiere una función con un parametro tipo string (valor del input)
-- Output() whenCloseMobile: (function) Acción que se ejecuta cuando se esta en modo mobile y se da click en el boton para cerrar el input (opcional)
 
 
 ### matecu-topbar-body: 
