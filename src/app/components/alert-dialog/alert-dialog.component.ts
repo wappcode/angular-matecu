@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { filter } from 'rxjs/operators';
-import { MatecuAlertBoxType } from '../../../../dist/angular-matecu/lib/modules/matecu-alert-box/types/matecu-altert-box-type';
+import { MatecuAlertBoxType } from '../../../../projects/angular-matecu/src/lib/modules/matecu-alert-box/types/matecu-altert-box-type';
 import { MatecuAlertDialogComponent } from '../../../../projects/angular-matecu/src/lib/modules/matecu-alert-box/components/matecu-alert-dialog/matecu-alert-dialog.component';
 
 @Component({
