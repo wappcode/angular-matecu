@@ -27,7 +27,7 @@ export class MatecuTopbarSearchComponent implements OnInit {
   private destroy = new Subject();
   @Input() searchPlaceholder = 'Buscar';
   @Input() debounceTime = 500;
-  @Input() inputType: 'text' | 'search' = 'text';
+  @Input() inputType: 'text' | 'search' = 'search';
   @Input() cleanWhenClose = true;
   @Input() set value(val: string | null | undefined) {
     if (typeof val === 'string') {
