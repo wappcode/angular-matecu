@@ -29,6 +29,10 @@ export class MatecuTopbarSearchComponent implements OnInit {
   @Input() debounceTime = 500;
   @Input() inputType: 'text' | 'search' = 'text';
   @Input() cleanWhenClose = true;
+  @Input() set value(val: string | null | undefined) {
+    this.searchInput.setValue(val);
+  }
+  @Output() valueChange = new EventEmitter<string>();
   @Output() whenSearchChanges = new EventEmitter<string>();
   @HostBinding('class') className = 'matecu-topbar-search';
   constructor() {}
@@ -61,5 +65,6 @@ export class MatecuTopbarSearchComponent implements OnInit {
     const value =
       typeof searchVal === 'string' && searchVal.length > 0 ? searchVal : '';
     this.whenSearchChanges.emit(value);
+    this.valueChange.emit(value);
   }
 }
