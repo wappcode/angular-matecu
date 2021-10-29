@@ -30,7 +30,11 @@ export class MatecuTopbarSearchComponent implements OnInit {
   @Input() inputType: 'text' | 'search' = 'text';
   @Input() cleanWhenClose = true;
   @Input() set value(val: string | null | undefined) {
-    this.searchInput.setValue(val);
+    if (typeof val === 'string') {
+      this.searchInput.setValue(val);
+    } else {
+      this.searchInput.reset();
+    }
   }
   @Output() valueChange = new EventEmitter<string>();
   @Output() whenSearchChanges = new EventEmitter<string>();
