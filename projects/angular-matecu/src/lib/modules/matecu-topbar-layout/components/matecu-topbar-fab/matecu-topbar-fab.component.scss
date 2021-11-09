@@ -3,9 +3,9 @@
   align-items: flex-end;
   height: 100%;
   position: relative;
+  z-index: 2;
   button {
     transform: translateY(50%);
-    z-index: 2;
     &.extended {
       border-radius: 27px;
       height: 55px;
