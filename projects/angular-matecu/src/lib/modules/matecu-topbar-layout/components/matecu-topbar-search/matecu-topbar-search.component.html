@@ -5,7 +5,8 @@
 <div class="matecu-topbar-search__input" [ngClass]="{'mobile-input-active': showMobileInput}">
   <mat-icon>search</mat-icon>
   <input [type]="inputType" [formControl]="searchInput" [placeholder]="searchPlaceholder" />
-  <button mat-icon-button class="only-mobile" (click)="closeMobile()">
+  <button mat-icon-button (click)="closeMobile()" [ngClass]="{'show-btn': showDescktopCleanBtn}">
     <mat-icon>close</mat-icon>
   </button>
+
 </div>

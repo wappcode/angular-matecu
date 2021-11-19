@@ -24,10 +24,11 @@ import {
 export class MatecuTopbarSearchComponent implements OnInit {
   showMobileInput = false;
   searchInput = new FormControl();
+  showDescktopCleanBtn = false;
   private destroy = new Subject();
   @Input() searchPlaceholder = 'Buscar';
   @Input() debounceTime = 500;
-  @Input() inputType: 'text' | 'search' = 'search';
+  @Input() inputType: 'text' | 'search' = 'text';
   @Input() cleanWhenClose = true;
   @Input() set value(val: string | null | undefined) {
     if (typeof val === 'string') {
@@ -58,6 +59,7 @@ export class MatecuTopbarSearchComponent implements OnInit {
   private watchSearch(): void {
     this.searchInput.valueChanges
       .pipe(
+        tap((value) => this.setShowDescktopCleanBtn(value)),
         debounceTime(this.debounceTime),
         distinctUntilChanged(),
         tap((value) => this.searchChanges(value)),
@@ -70,5 +72,8 @@ export class MatecuTopbarSearchComponent implements OnInit {
       typeof searchVal === 'string' && searchVal.length > 0 ? searchVal : '';
     this.whenSearchChanges.emit(value);
     this.valueChange.emit(value);
+  }
+  private setShowDescktopCleanBtn(value: string | null | undefined): void {
+    this.showDescktopCleanBtn = typeof value === 'string' && value.length > 0;
   }
 }
