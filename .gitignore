@@ -48,3 +48,4 @@ testem.log
 Thumbs.db
 
 README_AL.md
+.vscode/*
