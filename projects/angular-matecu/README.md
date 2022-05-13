@@ -118,6 +118,35 @@ En el componente
   }
 
 
+## MatecuSnackBarService 
+
+Servicio para abrir dialogos snackBar con titulos con colores para Error, Success, Warning, Info
+
+### Uso
+
+Importar en el módulo.
+
+    import { MatecuAlertBoxModule } from 'angular-matecu';
+
+En el componente
+
+    import { MatecuSnackBarService } from 'angular-matecu';
+
+     // .... 
+    constructor(private snackBar: MatecuSnackBarService) { }
+
+    openError(): void {
+         this.snackBar.openError('Mensaje de error');
+    }
+
+### Métodos
+
+    - openError()
+    - openInfo()
+    - openWarning()
+    - openSuccess()
+    - open()
+    - dismiss()
 # matecu-topbar-layout (Componente)
 
 ### Uso:

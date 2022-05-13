@@ -22,6 +22,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { SnackbarComponent } from './components/snackbar/snackbar.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     TopbarComponent,
     AlertBoxComponent,
     AlertDialogComponent,
+    SnackbarComponent,
   ],
   imports: [
     BrowserModule,
