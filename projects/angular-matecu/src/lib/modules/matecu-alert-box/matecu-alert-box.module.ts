@@ -7,9 +7,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
-  declarations: [MatecuAlertBoxComponent, MatecuAlertDialogComponent],
-  imports: [CommonModule, MatIconModule, MatDialogModule, MatButtonModule],
-  exports: [MatecuAlertBoxComponent],
-  entryComponents: [MatecuAlertDialogComponent],
+    declarations: [MatecuAlertBoxComponent, MatecuAlertDialogComponent],
+    imports: [CommonModule, MatIconModule, MatDialogModule, MatButtonModule],
+    exports: [MatecuAlertBoxComponent]
 })
 export class MatecuAlertBoxModule {}
