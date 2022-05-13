@@ -1,14 +1,14 @@
 import { Component, HostBinding, Inject, OnInit } from '@angular/core';
 import { MatSnackBarRef, MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
-import { MatecuAlertSnackBarData } from '../types/matecu-alert-snackbar';
-import { MatecuAlertBoxType } from '../types/matecu-altert-box-type';
+import { MatecuAlertSnackBarData } from '../../types/matecu-alert-snackbar';
+import { MatecuAlertBoxType } from '../../types/matecu-altert-box-type';
 
 @Component({
-  selector: 'matecu-snack-bar-alert',
-  templateUrl: './matecu-snack-bar-alert.component.html',
-  styleUrls: ['./matecu-snack-bar-alert.component.scss']
+  selector: 'matecu-alert-snack-bar',
+  templateUrl: './matecu-alert-snack-bar.component.html',
+  styleUrls: ['./matecu-alert-snack-bar.component.scss']
 })
-export class MatecuSnackBarAlertComponent  {
+export class MatecuAlertSnackBarComponent {
 
   title: string;
   message: string;
@@ -25,7 +25,7 @@ export class MatecuSnackBarAlertComponent  {
   @HostBinding('class') className = this.classNameBase;
   constructor(
     @Inject(MAT_SNACK_BAR_DATA) public data: MatecuAlertSnackBarData,
-    private snackBarRef: MatSnackBarRef<MatecuSnackBarAlertComponent>) { 
+    private snackBarRef: MatSnackBarRef<MatecuAlertSnackBarComponent>) { 
     this.title = data.title;
     this.message = data.message;
     this.action = data.action;
