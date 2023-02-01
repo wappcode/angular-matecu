@@ -7,7 +7,7 @@ import {
   Output,
   ViewEncapsulation,
 } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
 import {
   debounceTime,
@@ -23,7 +23,7 @@ import {
 })
 export class MatecuTopbarSearchComponent implements OnInit {
   showMobileInput = false;
-  searchInput = new FormControl();
+  searchInput = new UntypedFormControl();
   showDescktopCleanBtn = false;
   private destroy = new Subject();
   @Input() searchPlaceholder = 'Buscar';

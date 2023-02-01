@@ -9,7 +9,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { ParamMap } from '@angular/router';
 import { fromEvent, Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
@@ -22,7 +22,7 @@ export class MatecuTopbarLayoutComponent implements AfterViewInit {
   @HostBinding('class') className = 'matecu-topbar-layout';
   showSearchInput = false;
   search = false;
-  searchInput: FormControl = new FormControl();
+  searchInput: UntypedFormControl = new UntypedFormControl();
   isProminent = false;
   private scrollingClass = 'matecu-topbar-layout--scrolling';
   private prominentClass = 'matecu-topbar-layout--prominent';

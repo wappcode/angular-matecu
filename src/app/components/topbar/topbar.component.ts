@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
@@ -8,7 +8,7 @@ import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
   styleUrls: ['./topbar.component.scss'],
 })
 export class TopbarComponent implements OnInit {
-  searchCtrl: FormControl | null = new FormControl();
+  searchCtrl: UntypedFormControl | null = new UntypedFormControl();
   actionMenu = true;
   prominent = true;
   showFab = true;
@@ -21,7 +21,7 @@ export class TopbarComponent implements OnInit {
 
   toogleSearch(event: MatCheckboxChange): void {
     if (event.checked) {
-      this.searchCtrl = new FormControl();
+      this.searchCtrl = new UntypedFormControl();
     } else {
       this.searchCtrl = null;
     }
