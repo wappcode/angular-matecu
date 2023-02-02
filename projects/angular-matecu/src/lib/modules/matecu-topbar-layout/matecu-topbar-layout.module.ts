@@ -9,7 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatecuTopbarFabComponent } from '../../components/matecu-topbar-fab/matecu-topbar-fab.component';
 import { MatecuTopbarSearchComponent } from '../../components/matecu-topbar-search/matecu-topbar-search.component';
-import { MatecuTopbarActionsComponent } from '../../components/matecu-topbar-actions/matecu-topbar-actions.component';
+import { MatecuTopbarActionsComponent } from '../../components/matecu-topbar-action/matecu-topbar-action.component';
 
 /**
  * @deprecated Usar stanalone components 

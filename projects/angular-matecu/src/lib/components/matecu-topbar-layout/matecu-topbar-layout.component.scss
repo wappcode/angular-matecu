@@ -1,6 +1,6 @@
 @import '../../../scss/matecu-topbar-layout/variables.scss';
-:host,
-.matecu-topbar-layout {
+:host,.matecu-topbar-layout {
+
   display: grid;
   height: 100vh;
   max-width: 100vw;
@@ -11,31 +11,33 @@
   * {
     box-sizing: border-box;
   }
-  // overflow: hidden;
-  mat-toolbar {
-    position: relative;
-    height: $toolbar-height;
-    max-height: $toolbar-height;
+  
+  overflow: hidden;  
 
+    mat-toolbar {
+    position: relative;
     transition: all 300ms;
     align-items: flex-start;
+    
   }
-  &__menu-btn,
-  &__more-actions-btn {
-    min-height: $toolbar-height;
-    display: flex;
-    align-items: center;
-  }
-  &__menu-btn {
-    @media screen and (max-width: 425px) {
-      margin-right: auto;
+  mat-toolbar-row {
+    white-space: normal;
+    justify-content: space-between;
+    column-gap: 1px;
+    &:first-of-type {
+      min-height: 100%;
     }
   }
+  
+  
 }
 :host.matecu-topbar-layout--prominent {
   .mat-toolbar {
     height: $toolbar-prominent-height;
     max-height: $toolbar-prominent-height;
+  }
+  mat-toolbar-row {
+    align-items: flex-start;
   }
 }
 :host.matecu-topbar-layout--scrolling {

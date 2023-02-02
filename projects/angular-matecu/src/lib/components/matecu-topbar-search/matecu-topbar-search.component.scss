@@ -1,6 +1,8 @@
 @import '../../../scss/matecu-topbar-layout/variables.scss';
 :host {
+  flex-grow: 1;
   display: flex;
+  justify-content: flex-end;
   align-items: center;
   position: relative;
   padding: 7px;

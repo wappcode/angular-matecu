@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MatecuTopbarActionsComponent } from './matecu-topbar-actions.component';
+import { MatecuTopbarActionsComponent } from './matecu-topbar-action.component';
 
 describe('MatecuTopbarActionsComponent', () => {
   let component: MatecuTopbarActionsComponent;
@@ -8,9 +8,9 @@ describe('MatecuTopbarActionsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MatecuTopbarActionsComponent ]
+      declarations: [MatecuTopbarActionsComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

@@ -33,10 +33,6 @@ export class MatecuTopbarLayoutComponent implements AfterViewInit {
   private scrollingClass = 'matecu-topbar-layout--scrolling';
   private prominentClass = 'matecu-topbar-layout--prominent';
   @Input() color = 'primary';
-  @Input() navMenu = true;
-  @Input() actionMenu = false;
-  @Output() clickNavMenu = new EventEmitter<void>();
-  @Output() clickActionMenu = new EventEmitter<void>();
   @Input() set prominent(value: boolean) {
     this.isProminent = value;
     if (value) {
@@ -60,12 +56,7 @@ export class MatecuTopbarLayoutComponent implements AfterViewInit {
     this.searchInput.reset();
   }
   onMenuClick(): void { }
-  onClickNavMenu(): void {
-    this.clickNavMenu.emit();
-  }
-  onClickActionMenu(): void {
-    this.clickActionMenu.emit();
-  }
+
   spyScroll(): Observable<HTMLElement | null> {
     const scrollabe: HTMLElement | null = document.querySelector(
       '.matecu-topbar-body'

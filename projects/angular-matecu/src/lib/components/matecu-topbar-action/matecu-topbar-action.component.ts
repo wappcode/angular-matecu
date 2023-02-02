@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'matecu-topbar-actions',
-  templateUrl: './matecu-topbar-actions.component.html',
-  styleUrls: ['./matecu-topbar-actions.component.scss'],
+  selector: 'matecu-topbar-action',
+  templateUrl: './matecu-topbar-action.component.html',
+  styleUrls: ['./matecu-topbar-action.component.scss'],
   standalone: true
 })
 export class MatecuTopbarActionsComponent implements OnInit {

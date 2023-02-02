@@ -2,7 +2,6 @@
 :host {
   display: flex;
   align-items: center;
-  padding: 7px;
-  min-height: $toolbar-height;
-  box-sizing: border-box;
+  height: 100%;
+  max-height: $toolbar-height;
 }
