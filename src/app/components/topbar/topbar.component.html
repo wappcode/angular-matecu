@@ -1,33 +1,41 @@
-<matecu-topbar-layout [prominent]="prominent" >
-  <matecu-topbar-title>Topbar Layout el pueblo unido jamás sera unido ni el pr ni el pan</matecu-topbar-title>
-
-  <matecu-topbar-fab *ngIf="showFab" [extended]="fabLarge" (clickAction)="clickFabButton()" toolTip="">
-    <mat-icon>add</mat-icon>
-    <ng-container *ngIf="fabLarge"> el pueblo unido</ng-container>
-  </matecu-topbar-fab>
-
-  <matecu-topbar-search (whenSearchChanges)="searching($event)" [searchPlaceholder]="searchPlaceholder"></matecu-topbar-search>
+<matecu-topbar-layout [prominent]="prominent" [secondRow]="true" >
+<matecu-topbar-row position="first">
   
-  <matecu-topbar-action position="left">
-    <button mat-icon-button (click)="clickNavMenu()"><mat-icon>menu</mat-icon></button>
-  </matecu-topbar-action>
-  <matecu-topbar-action position="left">
-    <button mat-icon-button (click)="clickNavMenu()"><mat-icon>notifications</mat-icon></button>
-  </matecu-topbar-action>
-  <matecu-topbar-action position="left">
-    <mat-icon>notifications</mat-icon>
-  </matecu-topbar-action>
-  <matecu-topbar-action>
-    <button mat-icon-button (clickActionMenu)="clickActionMenu()"><mat-icon>more_vert</mat-icon></button>
-  </matecu-topbar-action>
-  <matecu-topbar-action>
-    <button mat-icon-button (click)="clickNavMenu()"><mat-icon>menu</mat-icon></button>
-    <mat-icon>notifications</mat-icon>
-  </matecu-topbar-action>
-  <matecu-topbar-action>
-    a
-  </matecu-topbar-action>
 
+  
+    <matecu-topbar-search (whenSearchChanges)="searching($event)" [searchPlaceholder]="searchPlaceholder"></matecu-topbar-search>
+  
+    <matecu-topbar-action position="left">
+      <button mat-icon-button (click)="clickNavMenu()"><mat-icon>menu</mat-icon></button>
+    </matecu-topbar-action>
+    <matecu-topbar-action position="left">
+      <button mat-icon-button (click)="clickNavMenu()"><mat-icon>notifications</mat-icon></button>
+    </matecu-topbar-action>
+    <matecu-topbar-action position="left">
+      <mat-icon>notifications</mat-icon>
+    </matecu-topbar-action>
+    <matecu-topbar-action>
+      <button mat-icon-button (click)="clickNavMenu()"><mat-icon>menu</mat-icon></button>
+      <mat-icon>notifications</mat-icon>
+    </matecu-topbar-action>
+    <matecu-topbar-action>
+      a
+    </matecu-topbar-action>
+    <matecu-topbar-action>
+      <button mat-icon-button (clickActionMenu)="clickActionMenu()"><mat-icon>more_vert</mat-icon></button>
+    </matecu-topbar-action>
+</matecu-topbar-row>
+
+  <matecu-topbar-row position="second">
+    <matecu-topbar-title>Topbar Layout el pueblo unido jamás sera unido ni el pr ni el pan</matecu-topbar-title>
+    <matecu-topbar-fab *ngIf="showFab" [extended]="fabLarge" (clickAction)="clickFabButton()" toolTip="">
+      <mat-icon>add</mat-icon>
+      <ng-container *ngIf="fabLarge"> el pueblo unido</ng-container>
+    </matecu-topbar-fab>
+    <matecu-topbar-action>
+      <button mat-icon-button (clickActionMenu)="clickActionMenu()"><mat-icon>more_vert</mat-icon></button>
+    </matecu-topbar-action>
+  </matecu-topbar-row>
   <matecu-topbar-body #tobarBody>
     <!-- 1 <br>
     2 <br>

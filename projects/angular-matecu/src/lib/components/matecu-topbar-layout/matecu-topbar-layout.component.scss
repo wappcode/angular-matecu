@@ -15,12 +15,14 @@
   overflow: hidden;  
 
     mat-toolbar {
+      display: block;
     position: relative;
     transition: all 300ms;
     align-items: flex-start;
+    min-height: auto !important;
     
   }
-  mat-toolbar-row {
+  matecu-topbar-row {
     white-space: normal;
     justify-content: space-between;
     column-gap: 1px;
@@ -31,15 +33,15 @@
   
   
 }
-:host.matecu-topbar-layout--prominent {
-  .mat-toolbar {
-    height: $toolbar-prominent-height;
-    max-height: $toolbar-prominent-height;
-  }
-  mat-toolbar-row {
-    align-items: flex-start;
-  }
-}
+// :host.matecu-topbar-layout--prominent {
+//   .mat-toolbar {
+//     height: $toolbar-prominent-height;
+//     max-height: $toolbar-prominent-height;
+//   }
+//   mat-toolbar-row {
+//     align-items: flex-start;
+//   }
+// }
 :host.matecu-topbar-layout--scrolling {
   .mat-toolbar {
     height: $toolbar-height;

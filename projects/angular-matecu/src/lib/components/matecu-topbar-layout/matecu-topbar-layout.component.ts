@@ -33,6 +33,7 @@ export class MatecuTopbarLayoutComponent implements AfterViewInit {
   private scrollingClass = 'matecu-topbar-layout--scrolling';
   private prominentClass = 'matecu-topbar-layout--prominent';
   @Input() color = 'primary';
+  @Input() secondRow = false;
   @Input() set prominent(value: boolean) {
     this.isProminent = value;
     if (value) {

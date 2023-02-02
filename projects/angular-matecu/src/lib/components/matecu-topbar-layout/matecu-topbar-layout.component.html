@@ -1,14 +1,12 @@
   <mat-toolbar [color]="color">
     
     <mat-toolbar-row>
-      <ng-content select="matecu-topbar-action[position='left']"></ng-content>
-      <ng-content select="matecu-topbar-fab"></ng-content>
-      <ng-content select="matecu-topbar-title"></ng-content>
-      <ng-content select="matecu-topbar-search"></ng-content>
-      <ng-content select="matecu-topbar-action"></ng-content>
-      <ng-content select="matecu-topbar-actions[position='right']"></ng-content>
+      <ng-content select="matecu-topbar-row"></ng-content>
+      <ng-content select="matecu-topbar-row[position='first']"></ng-content>
     </mat-toolbar-row>
-
+    <mat-toolbar-row *ngIf="secondRow">
+      <ng-content select="matecu-topbar-row[position='second']"></ng-content>
+    </mat-toolbar-row>
 
     <!-- <mat-toolbar-row>
       <span>My App</span>
