@@ -1,10 +1,13 @@
 import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
 import { MatecuAlertBoxType } from '../../types/matecu-altert-box-type';
 
 @Component({
   selector: 'matecu-alert-box',
   templateUrl: './matecu-alert-box.component.html',
   styleUrls: ['./matecu-alert-box.component.scss'],
+  standalone: true,
+  imports: [MatIconModule]
 })
 export class MatecuAlertBoxComponent implements OnInit {
   classNameBase = 'matecu-alert-box';
@@ -30,9 +33,9 @@ export class MatecuAlertBoxComponent implements OnInit {
     this.alertIcon = value;
   }
   @HostBinding('class') className = this.classNameBase;
-  constructor() {}
+  constructor() { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   private updateIcon(): void {
     switch (this.color) {

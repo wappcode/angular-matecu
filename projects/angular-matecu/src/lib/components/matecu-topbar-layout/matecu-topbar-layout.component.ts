@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -10,6 +11,9 @@ import {
   ViewChild,
 } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { ParamMap } from '@angular/router';
 import { fromEvent, Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
@@ -17,6 +21,8 @@ import { map, tap } from 'rxjs/operators';
   selector: 'matecu-topbar-layout',
   templateUrl: './matecu-topbar-layout.component.html',
   styleUrls: ['./matecu-topbar-layout.component.scss'],
+  standalone: true,
+  imports: [CommonModule, MatButtonModule, MatIconModule, MatToolbarModule]
 })
 export class MatecuTopbarLayoutComponent implements AfterViewInit {
   @HostBinding('class') className = 'matecu-topbar-layout';
@@ -40,7 +46,7 @@ export class MatecuTopbarLayoutComponent implements AfterViewInit {
       this.className = this.className.replace(regex, '').trim();
     }
   }
-  constructor() {}
+  constructor() { }
 
   ngAfterViewInit(): void {
     this.spyScroll().subscribe();
@@ -53,7 +59,7 @@ export class MatecuTopbarLayoutComponent implements AfterViewInit {
     this.showSearchInput = false;
     this.searchInput.reset();
   }
-  onMenuClick(): void {}
+  onMenuClick(): void { }
   onClickNavMenu(): void {
     this.clickNavMenu.emit();
   }

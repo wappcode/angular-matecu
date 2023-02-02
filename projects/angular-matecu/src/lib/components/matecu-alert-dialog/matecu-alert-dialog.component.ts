@@ -1,10 +1,15 @@
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 import { MatecuAlertDialogData } from '../../types/matecu-alert-dialog';
+import { MatecuAlertBoxComponent } from '../matecu-alert-box/matecu-alert-box.component';
 @Component({
   selector: 'matecu-alert-dialog',
   templateUrl: './matecu-alert-dialog.component.html',
   styleUrls: ['./matecu-alert-dialog.component.scss'],
+  standalone: true,
+  imports: [CommonModule, MatDialogModule, MatIconModule, MatecuAlertBoxComponent]
 })
 export class MatecuAlertDialogComponent implements OnInit {
   hasTitle = false;
@@ -21,7 +26,7 @@ export class MatecuAlertDialogComponent implements OnInit {
     this.setShowActions();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   activateAction(): void {
     this.dialogRef.close(true);

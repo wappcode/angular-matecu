@@ -4,12 +4,13 @@ import { Component, ElementRef, HostBinding, OnInit } from '@angular/core';
   selector: 'matecu-topbar-body',
   templateUrl: './matecu-topbar-body.component.html',
   styleUrls: ['./matecu-topbar-body.component.scss'],
+  standalone: true
 })
 export class MatecuTopbarBodyComponent implements OnInit {
   @HostBinding('class') className = 'matecu-topbar-body';
-  constructor(private elementRef: ElementRef) {}
+  constructor(private elementRef: ElementRef) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   scrollTop(): void {
     const element = this.elementRef.nativeElement;

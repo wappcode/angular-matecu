@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   Component,
   EventEmitter,
@@ -7,7 +8,9 @@ import {
   Output,
   ViewEncapsulation,
 } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { Subject } from 'rxjs';
 import {
   debounceTime,
@@ -20,6 +23,8 @@ import {
   selector: 'matecu-topbar-search',
   templateUrl: './matecu-topbar-search.component.html',
   styleUrls: ['./matecu-topbar-search.component.scss'],
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, MatIconModule, MatButtonModule]
 })
 export class MatecuTopbarSearchComponent implements OnInit {
   showMobileInput = false;
@@ -40,7 +45,7 @@ export class MatecuTopbarSearchComponent implements OnInit {
   @Output() valueChange = new EventEmitter<string>();
   @Output() whenSearchChanges = new EventEmitter<string>();
   @HostBinding('class') className = 'matecu-topbar-search';
-  constructor() {}
+  constructor() { }
 
   ngOnInit(): void {
     this.watchSearch();

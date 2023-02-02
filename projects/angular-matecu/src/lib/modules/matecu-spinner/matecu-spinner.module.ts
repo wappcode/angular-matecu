@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatecuSpinnerComponent } from './components/matecu-spinner/matecu-spinner.component';
-import { MatecuSpinnerService } from './services/matecu-spinner.service';
+import { MatecuSpinnerComponent } from '../../components/matecu-spinner/matecu-spinner.component';
 
 
-
+/**
+ * @deprecated Usar stanalone components 
+ */
 @NgModule({
-  declarations: [MatecuSpinnerComponent],
+  declarations: [],
   imports: [
-    CommonModule
+    CommonModule, MatecuSpinnerComponent
   ],
   exports: [
     MatecuSpinnerComponent

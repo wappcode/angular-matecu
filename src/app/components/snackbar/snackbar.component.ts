@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MatecuSnackBarService } from '../../../../projects/angular-matecu/src/lib/modules/matecu-alert-box/services/matecu-snack-bar.service';
+import { MatecuSnackBarService } from '../../../../projects/angular-matecu/src/public-api';
+
 
 @Component({
   selector: 'app-snackbar',

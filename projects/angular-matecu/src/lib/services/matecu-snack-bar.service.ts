@@ -13,34 +13,34 @@ export class MatecuSnackBarService {
 
 
 
-  openError(error: string | Error, title?: string | null, action?: string, config?:MatSnackBarConfig<any>): MatSnackBarRef<MatecuAlertSnackBarComponent> {
+  openError(error: string | Error, title?: string | null, action?: string, config?: MatSnackBarConfig<any>): MatSnackBarRef<MatecuAlertSnackBarComponent> {
     const message = this.getErrorMessage(error);
     const titleStr = title || 'ERROR';
     const type = MatecuAlertBoxType.danger;
     return this.openAlert(message, titleStr, type, action, config);
   }
-  openSuccess(message: string, title?: string | null, action?: string, config?:MatSnackBarConfig<any>): MatSnackBarRef<MatecuAlertSnackBarComponent> {
+  openSuccess(message: string, title?: string | null, action?: string, config?: MatSnackBarConfig<any>): MatSnackBarRef<MatecuAlertSnackBarComponent> {
     const titleStr = title || 'OK';
     const type = MatecuAlertBoxType.success;
     return this.openAlert(message, titleStr, type, action, config);
   }
-  openWarning(message: string, title?: string | null, action?: string, config?:MatSnackBarConfig<any>): MatSnackBarRef<MatecuAlertSnackBarComponent> {
+  openWarning(message: string, title?: string | null, action?: string, config?: MatSnackBarConfig<any>): MatSnackBarRef<MatecuAlertSnackBarComponent> {
     const titleStr = title || 'WARNING';
     const type = MatecuAlertBoxType.warning;
     return this.openAlert(message, titleStr, type, action, config);
   }
-  openInfo(message: string, title?: string | null, action?: string, config?:MatSnackBarConfig<any>): MatSnackBarRef<MatecuAlertSnackBarComponent> {
+  openInfo(message: string, title?: string | null, action?: string, config?: MatSnackBarConfig<any>): MatSnackBarRef<MatecuAlertSnackBarComponent> {
     const titleStr = title || 'INFO';
     const type = MatecuAlertBoxType.info;
     return this.openAlert(message, titleStr, type, action, config);
   }
   open(message: string, action?: string, config?: MatSnackBarConfig<any>): MatSnackBarRef<TextOnlySnackBar> {
-    return this.snackBar.open(message, action,config);
+    return this.snackBar.open(message, action, config);
   }
   dismiss(): void {
     this.snackBar.dismiss()
   }
-  private openAlert(message: string, title: string, type: MatecuAlertBoxType, action?: string, config?:MatSnackBarConfig<any> ) {
+  private openAlert(message: string, title: string, type: MatecuAlertBoxType, action?: string, config?: MatSnackBarConfig<any>) {
 
     const data: MatecuAlertSnackBarData = {
       message,
@@ -48,12 +48,12 @@ export class MatecuSnackBarService {
       action,
       type
     }
-    const dialogConfig = {...config, data}
-    
+    const dialogConfig = { ...config, data }
+
     return this.snackBar.openFromComponent(MatecuAlertSnackBarComponent, dialogConfig);
   }
 
-  private getErrorMessage(err: string | Error ): string {
+  private getErrorMessage(err: string | Error): string {
     const error = new Error()
     if (typeof err === 'string') {
       return err;

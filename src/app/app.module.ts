@@ -9,12 +9,8 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {
-  MatecuAlertBoxModule,
-  MatecuSpinnerModule,
-} from 'projects/angular-matecu/src/public-api';
+
 import { TopbarComponent } from './components/topbar/topbar.component';
-import { MatecuTopbarLayoutModule } from 'projects/angular-matecu/src/lib/modules/matecu-topbar-layout/matecu-topbar-layout.module';
 import { MatIconModule } from '@angular/material/icon';
 import { AlertBoxComponent } from './components/alert-box/alert-box.component';
 import { AlertDialogComponent } from './components/alert-dialog/alert-dialog.component';
@@ -23,6 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { SnackbarComponent } from './components/snackbar/snackbar.component';
+import { MatecuAlertBoxComponent, MatecuSpinnerComponent, MatecuTopbarActionsComponent, MatecuTopbarBodyComponent, MatecuTopbarFabComponent, MatecuTopbarLayoutComponent, MatecuTopbarLayoutModule, MatecuTopbarSearchComponent, MatecuTopbarTitleComponent } from '../../projects/angular-matecu/src/public-api';
 
 @NgModule({
   declarations: [
@@ -37,15 +34,21 @@ import { SnackbarComponent } from './components/snackbar/snackbar.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    MatecuSpinnerModule,
+    MatecuSpinnerComponent,
     BrowserAnimationsModule,
     MatCheckboxModule,
     FormsModule,
     ReactiveFormsModule,
     MatInputModule,
+    // MatecuTopbarLayoutComponent,
+    // MatecuTopbarTitleComponent,
+    // MatecuTopbarBodyComponent,
+    // MatecuTopbarActionsComponent,
+    // MatecuTopbarSearchComponent,
+    // MatecuTopbarFabComponent
     MatecuTopbarLayoutModule,
     MatIconModule,
-    MatecuAlertBoxModule,
+    MatecuAlertBoxComponent,
     MatDialogModule,
     MatButtonModule,
     MatRadioModule,
@@ -55,4 +58,4 @@ import { SnackbarComponent } from './components/snackbar/snackbar.component';
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

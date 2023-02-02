@@ -1,11 +1,14 @@
+import { CommonModule } from '@angular/common';
 import { Component, HostBinding, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import { MatecuSpinnerService } from '../../services/matecu-spinner.service';
 import { takeUntil, tap } from 'rxjs/operators';
+import { MatecuSpinnerService } from '../../services/matecu-spinner.service';
 @Component({
   selector: 'matecu-spinner',
   templateUrl: './matecu-spinner.component.html',
-  styleUrls: ['./matecu-spinner.component.css']
+  styleUrls: ['./matecu-spinner.component.css'],
+  standalone: true,
+  imports: [CommonModule]
 })
 export class MatecuSpinnerComponent implements OnInit, OnDestroy {
 
@@ -15,7 +18,7 @@ export class MatecuSpinnerComponent implements OnInit, OnDestroy {
   @HostBinding('class') className = 'matecu-spinner';
   @Input() color = '#2196F3';
   @Input() global = false;
-  get active(): boolean{
+  get active(): boolean {
     return this.activeCache;
   }
   @Input() set active(value: boolean) {
@@ -31,7 +34,7 @@ export class MatecuSpinnerComponent implements OnInit, OnDestroy {
 
   constructor(
     private spinnerService: MatecuSpinnerService,
-  ) {}
+  ) { }
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();

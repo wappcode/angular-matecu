@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { filter } from 'rxjs/operators';
-import { MatecuAlertBoxType } from '../../../../projects/angular-matecu/src/lib/modules/matecu-alert-box/types/matecu-altert-box-type';
-import { MatecuAlertDialogComponent } from '../../../../projects/angular-matecu/src/lib/modules/matecu-alert-box/components/matecu-alert-dialog/matecu-alert-dialog.component';
+import { MatecuAlertBoxType } from '../../../../projects/angular-matecu/src/lib/types/matecu-altert-box-type';
+import { MatecuAlertDialogComponent } from '../../../../projects/angular-matecu/src/public-api';
 
 @Component({
   selector: 'app-alert-dialog',
@@ -17,9 +17,9 @@ export class AlertDialogComponent implements OnInit {
   dismissText?: string;
   action?: string;
   title?: string;
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   openBasicDialog(): void {
     const message = this.defaultMessage;
