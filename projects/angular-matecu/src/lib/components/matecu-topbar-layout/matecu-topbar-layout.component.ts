@@ -1,11 +1,13 @@
 import { CommonModule } from '@angular/common';
 import {
+  AfterViewChecked,
   AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
   HostBinding,
   Input,
+  OnDestroy,
   OnInit,
   Output,
   ViewChild,
@@ -15,8 +17,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ParamMap } from '@angular/router';
-import { fromEvent, Observable, of } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { fromEvent, Observable, of, Subject } from 'rxjs';
+import { map, takeUntil, tap } from 'rxjs/operators';
 @Component({
   selector: 'matecu-topbar-layout',
   templateUrl: './matecu-topbar-layout.component.html',
@@ -24,13 +26,14 @@ import { map, tap } from 'rxjs/operators';
   standalone: true,
   imports: [CommonModule, MatButtonModule, MatIconModule, MatToolbarModule]
 })
-export class MatecuTopbarLayoutComponent implements AfterViewInit {
+export class MatecuTopbarLayoutComponent implements AfterViewInit, OnDestroy {
   @HostBinding('class') className = 'matecu-topbar-layout';
   showSearchInput = false;
   search = false;
   searchInput: UntypedFormControl = new UntypedFormControl();
   isProminent = false;
   hasTwoRows = false;
+  destroySpyScroll$ = new Subject<void>();
 
   private scrollingClass = 'matecu-topbar-layout--scrolling';
   private prominentClass = 'matecu-topbar-layout--prominent';
@@ -45,8 +48,13 @@ export class MatecuTopbarLayoutComponent implements AfterViewInit {
   }
   constructor() { }
 
+  ngOnDestroy(): void {
+    this.destroySpyScroll$.next();
+    this.destroySpyScroll$.complete();
+  }
   ngAfterViewInit(): void {
-    this.spyScroll().subscribe();
+    this.destroySpyScroll$.next();
+    this.spyScroll().pipe(takeUntil(this.destroySpyScroll$)).subscribe();
   }
 
   toogleSearch(): void {
@@ -59,12 +67,14 @@ export class MatecuTopbarLayoutComponent implements AfterViewInit {
   onMenuClick(): void { }
 
   spyScroll(): Observable<HTMLElement | null> {
-    const scrollabe: HTMLElement | null = document.querySelector(
+    const scrollabes: NodeListOf<HTMLElement> | null = document.querySelectorAll(
       '.matecu-topbar-body'
     );
-    if (!scrollabe) {
+    if (!scrollabes || scrollabes.length === 0) {
       return of(null);
     }
+    const lastindex = scrollabes.length - 1
+    const scrollabe = scrollabes[lastindex];
     return fromEvent(scrollabe, 'scroll').pipe(
       tap(() => this.applyScrollStyles(scrollabe)),
       map(() => scrollabe)

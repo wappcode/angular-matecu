@@ -5,6 +5,7 @@ import { AlertDialogComponent } from './components/alert-dialog/alert-dialog.com
 import { IndexComponent } from './components/index/index.component';
 import { SnackbarComponent } from './components/snackbar/snackbar.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
+import { TopbarNextComponent } from './components/topbar-next/topbar-next.component';
 import { TopbarComponent } from './components/topbar/topbar.component';
 
 const routes: Routes = [
@@ -19,6 +20,10 @@ const routes: Routes = [
   {
     path: 'topbar',
     component: TopbarComponent,
+  },
+  {
+    path: 'topbar-next',
+    component: TopbarNextComponent,
   },
   {
     path: 'alert-box',
@@ -38,4 +43,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

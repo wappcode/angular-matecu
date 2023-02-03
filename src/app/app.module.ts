@@ -20,6 +20,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { SnackbarComponent } from './components/snackbar/snackbar.component';
 import { MatecuAlertBoxComponent, MatecuSpinnerComponent, MatecuTopbarActionsComponent, MatecuTopbarBodyComponent, MatecuTopbarFabComponent, MatecuTopbarLayoutComponent, MatecuTopbarLayoutModule, MatecuTopbarSearchComponent, MatecuTopbarTitleComponent } from '../../projects/angular-matecu/src/public-api';
+import { TopbarNextComponent } from './components/topbar-next/topbar-next.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { MatecuAlertBoxComponent, MatecuSpinnerComponent, MatecuTopbarActionsCom
     AlertBoxComponent,
     AlertDialogComponent,
     SnackbarComponent,
+    TopbarNextComponent,
   ],
   imports: [
     BrowserModule,

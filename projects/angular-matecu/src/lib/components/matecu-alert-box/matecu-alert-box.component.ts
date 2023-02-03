@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, HostBinding, Input, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatecuAlertBoxType } from '../../types/matecu-altert-box-type';
@@ -7,7 +8,7 @@ import { MatecuAlertBoxType } from '../../types/matecu-altert-box-type';
   templateUrl: './matecu-alert-box.component.html',
   styleUrls: ['./matecu-alert-box.component.scss'],
   standalone: true,
-  imports: [MatIconModule]
+  imports: [CommonModule, MatIconModule]
 })
 export class MatecuAlertBoxComponent implements OnInit {
   classNameBase = 'matecu-alert-box';
