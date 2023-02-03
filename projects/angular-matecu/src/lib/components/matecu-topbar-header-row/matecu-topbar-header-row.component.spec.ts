@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MatecuTopbarRowComponent } from './matecu-topbar-row.component';
+import { MatecuTopbarHeaderRowComponent } from './matecu-topbar-header-row.component';
 
 describe('MatecuTopbarRowComponent', () => {
-  let component: MatecuTopbarRowComponent;
-  let fixture: ComponentFixture<MatecuTopbarRowComponent>;
+  let component: MatecuTopbarHeaderRowComponent;
+  let fixture: ComponentFixture<MatecuTopbarHeaderRowComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ MatecuTopbarRowComponent ]
+      imports: [MatecuTopbarHeaderRowComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
-    fixture = TestBed.createComponent(MatecuTopbarRowComponent);
+    fixture = TestBed.createComponent(MatecuTopbarHeaderRowComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

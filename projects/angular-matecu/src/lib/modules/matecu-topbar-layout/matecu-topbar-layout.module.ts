@@ -10,7 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatecuTopbarFabComponent } from '../../components/matecu-topbar-fab/matecu-topbar-fab.component';
 import { MatecuTopbarSearchComponent } from '../../components/matecu-topbar-search/matecu-topbar-search.component';
 import { MatecuTopbarActionsComponent } from '../../components/matecu-topbar-action/matecu-topbar-action.component';
-import { MatecuTopbarRowComponent } from '../../components/matecu-topbar-row/matecu-topbar-row.component';
+import { MatecuTopbarHeaderRowComponent } from '../../components/matecu-topbar-header-row/matecu-topbar-header-row.component';
 
 /**
  * @deprecated Usar stanalone components 
@@ -32,7 +32,7 @@ import { MatecuTopbarRowComponent } from '../../components/matecu-topbar-row/mat
     MatecuTopbarFabComponent,
     MatecuTopbarSearchComponent,
     MatecuTopbarActionsComponent,
-    MatecuTopbarRowComponent
+    MatecuTopbarHeaderRowComponent
   ],
   exports: [
     MatecuTopbarLayoutComponent,
@@ -41,7 +41,7 @@ import { MatecuTopbarRowComponent } from '../../components/matecu-topbar-row/mat
     MatecuTopbarFabComponent,
     MatecuTopbarSearchComponent,
     MatecuTopbarActionsComponent,
-    MatecuTopbarRowComponent
+    MatecuTopbarHeaderRowComponent
 
   ],
 })

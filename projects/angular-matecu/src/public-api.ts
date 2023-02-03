@@ -19,7 +19,7 @@ export * from './lib/components/matecu-topbar-layout/matecu-topbar-layout.compon
 export * from './lib/components/matecu-topbar-title/matecu-topbar-title.component';
 export * from './lib/components/matecu-topbar-search/matecu-topbar-search.component';
 export * from './lib/components/matecu-topbar-action/matecu-topbar-action.component';
-export * from './lib/components/matecu-topbar-row/matecu-topbar-row.component';
+export * from './lib/components/matecu-topbar-header-row/matecu-topbar-header-row.component';
 
 /**
  *  alert-box

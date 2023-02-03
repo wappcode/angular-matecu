@@ -1,5 +1,5 @@
 <matecu-topbar-layout [prominent]="prominent" [twoRows]="twoRows" >
-<matecu-topbar-row position="first">
+<matecu-topbar-header-row position="first">
   
 
   <matecu-topbar-title>Topbar Layout el pueblo unido jamás sera unido ni el pr ni el pan</matecu-topbar-title>
@@ -28,9 +28,9 @@
     <matecu-topbar-action>
       <button mat-icon-button (clickActionMenu)="clickActionMenu()"><mat-icon>more_vert</mat-icon></button>
     </matecu-topbar-action>
-</matecu-topbar-row>
+</matecu-topbar-header-row>
 
-  <matecu-topbar-row position="second">
+  <matecu-topbar-header-row position="second">
     <matecu-topbar-title>Topbar Layout el pueblo unido jamás sera unido ni el pr ni el pan</matecu-topbar-title>
     <matecu-topbar-fab *ngIf="showFab && twoRows" [extended]="fabLarge" (clickAction)="clickFabButton()" toolTip="">
       <mat-icon>add</mat-icon>
@@ -42,7 +42,7 @@
     <matecu-topbar-action>
       <button mat-icon-button (clickActionMenu)="clickActionMenu()"><mat-icon>more_vert</mat-icon></button>
     </matecu-topbar-action>
-  </matecu-topbar-row>
+  </matecu-topbar-header-row>
   <matecu-topbar-body #tobarBody>
 
     <ul>

@@ -1,31 +1,11 @@
   <mat-toolbar [color]="color">
     
     <mat-toolbar-row>
-      <!-- <ng-content select="matecu-topbar-row"></ng-content> -->
-      <ng-content select="matecu-topbar-row:not([position])"></ng-content>
-      <ng-content select="matecu-topbar-row[position='first']"></ng-content>
+      <ng-content select="matecu-topbar-header-row:not([position])"></ng-content>
+      <ng-content select="matecu-topbar-header-row[position='first']"></ng-content>
     </mat-toolbar-row>
     <mat-toolbar-row *ngIf="hasTwoRows">
-      <ng-content select="matecu-topbar-row[position='second']"></ng-content>
+      <ng-content select="matecu-topbar-header-row[position='second']"></ng-content>
     </mat-toolbar-row>
-
-    <!-- <mat-toolbar-row>
-      <span>My App</span>
-      <span class="example-spacer"></span>
-      <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-        <mat-icon>menu</mat-icon>
-      </button>
-    </mat-toolbar-row>
-
-    <mat-toolbar-row>
-      <span>Second Line</span>
-      <span class="example-spacer"></span>
-      <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-        <mat-icon>favorite</mat-icon>
-      </button>
-      <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-        <mat-icon>share</mat-icon>
-      </button>
-    </mat-toolbar-row> -->
   </mat-toolbar>
   <ng-content select="matecu-topbar-body"></ng-content>
