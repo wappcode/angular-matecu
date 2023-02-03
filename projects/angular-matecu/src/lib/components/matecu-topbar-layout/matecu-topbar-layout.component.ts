@@ -30,18 +30,18 @@ export class MatecuTopbarLayoutComponent implements AfterViewInit {
   search = false;
   searchInput: UntypedFormControl = new UntypedFormControl();
   isProminent = false;
+  hasTwoRows = false;
+
   private scrollingClass = 'matecu-topbar-layout--scrolling';
   private prominentClass = 'matecu-topbar-layout--prominent';
   @Input() color = 'primary';
-  @Input() secondRow = false;
+  @Input() set twoRows(value: boolean) {
+    this.hasTwoRows = value;
+    this.setProminentClassValue()
+  }
   @Input() set prominent(value: boolean) {
     this.isProminent = value;
-    if (value) {
-      this.className += ' ' + this.prominentClass;
-    } else {
-      const regex = new RegExp(this.prominentClass, 'ig');
-      this.className = this.className.replace(regex, '').trim();
-    }
+    this.setProminentClassValue();
   }
   constructor() { }
 
@@ -86,6 +86,14 @@ export class MatecuTopbarLayoutComponent implements AfterViewInit {
     if (scrollPosition < 10) {
       const regexp = new RegExp(this.scrollingClass, 'ig');
       this.className = this.className.replace(regexp, '').trim();
+    }
+  }
+  private setProminentClassValue() {
+    if (this.isProminent && !this.hasTwoRows) {
+      this.className += ' ' + this.prominentClass;
+    } else {
+      const regex = new RegExp(this.prominentClass, 'ig');
+      this.className = this.className.replace(regex, '').trim();
     }
   }
 }

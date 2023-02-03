@@ -1,10 +1,11 @@
   <mat-toolbar [color]="color">
     
     <mat-toolbar-row>
-      <ng-content select="matecu-topbar-row"></ng-content>
+      <!-- <ng-content select="matecu-topbar-row"></ng-content> -->
+      <ng-content select="matecu-topbar-row:not([position])"></ng-content>
       <ng-content select="matecu-topbar-row[position='first']"></ng-content>
     </mat-toolbar-row>
-    <mat-toolbar-row *ngIf="secondRow">
+    <mat-toolbar-row *ngIf="hasTwoRows">
       <ng-content select="matecu-topbar-row[position='second']"></ng-content>
     </mat-toolbar-row>
 

@@ -14,10 +14,11 @@ export class TopbarComponent implements OnInit {
   showFab = true;
   navMenu = true;
   fabLarge = false;
+  twoRows = false;
   searchPlaceholder = 'Buscar';
-  constructor() {}
+  constructor() { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   toogleSearch(event: MatCheckboxChange): void {
     if (event.checked) {
