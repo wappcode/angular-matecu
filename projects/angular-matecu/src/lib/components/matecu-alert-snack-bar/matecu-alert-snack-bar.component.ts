@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, HostBinding, Inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSnackBarRef, MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
+import { MatSnackBarModule, MatSnackBarRef, MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
 import { MatecuAlertSnackBarData } from '../../types/matecu-alert-snackbar';
 import { MatecuAlertBoxType } from '../../types/matecu-altert-box-type';
 
@@ -10,7 +10,7 @@ import { MatecuAlertBoxType } from '../../types/matecu-altert-box-type';
   templateUrl: './matecu-alert-snack-bar.component.html',
   styleUrls: ['./matecu-alert-snack-bar.component.scss'],
   standalone: true,
-  imports: [CommonModule, MatButtonModule]
+  imports: [CommonModule, MatButtonModule, MatSnackBarModule]
 })
 export class MatecuAlertSnackBarComponent {
 
