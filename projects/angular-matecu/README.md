@@ -7,6 +7,9 @@ Libreria con complementos y utilidades  para el desarrollo de aps
 
     npm install angular-matecu
 
+Para versiones de angular menores a 15 utilizar la versión ^2.0
+
+    npm install angular-matecu@^2.0
 
 ## matecu-spinner (Componente)
  
@@ -230,6 +233,7 @@ Propiedades
 - Input() debounceTime: (number) El tiempo en milisegundos de espera antes de emitir el evento de que el valor del input a cambiado (default 500)
 - Output() cleanWhenClose: (boolean) Determina si se quita el valor del input cuando se cierra en módo mobil (default true)
 - Input() inputType: ('text'|'search') El tipo de input que se va a utilizar (default 'text')
+- Input() value : Valor inicial para el input puede utilizarse dos vías [(value)]=value
 - Output() whenSearchChanges: (function) Acción que se ejecuta cuando el valor del input cambia requiere una función con un parametro tipo string (valor del input)
 
 

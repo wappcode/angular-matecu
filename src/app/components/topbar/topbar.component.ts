@@ -16,6 +16,7 @@ export class TopbarComponent implements OnInit {
   fabLarge = false;
   twoRows = false;
   searchPlaceholder = 'Buscar';
+  searchValue?: string;
   constructor() { }
 
   ngOnInit(): void { }
