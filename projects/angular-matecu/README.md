@@ -11,6 +11,7 @@ Para versiones de angular menores a 15 utilizar la versión ^2.0
 
     npm install angular-matecu@^2.0
 
+ver [CHANGELOG](CHANGELOG.md)
 ## matecu-spinner (Componente)
  
 
