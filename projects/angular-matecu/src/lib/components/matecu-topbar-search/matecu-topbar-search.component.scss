@@ -9,6 +9,10 @@
   min-height: $toolbar-height;
   max-height: $toolbar-height;
   box-sizing: border-box;
+  * {
+    box-sizing: border-box;
+     outline: none;;
+  }
   .matecu-topbar-search {
     &__input {
       display: block;

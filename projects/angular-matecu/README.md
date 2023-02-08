@@ -127,9 +127,18 @@ Servicio para abrir dialogos snackBar con titulos con colores para Error, Succes
 
 ### Uso
 
-Importar en el módulo.
+Importar en el módulo MatecuAlertBoxModule en app.module
 
     import { MatecuAlertBoxModule } from 'angular-matecu';
+    @NgModule({
+     imports: [
+        ...
+        MatecuAlertBoxModule
+        ...
+      ],
+        ...
+    })
+    export class AppModule { }        
 
 En el componente
 

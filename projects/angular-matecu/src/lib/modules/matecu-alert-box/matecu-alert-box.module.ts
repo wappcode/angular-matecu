@@ -8,9 +8,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatecuAlertSnackBarComponent } from '../../components/matecu-alert-snack-bar/matecu-alert-snack-bar.component';
 
-/**
- * @deprecated Usar stanalone components 
- */
 @NgModule({
     declarations: [],
     imports: [CommonModule, MatIconModule, MatDialogModule, MatButtonModule, MatSnackBarModule, MatecuAlertBoxComponent, MatecuAlertDialogComponent, MatecuAlertSnackBarComponent],

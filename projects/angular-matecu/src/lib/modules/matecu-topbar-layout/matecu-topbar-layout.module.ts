@@ -12,9 +12,7 @@ import { MatecuTopbarSearchComponent } from '../../components/matecu-topbar-sear
 import { MatecuTopbarActionComponent } from '../../components/matecu-topbar-action/matecu-topbar-action.component';
 import { MatecuTopbarHeaderRowComponent } from '../../components/matecu-topbar-header-row/matecu-topbar-header-row.component';
 
-/**
- * @deprecated Usar stanalone components 
- */
+
 @NgModule({
   declarations: [
 
