@@ -9,7 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatecuTopbarFabComponent } from '../../components/matecu-topbar-fab/matecu-topbar-fab.component';
 import { MatecuTopbarSearchComponent } from '../../components/matecu-topbar-search/matecu-topbar-search.component';
-import { MatecuTopbarActionsComponent } from '../../components/matecu-topbar-action/matecu-topbar-action.component';
+import { MatecuTopbarActionComponent } from '../../components/matecu-topbar-action/matecu-topbar-action.component';
 import { MatecuTopbarHeaderRowComponent } from '../../components/matecu-topbar-header-row/matecu-topbar-header-row.component';
 
 /**
@@ -31,7 +31,7 @@ import { MatecuTopbarHeaderRowComponent } from '../../components/matecu-topbar-h
     MatecuTopbarBodyComponent,
     MatecuTopbarFabComponent,
     MatecuTopbarSearchComponent,
-    MatecuTopbarActionsComponent,
+    MatecuTopbarActionComponent,
     MatecuTopbarHeaderRowComponent
   ],
   exports: [
@@ -40,7 +40,7 @@ import { MatecuTopbarHeaderRowComponent } from '../../components/matecu-topbar-h
     MatecuTopbarBodyComponent,
     MatecuTopbarFabComponent,
     MatecuTopbarSearchComponent,
-    MatecuTopbarActionsComponent,
+    MatecuTopbarActionComponent,
     MatecuTopbarHeaderRowComponent
 
   ],

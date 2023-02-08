@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./matecu-topbar-action.component.scss'],
   standalone: true
 })
-export class MatecuTopbarActionsComponent implements OnInit {
+export class MatecuTopbarActionComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void { }

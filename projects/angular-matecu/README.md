@@ -15,9 +15,9 @@ Componente que genera un spinner que se puede utilizar para indicar que la app e
 
 ### Uso:
 
-Importar módulo
+Importar componente o módulo
 
-    import { MatecuSpinnerModule } from 'angular-matecu';
+    import { MatecuSpinnerComponent } from 'angular-matecu';
 
 Agregar a la plantilla de algún componente 
 
@@ -67,9 +67,9 @@ Métodos:
 
 ### Uso:
 
-Importar módulo
+Importar componente o módulo
 
-    import { MatecuAlertBoxModule } from 'angular-matecu';
+    import { MatecuAlertBoxComponent } from 'angular-matecu';
 
 Agregar a la plantilla de algún componente 
 
@@ -89,7 +89,6 @@ Dialogo de alerta o confirmación
 
 Importar módulo
 
-    import { MatecuAlertBoxModule } from 'angular-matecu';
 
 En el componente
 
@@ -151,63 +150,76 @@ En el componente
 
 ### Uso:
 
-Importar módulo
+Importar módulo o componentes
 
     import { MatecuTopbarLayoutModule } from 'angular-matecu';
+    // o
+    import {MatecuTopbarLayoutComponent} from 'angular-matecu';
+    import {MatecuTopbarSearchComponent} from 'angular-matecu';
+    import {MatecuTopbarActionsComponent} from 'angular-matecu';
 
 
 Agregar a la plantilla de algún componente:
 
-        <matecu-topbar-layout
-            [prominent]="false"
-            [actionMenu]="true"
-            [navMenu]="trueu"
-            (clickNavMenu)="clickNavMenu()"
-            (clickActionMenu)="clickActionMenu()"
-        >
-        <matecu-topbar-title>Topbar Layout</matecu-topbar-title>
-  
-        <matecu-topbar-fab (clickAction)="clickFabButton()">
-            <mat-icon>add</mat-icon>
-        </matecu-topbar-fab>
+        <matecu-topbar-layout [prominent]="false">
+            <matecu-topbar-header-row>
+                <matecu-topbar-title>Topbar Layout</matecu-topbar-title>
 
-        <matecu-topbar-actions>
-            <mat-icon>notifications</mat-icon>
-        </matecu-topbar-actions>
-        <matecu-topbar-search (whenSearchChanges)="searching($event)">
-        </matecu-topbar-search>
-        <matecu-topbar-body #tobarBody>
-            Contenido de la página
-            .....
-            <button (click)="tobarBody.scrollTop()">
-                Regresar al inicio
-            </button>
-        </matecu-topbar-body>
+                <matecu-topbar-fab (clickAction)="clickFabButton()">
+                    <mat-icon>add</mat-icon>
+                </matecu-topbar-fab>
+
+                <matecu-topbar-action>
+                    <mat-icon>notifications</mat-icon>
+                </matecu-topbar-action>
+                <matecu-topbar-action position="left">
+                    <mat-icon>menu</mat-icon>
+                </matecu-topbar-action>
+                <matecu-topbar-search (whenSearchChanges)="searching($event)">
+                </matecu-topbar-search>
+                <matecu-topbar-body #tobarBody>
+                    Contenido de la página
+                    .....
+                    <button (click)="tobarBody.scrollTop()">
+                        Regresar al inicio
+                    </button>
+                </matecu-topbar-body>
+            </matecu-topbar-header-row>
         </matecu-topbar-layout>
 
 Propiedades:
 
 - Input() prominent: (boolean) Establece si la barra es prominente o no (default false)
-- Input() actionMenu: (boolean) Muestra el botón para más acciones (default false)
-- Input() navMenu: (boolean) Muestra el botón para la barra de navegación o menú (default false)
-- Output()  clickNavMenu: (function) Acción que se ejecuta en el evento click del botón de menu (opcional).
-- Output()  clickActionMenu: (function) Acción que se ejecuta en el evento click del botón de más acciones (opcional).
+
 
 ## Componentes adicionales
+
+## matecu-topbar-header-row
+
+Componente para agregar los elementos del encabezado (requerido si hay elementos en el encabezado).
+
+El encabezado puede tener 2 de estos elementos si este es el caso se debe agregar el atributo position con los valores first y second según corresponda
+
+    <matecu-topbar-header-row position="first"><matecu-topbar-header-row>
+    <matecu-topbar-header-row position="second"><matecu-topbar-header-row>
+
 
 ### matecu-topbar-title: 
 
 Componente para agregar título a la barra (opcional)
 ### matecu-topbar-fab: 
 Componente para agregar el contenido del botón pricipal (opcional)
+Solo debe haber uno de estos componentes, si hay dos encabezados colocarlo en la segunda fila
 
 Propiedades
 
 - Input() color: Similar a la propiedad del mismo nombre de los componentes de angular-material
 - Input() extended: (boolean) Determina si el boton va a ser mas largo de lo normal (default false)
 
-### matecu-topbar-actions
-Componente  para agregar otras acciones en la barra
+### matecu-topbar-action
+Componente  para agregar otras acciones en la barra (opcional)
+Pueden agregárse multiples elementos de este tipo.
+Utilizar el atributo position para cambiar ubicación, valores permitidos right|left|after-fab|before-search valor predeterminado right
 
 ### matecu-topbar-search
 Componente para agregar un campo de búsqueda
