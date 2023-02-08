@@ -203,6 +203,8 @@ Agregar a la plantilla de algún componente:
 Propiedades:
 
 - Input() prominent: (boolean) Establece si la barra es prominente o no (default false)
+- Input() color: colores del tema material ejemplo primary
+- Input() twoRows: True para activar que se puedan ver 2 filas de encabezados
 
 
 ## Componentes adicionales
@@ -211,10 +213,12 @@ Propiedades:
 
 Componente para agregar los elementos del encabezado (requerido si hay elementos en el encabezado).
 
-El encabezado puede tener 2 de estos elementos si este es el caso se debe agregar el atributo position con los valores first y second según corresponda
-
-    <matecu-topbar-header-row position="first"><matecu-topbar-header-row>
-    <matecu-topbar-header-row position="second"><matecu-topbar-header-row>
+El encabezado puede tener 2 de estos elementos si este es el caso se debe agregar el atributo position con los valores first y second según corresponda y en el elemento padre matecu-topbar-layout debe estar el input twoRows con valor true
+    
+    <matecu-topbar-layout [twoRows]="true">
+        <matecu-topbar-header-row position="first"><matecu-topbar-header-row>
+        <matecu-topbar-header-row position="second"><matecu-topbar-header-row>
+    </matecu-topbar-layout>
 
 
 ### matecu-topbar-title: 
