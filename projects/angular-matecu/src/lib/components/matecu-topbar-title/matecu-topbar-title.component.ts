@@ -4,14 +4,11 @@ import { Component, HostBinding, OnInit } from '@angular/core';
   selector: 'matecu-topbar-title',
   templateUrl: './matecu-topbar-title.component.html',
   styleUrls: ['./matecu-topbar-title.component.scss'],
-  standalone: true
+  standalone: true,
 })
 export class MatecuTopbarTitleComponent implements OnInit {
+  @HostBinding('class') className = 'matecu-topbar-title';
+  constructor() {}
 
-  @HostBinding('class') className = 'title';
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

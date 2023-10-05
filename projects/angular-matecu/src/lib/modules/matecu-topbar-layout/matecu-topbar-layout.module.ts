@@ -11,12 +11,10 @@ import { MatecuTopbarFabComponent } from '../../components/matecu-topbar-fab/mat
 import { MatecuTopbarSearchComponent } from '../../components/matecu-topbar-search/matecu-topbar-search.component';
 import { MatecuTopbarActionComponent } from '../../components/matecu-topbar-action/matecu-topbar-action.component';
 import { MatecuTopbarHeaderRowComponent } from '../../components/matecu-topbar-header-row/matecu-topbar-header-row.component';
-
+import { MatecuTopbarHeaderColumnComponent } from '../../components/matecu-topbar-header-column/matecu-topbar-header-column.component';
 
 @NgModule({
-  declarations: [
-
-  ],
+  declarations: [],
   imports: [
     CommonModule,
     MatToolbarModule,
@@ -30,7 +28,8 @@ import { MatecuTopbarHeaderRowComponent } from '../../components/matecu-topbar-h
     MatecuTopbarFabComponent,
     MatecuTopbarSearchComponent,
     MatecuTopbarActionComponent,
-    MatecuTopbarHeaderRowComponent
+    MatecuTopbarHeaderRowComponent,
+    MatecuTopbarHeaderColumnComponent,
   ],
   exports: [
     MatecuTopbarLayoutComponent,
@@ -39,8 +38,8 @@ import { MatecuTopbarHeaderRowComponent } from '../../components/matecu-topbar-h
     MatecuTopbarFabComponent,
     MatecuTopbarSearchComponent,
     MatecuTopbarActionComponent,
-    MatecuTopbarHeaderRowComponent
-
+    MatecuTopbarHeaderRowComponent,
+    MatecuTopbarHeaderColumnComponent,
   ],
 })
-export class MatecuTopbarLayoutModule { }
+export class MatecuTopbarLayoutModule {}

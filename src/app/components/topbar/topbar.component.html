@@ -1,66 +1,90 @@
-<matecu-topbar-layout [prominent]="prominent" [twoRows]="twoRows" >
-<matecu-topbar-header-row position="first">
-  
+<matecu-topbar-layout [prominent]="prominent" #tobarBody>
+  <matecu-topbar-header-row first-row>
+    <matecu-topbar-header-column left-column>
+      <matecu-topbar-fab *ngIf="showFab && !twoRows" toolTip="">
+        <button mat-fab><mat-icon>add</mat-icon></button>
+      </matecu-topbar-fab>
+      <matecu-topbar-title
+        >Topbar Layout el pueblo unido jamás sera unido ni el pr ni el
+        pan</matecu-topbar-title
+      >
+    </matecu-topbar-header-column>
 
-  <matecu-topbar-title>Topbar Layout el pueblo unido jamás sera unido ni el pr ni el pan</matecu-topbar-title>
-  <matecu-topbar-fab *ngIf="showFab && !twoRows" [extended]="fabLarge" (clickAction)="clickFabButton()" toolTip="">
-    <mat-icon>add</mat-icon>
-    <ng-container *ngIf="fabLarge"> el pueblo unido</ng-container>
-  </matecu-topbar-fab>
-    <matecu-topbar-search (whenSearchChanges)="searching($event)" [searchPlaceholder]="searchPlaceholder" [(value)]="searchValue"></matecu-topbar-search>
-  
-    <matecu-topbar-action position="left">
-      <button mat-icon-button (click)="clickNavMenu()"><mat-icon>menu</mat-icon></button>
-    </matecu-topbar-action>
-    <matecu-topbar-action position="after-fab">
-      <button mat-icon-button (click)="clickNavMenu()"><mat-icon>notifications</mat-icon></button>
-    </matecu-topbar-action>
-    <matecu-topbar-action position="before-search">
-      <mat-icon>notifications</mat-icon>
-    </matecu-topbar-action>
-    <matecu-topbar-action>
-      <button mat-icon-button (click)="clickNavMenu()"><mat-icon>menu</mat-icon></button>
-      <mat-icon>notifications</mat-icon>
-    </matecu-topbar-action>
-    <matecu-topbar-action>
-      a
-    </matecu-topbar-action>
-    <matecu-topbar-action>
-      <button mat-icon-button (clickActionMenu)="clickActionMenu()"><mat-icon>more_vert</mat-icon></button>
-    </matecu-topbar-action>
-</matecu-topbar-header-row>
+    <matecu-topbar-header-column right-column>
+      <matecu-topbar-search
+        (valueChange)="searching($event)"
+        [placeholder]="searchPlaceholder"
+        [(value)]="searchValue"
+      ></matecu-topbar-search>
 
-  <matecu-topbar-header-row position="second">
-    <matecu-topbar-title>Topbar Layout el pueblo unido jamás sera unido ni el pr ni el pan</matecu-topbar-title>
-    <matecu-topbar-fab *ngIf="showFab && twoRows" [extended]="fabLarge" (clickAction)="clickFabButton()" toolTip="">
-      <mat-icon>add</mat-icon>
-      <ng-container *ngIf="fabLarge"> el pueblo unido</ng-container>
-    </matecu-topbar-fab>
-    <matecu-topbar-action position="left">
-      <button mat-icon-button (click)="clickNavMenu()"><mat-icon>menu</mat-icon></button>
-    </matecu-topbar-action>
-    <matecu-topbar-action>
-      <button mat-icon-button (clickActionMenu)="clickActionMenu()"><mat-icon>more_vert</mat-icon></button>
-    </matecu-topbar-action>
+      <matecu-topbar-action>
+        <button mat-icon-button (click)="clickNavMenu()">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </matecu-topbar-action>
+      <matecu-topbar-action>
+        <button mat-icon-button (click)="clickNavMenu()">
+          <mat-icon>notifications</mat-icon>
+        </button>
+      </matecu-topbar-action>
+
+      <matecu-topbar-action>
+        <button mat-icon-button (clickActionMenu)="clickActionMenu()">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+      </matecu-topbar-action>
+    </matecu-topbar-header-column>
   </matecu-topbar-header-row>
-  <matecu-topbar-body #tobarBody>
 
+  <matecu-topbar-header-row second-row *ngIf="twoRows">
+    <matecu-topbar-header-column left-column>
+      <matecu-topbar-title
+        >Topbar Layout el pueblo unido jamás sera unido ni el pr ni el
+        pan</matecu-topbar-title
+      >
+      <matecu-topbar-fab
+        *ngIf="showFab && twoRows"
+        (clickAction)="clickFabButton()"
+        toolTip=""
+      >
+        <mat-icon>add</mat-icon>
+        <ng-container *ngIf="fabLarge"> el pueblo unido</ng-container>
+      </matecu-topbar-fab>
+      <matecu-topbar-action position="left">
+        <button mat-icon-button (click)="clickNavMenu()">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </matecu-topbar-action>
+      <matecu-topbar-action>
+        <button mat-icon-button (clickActionMenu)="clickActionMenu()">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+      </matecu-topbar-action>
+    </matecu-topbar-header-column>
+  </matecu-topbar-header-row>
+  <matecu-topbar-body>
     <ul>
       <li>
         <mat-checkbox [(ngModel)]="twoRows"> Dos Filas</mat-checkbox>
       </li>
       <li>
-        <mat-checkbox [(ngModel)]="prominent">Cambiar a barra prominente</mat-checkbox>
+        <mat-checkbox [(ngModel)]="prominent"
+          >Cambiar a barra prominente</mat-checkbox
+        >
       </li>
 
       <li>
-        <mat-checkbox (change)="toogleSearch($event)">Activar búsqueda</mat-checkbox>
+        <mat-checkbox (change)="toogleSearch($event)"
+          >Activar búsqueda</mat-checkbox
+        >
       </li>
       <li>
         <mat-checkbox [(ngModel)]="navMenu">Activar menú lateral</mat-checkbox>
       </li>
       <li>
-        <mat-checkbox [(ngModel)]="actionMenu">Activar menú acciones</mat-checkbox>
+        <mat-checkbox [(ngModel)]="actionMenu"
+          >Activar menú acciones</mat-checkbox
+        >
       </li>
       <li>
         <mat-checkbox [(ngModel)]="showFab">Activar boton FAB</mat-checkbox>
@@ -71,75 +95,122 @@
       <li>
         <mat-form-field>
           <mat-label>Título Búsqueda</mat-label>
-          <input type="text" matInput [(ngModel)]="searchPlaceholder">
+          <input type="text" matInput [(ngModel)]="searchPlaceholder" />
         </mat-form-field>
       </li>
       <li>
         <mat-form-field>
           <mat-label>Valor Búsqueda</mat-label>
-          <input type="text" matInput [(ngModel)]="searchValue">
+          <input type="text" matInput [(ngModel)]="searchValue" />
         </mat-form-field>
       </li>
     </ul>
 
-
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis
-      aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
-      consectetur assumenda libero accusamus.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis
-      aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
-      consectetur assumenda libero accusamus.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis
-      aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
-      consectetur assumenda libero accusamus.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis
-      aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
-      consectetur assumenda libero accusamus.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis
-      aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
-      consectetur assumenda libero accusamus.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis
-      aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
-      consectetur assumenda libero accusamus.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis
-      aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
-      consectetur assumenda libero accusamus.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis
-      aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
-      consectetur assumenda libero accusamus.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis
-      aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
-      consectetur assumenda libero accusamus.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis
-      aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
-      consectetur assumenda libero accusamus.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis
-      aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
-      consectetur assumenda libero accusamus.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis
-      aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
-      consectetur assumenda libero accusamus.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis
-      aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
-      consectetur assumenda libero accusamus.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis
-      aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
-      consectetur assumenda libero accusamus.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis
-      aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
-      consectetur assumenda libero accusamus.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis
-      aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
-      consectetur assumenda libero accusamus.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium facere quibusdam blanditiis facilis
-      aliquam, voluptate illum consectetur error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
-      consectetur assumenda libero accusamus.</p>
-    <div style="text-align: right;">
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium
+      facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur
+      error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
+      consectetur assumenda libero accusamus.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium
+      facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur
+      error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
+      consectetur assumenda libero accusamus.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium
+      facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur
+      error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
+      consectetur assumenda libero accusamus.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium
+      facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur
+      error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
+      consectetur assumenda libero accusamus.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium
+      facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur
+      error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
+      consectetur assumenda libero accusamus.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium
+      facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur
+      error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
+      consectetur assumenda libero accusamus.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium
+      facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur
+      error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
+      consectetur assumenda libero accusamus.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium
+      facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur
+      error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
+      consectetur assumenda libero accusamus.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium
+      facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur
+      error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
+      consectetur assumenda libero accusamus.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium
+      facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur
+      error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
+      consectetur assumenda libero accusamus.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium
+      facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur
+      error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
+      consectetur assumenda libero accusamus.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium
+      facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur
+      error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
+      consectetur assumenda libero accusamus.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium
+      facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur
+      error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
+      consectetur assumenda libero accusamus.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium
+      facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur
+      error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
+      consectetur assumenda libero accusamus.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium
+      facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur
+      error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
+      consectetur assumenda libero accusamus.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium
+      facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur
+      error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
+      consectetur assumenda libero accusamus.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium
+      facere quibusdam blanditiis facilis aliquam, voluptate illum consectetur
+      error fugit quae quam reprehenderit? Ut, neque temporibus laboriosam
+      consectetur assumenda libero accusamus.
+    </p>
+    <div style="text-align: right">
       <a routerLink="../topbar-next">Siguiente</a>
-      <button (click)="tobarBody.scrollTop()">
-        Subir
-      </button>
+      <button (click)="tobarBody.scrollTop()">Subir</button>
     </div>
-
   </matecu-topbar-body>
 </matecu-topbar-layout>

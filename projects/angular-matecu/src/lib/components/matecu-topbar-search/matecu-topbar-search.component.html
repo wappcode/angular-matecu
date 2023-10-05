@@ -1,7 +1,7 @@
 <ng-container *ngIf="display">
   <button
     class="matecu-topbar-search-mobile-only"
-    class:mobile-style="{mobileStyle}"
+    [ngClass]="{ 'mobile-style': mobileStyle }"
     (click)="toggleActiveMobildeSearch()"
   >
     <mat-icon>search</mat-icon>
@@ -24,6 +24,6 @@
         <mat-icon>close</mat-icon>
       </button>
     </ng-container>
-    <input type="text" {placeholder} [formControl]="inputCtrl" />
+    <input type="text" [placeholder]="placeholder" [formControl]="inputCtrl" />
   </div>
 </ng-container>

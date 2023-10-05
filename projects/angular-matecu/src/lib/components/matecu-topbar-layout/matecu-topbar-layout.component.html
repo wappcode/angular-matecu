@@ -3,7 +3,7 @@
     <ng-content select="matecu-topbar-header-row[first-row]"></ng-content>
     <ng-content select="matecu-topbar-header-row[second-row]"></ng-content>
   </div>
-  <div class="matecu-topbar-layout__body" bind:this="{bodyElement}">
-    <ng-content select="matecu-topbar-body" #body></ng-content>
+  <div class="matecu-topbar-layout__body" #mtbBody>
+    <ng-content select="matecu-topbar-body"></ng-content>
   </div>
 </div>

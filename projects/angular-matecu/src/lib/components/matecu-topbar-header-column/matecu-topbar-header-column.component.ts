@@ -2,12 +2,10 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'matecu-matecu-topbar-header-column',
+  selector: 'matecu-topbar-header-column',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './matecu-topbar-header-column.component.html',
-  styleUrls: ['./matecu-topbar-header-column.component.css']
+  styleUrls: ['./matecu-topbar-header-column.component.scss'],
 })
-export class MatecuTopbarHeaderColumnComponent {
-
-}
+export class MatecuTopbarHeaderColumnComponent {}

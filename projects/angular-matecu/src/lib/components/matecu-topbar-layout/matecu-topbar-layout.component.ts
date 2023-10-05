@@ -52,7 +52,7 @@ export class MatecuTopbarLayoutComponent implements AfterViewInit, OnDestroy {
     }
   }
   @HostBinding('class') className = 'matecu-topbar-layout';
-  @ViewChild('body') bodyElement!: HTMLDivElement;
+  @ViewChild('mtbBody') bodyElement?: ElementRef;
 
   constructor(private elementRef: ElementRef) {}
   ngOnDestroy(): void {
@@ -83,12 +83,22 @@ export class MatecuTopbarLayoutComponent implements AfterViewInit, OnDestroy {
     });
     resizeObserver.observe(layoutElement!);
     this.destroy$.pipe(tap(() => resizeObserver.disconnect())).subscribe();
-
-    fromEvent(this.bodyElement, 'scroll')
-      .pipe(
-        tap(() => this.spyScroll(this.bodyElement)),
-        takeUntil(this.destroy$)
-      )
-      .subscribe();
+    if (this.bodyElement) {
+      fromEvent(this.bodyElement.nativeElement, 'scroll')
+        .pipe(
+          tap(() => this.spyScroll(this.bodyElement?.nativeElement!)),
+          takeUntil(this.destroy$)
+        )
+        .subscribe();
+    }
+  }
+  scrollTop() {
+    if (!this.bodyElement) {
+      return;
+    }
+    this.bodyElement.nativeElement.scroll({
+      top: 0,
+      behavior: 'smooth',
+    });
   }
 }

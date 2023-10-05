@@ -33,7 +33,7 @@ export class MatecuTopbarSearchComponent implements OnInit {
   private _value = '';
 
   private destroy$ = new Subject<void>();
-  @Input() display = false;
+  @Input() display = true;
   @Input() placeholder = '';
   @Input() delyValueChanges = 300; // valor en milisegundos
   @Input() get value() {
