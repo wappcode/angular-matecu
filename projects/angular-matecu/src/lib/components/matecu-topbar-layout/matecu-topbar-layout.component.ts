@@ -68,7 +68,6 @@ export class MatecuTopbarLayoutComponent implements AfterViewInit, OnDestroy {
     }
     const scrollPosition = scrollabe.scrollTop;
     this.scrolled = scrollPosition > 20;
-    console.log(this.scrolled, this.className);
   }
   ngAfterViewInit(): void {
     const layoutElement = this.elementRef.nativeElement;
