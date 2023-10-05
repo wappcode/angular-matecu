@@ -1,11 +1,13 @@
 import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
   HostBinding,
   Input,
+  NgZone,
   OnDestroy,
   Output,
   ViewChild,
@@ -37,8 +39,9 @@ export class MatecuTopbarLayoutComponent implements AfterViewInit, OnDestroy {
   }
   private destroy$ = new Subject<void>();
   @Input() mobileStyle = false;
-  @Input() mobileWidth = 768;
   @Output() mobileStyleChange = new EventEmitter<boolean>();
+  @Input() mobileWidth = 768;
+  @Output() whenResize = new EventEmitter<number>();
   @Input() get prominent() {
     return this._prominent;
   }
@@ -52,7 +55,11 @@ export class MatecuTopbarLayoutComponent implements AfterViewInit, OnDestroy {
   @HostBinding('class') className = 'matecu-topbar-layout';
   @ViewChild('mtbBody') bodyElement?: ElementRef;
 
-  constructor(private elementRef: ElementRef) {}
+  constructor(
+    private elementRef: ElementRef,
+    private changeDetector: ChangeDetectorRef,
+    private zone: NgZone
+  ) {}
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
@@ -77,7 +84,10 @@ export class MatecuTopbarLayoutComponent implements AfterViewInit, OnDestroy {
         return;
       }
       this.mobileStyle = width <= this.mobileWidth;
-      this.mobileStyleChange.emit(this.mobileStyle);
+      this.zone.run(() => {
+        this.mobileStyleChange.emit(this.mobileStyle);
+        this.whenResize.emit(width);
+      });
     });
     resizeObserver.observe(layoutElement!);
     this.destroy$.pipe(tap(() => resizeObserver.disconnect())).subscribe();

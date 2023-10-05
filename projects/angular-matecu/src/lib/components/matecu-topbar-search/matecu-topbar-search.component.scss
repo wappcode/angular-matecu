@@ -1,24 +1,23 @@
 $search-text-color: var(--mtb-bar-color, #fff);
-
-:host,
+$mtb-search-margin: var(--mtb-search-margin, 10px);
 .matecu-topbar-search-mobile-only {
   display: none;
   border: none;
   background: none;
   cursor: pointer;
   color: var(--mtb-search-color, $search-text-color);
+  margin: $mtb-search-margin;
   &.mobile-style {
     display: block;
   }
 }
-:host,
 .matecu-topbar-search {
   &,
   * {
     box-sizing: border-box;
     outline: none;
   }
-  margin: var(--mtb-search-margin, 10px);
+  margin: $mtb-search-margin;
   position: relative;
   display: flex;
   align-items: center;

@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostBinding,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -27,10 +34,10 @@ import {
 })
 export class MatecuTopbarSearchComponent implements OnInit {
   hasValue = false;
-  mobileStyle = false;
   activeMobileSearch = false;
   inputCtrl = new FormControl('');
   private _value = '';
+  private _mobileStyle = false;
 
   private destroy$ = new Subject<void>();
   @Input() display = true;
@@ -43,7 +50,18 @@ export class MatecuTopbarSearchComponent implements OnInit {
     this._value = v;
     this.inputCtrl.setValue(v);
   }
+  @Input() get mobileStyle() {
+    return this._mobileStyle;
+  }
+  set mobileStyle(value: boolean) {
+    this._mobileStyle = value;
+    this.className = this.className.replace(/mobile-style/g, '').trim();
+    if (this._mobileStyle) {
+      this.className = `${this.className} mobile-style`;
+    }
+  }
   @Output() valueChange = new EventEmitter<string>();
+  @HostBinding() className = 'matecu-topbar-search';
   ngOnInit(): void {
     this.inputCtrl.valueChanges
       .pipe(

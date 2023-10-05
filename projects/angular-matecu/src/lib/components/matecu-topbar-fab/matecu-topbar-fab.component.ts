@@ -10,8 +10,20 @@ import { MatButtonModule } from '@angular/material/button';
   imports: [CommonModule, MatButtonModule],
 })
 export class MatecuTopbarFabComponent {
+  private _mobileStyle = false;
   private mainClassName = 'matecu-topbar-fab';
   @Input() display = true;
+  @Input() get mobileStyle() {
+    return this._mobileStyle;
+  }
+  set mobileStyle(value: boolean) {
+    this._mobileStyle = value;
+    this.className = this.className.replace(/mobile-style/g, '').trim();
+    if (this._mobileStyle) {
+      this.className = `${this.className} mobile-style`;
+    }
+  }
+
   @HostBinding('class') className = this.mainClassName;
   @HostBinding('style.display') get color() {
     return this.display ? 'flex' : 'none';

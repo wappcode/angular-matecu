@@ -17,8 +17,16 @@ export class TopbarComponent implements OnInit {
   twoRows = false;
   searchPlaceholder = 'Buscar';
   searchValue: string = '';
+  resizeWidth?: number;
+  mobileStyle = false;
   constructor() {}
 
+  changeMobileStyle(mb: boolean) {
+    console.log('mobile style top component', this.mobileStyle, mb);
+  }
+  resizing(width: number) {
+    console.log('resizing', width);
+  }
   ngOnInit(): void {}
 
   toogleSearch(event: MatCheckboxChange): void {

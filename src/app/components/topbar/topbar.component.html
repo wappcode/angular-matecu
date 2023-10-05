@@ -1,7 +1,16 @@
-<matecu-topbar-layout [prominent]="prominent" #tobarBody>
+<matecu-topbar-layout
+  [prominent]="prominent"
+  #tobarBody
+  (whenResize)="resizing($event)"
+  [(mobileStyle)]="mobileStyle"
+>
   <matecu-topbar-header-row first-row>
     <matecu-topbar-header-column left-column>
-      <matecu-topbar-fab *ngIf="showFab && !twoRows" toolTip="">
+      <matecu-topbar-fab
+        *ngIf="showFab && !twoRows"
+        toolTip=""
+        [mobileStyle]="mobileStyle"
+      >
         <button mat-fab><mat-icon>add</mat-icon></button>
       </matecu-topbar-fab>
       <matecu-topbar-title
@@ -15,6 +24,7 @@
         (valueChange)="searching($event)"
         [placeholder]="searchPlaceholder"
         [(value)]="searchValue"
+        [mobileStyle]="mobileStyle"
       ></matecu-topbar-search>
 
       <matecu-topbar-action>
@@ -43,7 +53,7 @@
           <mat-icon>menu</mat-icon>
         </button>
       </matecu-topbar-action>
-      <matecu-topbar-fab *ngIf="showFab && twoRows">
+      <matecu-topbar-fab *ngIf="showFab && twoRows" [mobileStyle]="mobileStyle">
         <button mat-fab><mat-icon>add</mat-icon></button>
       </matecu-topbar-fab>
       <matecu-topbar-title
@@ -60,6 +70,7 @@
     </matecu-topbar-header-column>
   </matecu-topbar-header-row>
   <matecu-topbar-body>
+    {{ mobileStyle }} Mobile style
     <ul>
       <li>
         <mat-checkbox [(ngModel)]="twoRows"> Dos Filas</mat-checkbox>
