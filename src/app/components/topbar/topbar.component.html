@@ -38,23 +38,20 @@
 
   <matecu-topbar-header-row second-row *ngIf="twoRows">
     <matecu-topbar-header-column left-column>
-      <matecu-topbar-title
-        >Topbar Layout el pueblo unido jamás sera unido ni el pr ni el
-        pan</matecu-topbar-title
-      >
-      <matecu-topbar-fab
-        *ngIf="showFab && twoRows"
-        (clickAction)="clickFabButton()"
-        toolTip=""
-      >
-        <mat-icon>add</mat-icon>
-        <ng-container *ngIf="fabLarge"> el pueblo unido</ng-container>
-      </matecu-topbar-fab>
-      <matecu-topbar-action position="left">
+      <matecu-topbar-action>
         <button mat-icon-button (click)="clickNavMenu()">
           <mat-icon>menu</mat-icon>
         </button>
       </matecu-topbar-action>
+      <matecu-topbar-fab *ngIf="showFab && twoRows">
+        <button mat-fab><mat-icon>add</mat-icon></button>
+      </matecu-topbar-fab>
+      <matecu-topbar-title
+        >Topbar Layout el pueblo unido jamás sera unido ni el pr ni el
+        pan</matecu-topbar-title
+      >
+    </matecu-topbar-header-column>
+    <matecu-topbar-header-column right-column>
       <matecu-topbar-action>
         <button mat-icon-button (clickActionMenu)="clickActionMenu()">
           <mat-icon>more_vert</mat-icon>

@@ -30,9 +30,8 @@ export class MatecuTopbarLayoutComponent implements AfterViewInit, OnDestroy {
   }
   set scrolled(value: boolean) {
     this._scrolled = value;
-    if (!this.scrolled) {
-      this.className = this.className.replace('scrolled', '').trim();
-    } else {
+    this.className = this.className.replace(/scrolled/g, '').trim();
+    if (this.scrolled) {
       this.className = `${this.className} scrolled`;
     }
   }
@@ -45,10 +44,9 @@ export class MatecuTopbarLayoutComponent implements AfterViewInit, OnDestroy {
   }
   set prominent(value: boolean) {
     this._prominent = value;
+    this.className = this.className.replace(/prominent/g, '').trim();
     if (this.prominent) {
       this.className = `${this.className} prominent`;
-    } else {
-      this.className = this.className.replace('prominent', '').trim();
     }
   }
   @HostBinding('class') className = 'matecu-topbar-layout';
@@ -70,6 +68,7 @@ export class MatecuTopbarLayoutComponent implements AfterViewInit, OnDestroy {
     }
     const scrollPosition = scrollabe.scrollTop;
     this.scrolled = scrollPosition > 20;
+    console.log(this.scrolled, this.className);
   }
   ngAfterViewInit(): void {
     const layoutElement = this.elementRef.nativeElement;
