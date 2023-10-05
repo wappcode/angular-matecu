@@ -1,108 +1,91 @@
-@import '../../../scss/matecu-topbar-layout/variables.scss';
-:host {
-  flex-grow: 1;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  position: relative;
-  padding: 7px;
-  min-height: $toolbar-height;
-  max-height: $toolbar-height;
-  box-sizing: border-box;
+$search-text-color: var(--mtb-bar-color, #fff);
+
+:host,
+.matecu-topbar-search-mobile-only {
+  display: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--mtb-search-color, $search-text-color);
+  &.mobile-style {
+    display: block;
+  }
+}
+:host,
+.matecu-topbar-search {
+  &,
   * {
     box-sizing: border-box;
-     outline: none;;
+    outline: none;
   }
-  .matecu-topbar-search {
-    &__input {
-      display: block;
-      position: relative;
-      z-index: 2;
-      input {
-        border: transparent;
-        border-radius: 4px;
-        padding: 5px 35px 5px 40px;
-        background-color: rgba($color: #ffffff, $alpha: 0.3);
-        min-width: 200px;
-        width: 200px;
-        transition: all 300ms ease-in-out;
-        height: 39px;
-        color: currentColor;
-        &:focus {
-          min-width: 290px;
-        }
-        &::placeholder {
-          color: currentColor;
-        }
-      }
-      input[type='search']::-webkit-search-decoration,
-      input[type='search']::-webkit-search-cancel-button,
-      input[type='search']::-webkit-search-results-button,
-      input[type='search']::-webkit-search-results-decoration {
-        -webkit-appearance: none;
-      }
+  margin: var(--mtb-search-margin, 10px);
+  position: relative;
+  display: flex;
+  align-items: center;
+  color: var(--mtb-search-color, $search-text-color);
+  max-height: var(--bar-height, 64px);
 
-      > mat-icon {
-        position: absolute;
-        left: 12px;
-        top: 10px;
-      }
-      button {
-        position: absolute;
-        right: 0px;
-        top: 0;
-        mat-icon {
-          font-size: 20px;
-        }
-        transform: scale(0);
-        transition: transform 300ms ease-in-out;
-        &.show-btn {
-          transform: scale(100%);
-        }
-      }
-      @media screen and (max-width: 768px) {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: $toolbar-height;
-        color: #333;
-        transform: translateY(-110%);
-        transition: all 300ms ease-in-out;
-        input {
-          width: 100%;
-          height: 100%;
-          background-color: #ffffff;
-          border-radius: 0;
-          padding-right: 30px;
-
-          &:focus {
-            min-width: 100%;
-          }
-        }
-        > mat-icon {
-          top: 20px;
-        }
-        button {
-          position: absolute;
-          right: 5px;
-          top: 10px;
-          transform: scale(100%);
-        }
-      }
-      &.mobile-input-active {
-        transform: translateY(0%);
-        @media screen and (max-width: 768px) {
-          display: block;
-        }
-      }
+  input {
+    width: var(--mtb-search-width, 200px);
+    min-width: var(--mtb-search-width, 200px);
+    height: var(--mtb-search-height, 40px);
+    padding: var(--mtb-search-pading, 3px 35px);
+    border-radius: 4px;
+    border: 1px solid;
+    border: var(--mtb-search-border, none);
+    background-color: var(--search-background-color, #ffffff4d);
+    color: currentColor;
+    transition: all 300ms ease-in-out;
+    &::placeholder {
+      color: var(--mtb-search-color, $search-text-color);
+      opacity: 1; /* Firefox */
+    }
+    &:focus {
+      min-width: var(--mtb-search-width-large, 290px);
     }
   }
 
-  .only-mobile {
-    display: none;
-    @media screen and (max-width: 768px) {
-      display: block;
+  &__icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0px;
+    &--search {
+      left: 6px;
+    }
+    &--clear {
+      border: 0px;
+      background: 0px;
+      cursor: pointer;
+      color: currentColor;
+      right: 6px;
+    }
+  }
+}
+.mobile-style.matecu-topbar-search {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  border-bottom: 1px solid;
+  border-bottom-color: var(--mtb-search-border-bottom-color, #ededed);
+  z-index: 3;
+  padding: 0px;
+  margin: 0px;
+  height: 64px;
+  color: var(--mtb-search-mobile-color, #000);
+  transform: translateY(-120%);
+  transition: all 300ms ease-in-out;
+  &.active-mobile {
+    transform: translateY(0);
+  }
+  input {
+    background-color: #fff;
+    height: 100%;
+    width: 100%;
+    border-radius: 0px;
+    &::placeholder {
+      color: var(--mtb-search-mobile-color, #000);
     }
   }
 }

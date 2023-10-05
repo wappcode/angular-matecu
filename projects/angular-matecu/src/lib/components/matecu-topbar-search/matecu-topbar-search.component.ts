@@ -1,20 +1,13 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  EventEmitter,
-  HostBinding,
-  Input,
-  OnInit,
-  Output,
-  ViewEncapsulation,
-} from '@angular/core';
-import { FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Subject } from 'rxjs';
 import {
   debounceTime,
   distinctUntilChanged,
+  map,
   takeUntil,
   tap,
 } from 'rxjs/operators';
@@ -24,61 +17,55 @@ import {
   templateUrl: './matecu-topbar-search.component.html',
   styleUrls: ['./matecu-topbar-search.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, MatIconModule, MatButtonModule]
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatIconModule,
+    MatButtonModule,
+  ],
 })
 export class MatecuTopbarSearchComponent implements OnInit {
-  showMobileInput = false;
-  searchInput = new UntypedFormControl();
-  showDescktopCleanBtn = false;
-  private destroy = new Subject();
-  @Input() searchPlaceholder = 'Buscar';
-  @Input() debounceTime = 500;
-  @Input() inputType: 'text' | 'search' = 'text';
-  @Input() cleanWhenClose = true;
-  @Input() set value(val: string | null | undefined) {
-    if (typeof val === 'string') {
-      this.searchInput.setValue(val);
-    } else {
-      this.searchInput.reset();
-    }
+  hasValue = false;
+  mobileStyle = false;
+  activeMobileSearch = false;
+  inputCtrl = new FormControl('');
+  private _value = '';
+
+  private destroy$ = new Subject<void>();
+  @Input() display = false;
+  @Input() placeholder = '';
+  @Input() delyValueChanges = 300; // valor en milisegundos
+  @Input() get value() {
+    return this._value;
+  }
+  set value(v: string) {
+    this._value = v;
+    this.inputCtrl.setValue(v);
   }
   @Output() valueChange = new EventEmitter<string>();
-  @Output() whenSearchChanges = new EventEmitter<string>();
-  @HostBinding('class') className = 'matecu-topbar-search';
-  constructor() { }
-
   ngOnInit(): void {
-    this.watchSearch();
-  }
-
-  toogleSearch(): void {
-    this.showMobileInput = !this.showMobileInput;
-  }
-  closeMobile(): void {
-    if (this.cleanWhenClose) {
-      this.searchInput.reset();
-    }
-    this.showMobileInput = false;
-  }
-
-  private watchSearch(): void {
-    this.searchInput.valueChanges
+    this.inputCtrl.valueChanges
       .pipe(
-        tap((value) => this.setShowDescktopCleanBtn(value)),
-        debounceTime(this.debounceTime),
+        map((value) => value ?? ''),
+        tap(this.updateHasValueFn()),
+        debounceTime(this.delyValueChanges),
         distinctUntilChanged(),
-        tap((value) => this.searchChanges(value)),
-        takeUntil(this.destroy)
+        tap((value) => this.valueChange.emit(value!)),
+        takeUntil(this.destroy$)
       )
       .subscribe();
   }
-  private searchChanges(searchVal?: string | null): void {
-    const value =
-      typeof searchVal === 'string' && searchVal.length > 0 ? searchVal : '';
-    this.whenSearchChanges.emit(value);
-    this.valueChange.emit(value);
+  toggleActiveMobildeSearch() {
+    this.activeMobileSearch = !this.activeMobileSearch;
   }
-  private setShowDescktopCleanBtn(value: string | null | undefined): void {
-    this.showDescktopCleanBtn = typeof value === 'string' && value.length > 0;
+  clearSearch() {
+    this.inputCtrl.setValue('');
+    this.activeMobileSearch = false;
+  }
+  updateHasValueFn() {
+    return (value: string): void => {
+      this.hasValue = value.length > 0;
+    };
   }
 }

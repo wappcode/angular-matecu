@@ -1,26 +1,19 @@
-:host {
-  display: flex;
-  align-items: flex-end;
-  height: 100%;
-  position: relative;
-  z-index: 2;
-  button {
-    transform: translateY(50%);
-    &.extended {
-      border-radius: 27px;
-      height: 55px;
-      width: auto;
-      padding: 0 1rem !important;
-    }
+:host,
+.matecu-topbar-fab {
+  &,
+  * {
+    box-sizing: border-box;
+    outline: none;
   }
-  @media screen and (max-width: 768px) {
-    height: auto;
-    position: fixed;
-    bottom: 1rem;
-    right: 1rem;
-    transform: initial;
-    button {
-      transform: translateY(0);
-    }
+  display: flex;
+  align-self: flex-end;
+  align-items: flex-start;
+  transform: translateY(50%);
+  transition: all 300ms ease-in-out;
+  &.mobile-style {
+    position: absolute;
+    transform: translate(0);
+    bottom: var(--mtb-fab-mobile-bottom-position, 20px);
+    right: var(--mtb-fab-mobile-right-position, 20px);
   }
 }

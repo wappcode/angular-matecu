@@ -1,59 +1,48 @@
-@import '../../../scss/matecu-topbar-layout/variables.scss';
-:host,.matecu-topbar-layout {
-
-  display: grid;
-  height: 100vh;
-  max-width: 100vw;
-  overflow: hidden;
-  grid-template-rows: auto 1fr;
+:host.matecu-topbar-layout {
   position: relative;
-  &,
+  box-sizing: border-box;
   * {
     box-sizing: border-box;
   }
-  
-  overflow: hidden;  
+  display: grid;
+  grid-template-rows: auto 1fr;
+  box-sizing: border-box;
+  border: var(--mtb-border, none);
+  margin: var(--mtb-margin, 0px);
+  padding: 0px;
+  width: var(--mtb-width, 100%);
+  height: var(--mtb-height, 100vh);
+  overflow: hidden;
 
-    mat-toolbar {
-      display: block;
-    position: relative;
+  &__bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: var(--mtb-primary-color, #3f51b5);
+    color: var(--mtb-bar-color, #fff);
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    min-height: var(--mtb-bar-height, 64px);
     transition: all 300ms;
-    min-height: auto !important;
-    
   }
-  matecu-topbar-row {
-    white-space: normal;
-    justify-content: space-between;
-    column-gap: 1px;
-    &:first-of-type {
-      min-height: 100%;
+  &__body {
+    padding: 0px;
+    margin: 0px;
+    overflow-y: auto;
+  }
+  &.prominent {
+    .matecu-topbar-layout__bar {
+      min-height: var(--mtb-bar-prominent-height, 128px);
     }
   }
-  
-  
-}
-:host.matecu-topbar-layout--prominent {
-  .mat-toolbar {
-    height: $toolbar-prominent-height;
-    max-height: $toolbar-prominent-height;
-  }
-  mat-toolbar-row {
-    align-items: flex-start;
-    min-height: 100%;
-  }
-}
-:host.matecu-topbar-layout--scrolling {
-  .mat-toolbar {
-    
-    box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2),
-      0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);
-  }
-  &.matecu-topbar-layout--prominent {
-    .mat-toolbar {
-
-      height: $toolbar-height;
-      max-height: $toolbar-height;
+  &.scrolled {
+    .matecu-topbar-layout__bar {
+      box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2),
+        0px 6px 10px 0px rgba(0, 0, 0, 0.14),
+        0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+      min-height: var(--mtb-bar-height, 64px);
     }
   }
-  
 }

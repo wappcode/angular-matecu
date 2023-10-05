@@ -1,9 +1,12 @@
-:host {
-  display: block;
-  padding: 0;
-  padding-top: 2rem;
-  overflow-y: auto;
-  @media screen and (max-width: 770px) {
-    padding-bottom: 80px;
+:host,
+.matecu-topbar-body {
+  &,
+  * {
+    box-sizing: border-box;
+    outline: none;
   }
+  padding: var(--mtb-body-padding, 30px);
+  background-color: var(--mtb-body-background, auto);
+  overflow-y: auto;
+  padding-bottom: var(--mtb-body-padding-button, 60px);
 }

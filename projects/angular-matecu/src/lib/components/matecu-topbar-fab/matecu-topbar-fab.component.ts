@@ -1,12 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  EventEmitter,
-  HostBinding,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, HostBinding, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
@@ -14,18 +7,13 @@ import { MatButtonModule } from '@angular/material/button';
   templateUrl: './matecu-topbar-fab.component.html',
   styleUrls: ['./matecu-topbar-fab.component.scss'],
   standalone: true,
-  imports: [CommonModule, MatButtonModule]
+  imports: [CommonModule, MatButtonModule],
 })
-export class MatecuTopbarFabComponent implements OnInit {
-  @Input() color = 'accent';
-  @Input() extended = false;
-  @Output() clickAction = new EventEmitter<void>();
-  constructor() { }
-
-  @HostBinding('class') className = 'matecu-topbar-fab';
-  ngOnInit(): void { }
-
-  onClickAction(): void {
-    this.clickAction.emit();
+export class MatecuTopbarFabComponent {
+  private mainClassName = 'matecu-topbar-fab';
+  @Input() display = true;
+  @HostBinding('class') className = this.mainClassName;
+  @HostBinding('style.display') get color() {
+    return this.display ? 'flex' : 'none';
   }
 }

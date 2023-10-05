@@ -1,8 +1,13 @@
-    <ng-content select="matecu-topbar-action[position='left']"></ng-content>
-    <ng-content select="matecu-topbar-fab"></ng-content>
-    <ng-content select="matecu-topbar-action[position='after-fab']"></ng-content>
-    <ng-content select="matecu-topbar-title"></ng-content>
-    <ng-content select="matecu-topbar-action[position='before-search']"></ng-content>
-    <ng-content select="matecu-topbar-search"></ng-content>
-    <ng-content select="matecu-topbar-action:not([position])"></ng-content>
-    <ng-content select="matecu-topbar-action[position='right']"></ng-content>
+<ng-container *ngIf="display">
+  <div
+    class="matecu-topbar-header-row__column matecu-topbar-header-row__column--left"
+  >
+    <ng-content select="matecu-topbar-header-column[left-column]"></ng-content>
+  </div>
+
+  <div
+    class="matecu-topbar-header-row__column matecu-topbar-header-row__column--right"
+  >
+    <ng-content select="matecu-topbar-header-column[left-column]"></ng-content>
+  </div>
+</ng-container>

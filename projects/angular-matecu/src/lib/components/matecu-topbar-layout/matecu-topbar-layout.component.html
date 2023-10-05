@@ -1,11 +1,9 @@
-  <mat-toolbar [color]="color">
-    
-    <mat-toolbar-row>
-      <ng-content select="matecu-topbar-header-row:not([position])"></ng-content>
-      <ng-content select="matecu-topbar-header-row[position='first']"></ng-content>
-    </mat-toolbar-row>
-    <mat-toolbar-row *ngIf="hasTwoRows">
-      <ng-content select="matecu-topbar-header-row[position='second']"></ng-content>
-    </mat-toolbar-row>
-  </mat-toolbar>
-  <ng-content select="matecu-topbar-body"></ng-content>
+<div class="" class:prominent class:scrolled bind:this="{layoutElement}">
+  <div class="matecu-topbar-layout__bar">
+    <ng-content select="matecu-topbar-header-row[first-row]"></ng-content>
+    <ng-content select="matecu-topbar-header-row[second-row]"></ng-content>
+  </div>
+  <div class="matecu-topbar-layout__body" bind:this="{bodyElement}">
+    <ng-content select="matecu-topbar-body" #body></ng-content>
+  </div>
+</div>

@@ -1,12 +1,29 @@
-<button mat-icon-button class="only-mobile" (click)="toogleSearch()">
-  <mat-icon>search</mat-icon>
-</button>
-
-<div class="matecu-topbar-search__input" [ngClass]="{'mobile-input-active': showMobileInput}">
-  <mat-icon>search</mat-icon>
-  <input [type]="inputType" [formControl]="searchInput" [placeholder]="searchPlaceholder" />
-  <button mat-icon-button (click)="closeMobile()" [ngClass]="{'show-btn': showDescktopCleanBtn}">
-    <mat-icon>close</mat-icon>
+<ng-container *ngIf="display">
+  <button
+    class="matecu-topbar-search-mobile-only"
+    class:mobile-style="{mobileStyle}"
+    (click)="toggleActiveMobildeSearch()"
+  >
+    <mat-icon>search</mat-icon>
   </button>
-
-</div>
+  <div
+    class="matecu-topbar-search"
+    [ngClass]="{
+      'mobile-style': mobileStyle,
+      'active-mobile': activeMobileSearch
+    }"
+  >
+    <span class="matecu-topbar-search__icon matecu-topbar-search__icon--search">
+      <mat-icon>search</mat-icon>
+    </span>
+    <ng-container *ngIf="hasValue || mobileStyle">
+      <button
+        class="matecu-topbar-search__icon matecu-topbar-search__icon--clear"
+        (click)="clearSearch()"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </ng-container>
+    <input type="text" {placeholder} [formControl]="inputCtrl" />
+  </div>
+</ng-container>
