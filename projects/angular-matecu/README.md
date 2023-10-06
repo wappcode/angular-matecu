@@ -1,7 +1,6 @@
 # Angular-Matecu
 
-Libreria con complementos y utilidades  para el desarrollo de aps
-
+Libreria con complementos y utilidades para el desarrollo de aps
 
 # Instalar
 
@@ -12,8 +11,8 @@ Para versiones de angular menores a 15 utilizar la versión ^2.0
     npm install angular-matecu@^2.0
 
 ver [CHANGELOG](CHANGELOG.md)
+
 ## matecu-spinner (Componente)
- 
 
 Componente que genera un spinner que se puede utilizar para indicar que la app esta realizando algún proceso
 
@@ -23,7 +22,7 @@ Importar componente o módulo
 
     import { MatecuSpinnerComponent } from 'angular-matecu';
 
-Agregar a la plantilla de algún componente 
+Agregar a la plantilla de algún componente
 
     <matecu-spinner active="true" color="'red'" size="'30px'" ></matecu-spinner>
     <matecu-spinner global="true" color="'orange'"></matecu-spinner>
@@ -41,33 +40,29 @@ Uso:
 
     // import { MatecuSpinnerService } from 'angular-matecu';
     ....
-    key: string; // 
+    key: string; //
     construct( private spinnerService: MatecuSpinnerService) {}
     ....
     // mostrar el spinner
     show() {
         this.key = this.spinnerService.add();
-    } 
+    }
     // ocultar el spinner
     hide() {
         this.spinnerService.remove(this.key);
     }
-    
+
 Métodos:
 
 - watch: Retorna un observable boolean indicando si el spinner esta activo. El espinner se mantendrá activo mientras haya elementos en la lista de claves del servico. No es necesario usar este método, el componente spinner lo usa de forma transparente.
 
 - add: Crea y agrega una clave en la lista del servico. Se puede pasar como parámetro una clave personalizada.
 
-- remove: Elimina de la lista del servicio las claves que sean igual a la clave pasada como parámetro 
+- remove: Elimina de la lista del servicio las claves que sean igual a la clave pasada como parámetro
 
 - clear: Elimina todas las claves forzando a que el spinner pase al estado inactivo.
 
-
-
 ## matecu-alert-box (Componente)
-
-
 
 ### Uso:
 
@@ -75,15 +70,11 @@ Importar componente o módulo
 
     import { MatecuAlertBoxComponent } from 'angular-matecu';
 
-Agregar a la plantilla de algún componente 
+Agregar a la plantilla de algún componente
 
     <matecu-alert-box color="success"> Alerta Success </matecu-alert-box>
 
-Colores: 
-    - warning
-    - danger
-    - success
-    - info
+Colores: - warning - danger - success - info
 
 ## matecu-alert-dialog (Componente)
 
@@ -93,14 +84,13 @@ Dialogo de alerta o confirmación
 
 Importar módulo
 
-
 En el componente
 
     import { MatDialog } from '@angular/material/dialog';
     import { MatecuAlertDialogComponent, MatecuAlertBoxType } from 'angular-matecu';
     import { filter } from 'rxjs/operators';
 
-    // .... 
+    // ....
     constructor(private dialog: MatDialog) {}
 
     openBasicDialog(): void {
@@ -118,10 +108,9 @@ En el componente
       filter(execAction => !!execAction)
     ).subscribe();
 
-  }
+}
 
-
-## MatecuSnackBarService 
+## MatecuSnackBarService
 
 Servicio para abrir dialogos snackBar con titulos con colores para Error, Success, Warning, Info
 
@@ -138,13 +127,13 @@ Importar en el módulo MatecuAlertBoxModule en app.module
       ],
         ...
     })
-    export class AppModule { }        
+    export class AppModule { }
 
 En el componente
 
     import { MatecuSnackBarService } from 'angular-matecu';
 
-     // .... 
+     // ....
     constructor(private snackBar: MatecuSnackBarService) { }
 
     openError(): void {
@@ -159,103 +148,158 @@ En el componente
     - openSuccess()
     - open()
     - dismiss()
-# matecu-topbar-layout (Componente)
 
-### Uso:
+## MatecuTopbarLayout
+
+Crea la estructura para una página que contiene un topbar en posición fija a la que se le pueden agregar botones de acciones, titulo y buscador.
+
+El contenido de la página tiene una función que se puede llamar para realizar un desplazamiento hacia arriba.
+
+## Ejemplo básico
 
 Importar módulo o componentes
 
     import { MatecuTopbarLayoutModule } from 'angular-matecu';
     // o
     import {MatecuTopbarLayoutComponent} from 'angular-matecu';
+    import {MatecuTopbarHeaderRowComponent} from 'angular-matecu';
+    import {MatecuTopbarHeaderColumnComponent} from 'angular-matecu';
+    import {MatecuTopbarActionComponent} from 'angular-matecu';
     import {MatecuTopbarSearchComponent} from 'angular-matecu';
-    import {MatecuTopbarActionsComponent} from 'angular-matecu';
-
+    import {MatecuTopbarFabComponent} from 'angular-matecu';
+    import {MatecuTopbarTitleComponent} from 'angular-matecu';
+    import {MatecuTopbarBodyComponent} from 'angular-matecu';
 
 Agregar a la plantilla de algún componente:
 
-        <matecu-topbar-layout [prominent]="false">
-            <matecu-topbar-header-row>
-                <matecu-topbar-title>Topbar Layout</matecu-topbar-title>
+```
+ <matecu-topbar-layout #topbar>
+  <matecu-topbar-header-row first-row>
+  <matecu-topbar-header-column left-column>
+      <matecu-topbar-action>
+      <button mat-icon-button><mat-icon>menu</mat-icon></button>
+      </matecu-topbar-action>
+      <matecu-topbar-fab>
+          <button mat-fab><mat-icon>add</mat-icon></button>
+      </matecu-topbar-fab>
+      <matecu-topbar-title>Topbar Layout</matecu-topbar-title>
 
-                <matecu-topbar-fab (clickAction)="clickFabButton()">
-                    <mat-icon>add</mat-icon>
-                </matecu-topbar-fab>
+  </matecu-topbar-header-column>
+  <matecu-topbar-header-column right-column>
+      <matecu-topbar-search (valueChange)="searchFunction($event)"></matecu-topbar-search>
+      <matecu-topbar-action>
+          <button><mat-icon>more_vert</mat-icon></button>
+      </matecu-topbar-action>
+  </matecu-topbar-header-column>
+  </matecu-topbar-header-row>
+      <matecu-topbar-body >
+          Contenido de la página
+          .....
+          <button (click)="topbar.scrollTop()">
+              Regresar al inicio
+          </button>
+      </matecu-topbar-body>
 
-                <matecu-topbar-action>
-                    <mat-icon>notifications</mat-icon>
-                </matecu-topbar-action>
-                <matecu-topbar-action position="left">
-                    <mat-icon>menu</mat-icon>
-                </matecu-topbar-action>
-                <matecu-topbar-search (whenSearchChanges)="searching($event)">
-                </matecu-topbar-search>
-                <matecu-topbar-body #tobarBody>
-                    Contenido de la página
-                    .....
-                    <button (click)="tobarBody.scrollTop()">
-                        Regresar al inicio
-                    </button>
-                </matecu-topbar-body>
-            </matecu-topbar-header-row>
-        </matecu-topbar-layout>
+</matecu-topbar-layout>
+```
 
-Propiedades:
+## Componentes
 
-- Input() prominent: (boolean) Establece si la barra es prominente o no (default false)
-- Input() color: colores del tema material ejemplo primary
-- Input() twoRows: True para activar que se puedan ver 2 filas de encabezados
+### MatecuTopbarLayout:
 
+Componente principal
 
-## Componentes adicionales
+#### Variables de estilos
 
-## matecu-topbar-header-row
+- --mtb-border : Borde
+- --mtb-margin : Margen
+- --mtb-width : Ancho
+- --mtb-height : Alto
+- --mtb-primary-color : Color principal (Color de la barra)
+- --mtb-bar-height : Alto de la barra
+- --mtb-bar-prominent-height : Alto de la barra en modo prominente
 
-Componente para agregar los elementos del encabezado (requerido si hay elementos en el encabezado).
+### Inputs
 
-El encabezado puede tener 2 de estos elementos si este es el caso se debe agregar el atributo position con los valores first y second según corresponda y en el elemento padre matecu-topbar-layout debe estar el input twoRows con valor true
-    
-    <matecu-topbar-layout [twoRows]="true">
-        <matecu-topbar-header-row position="first"><matecu-topbar-header-row>
-        <matecu-topbar-header-row position="second"><matecu-topbar-header-row>
-    </matecu-topbar-layout>
+- prominent : Valor boolean que indica si la barra es prominente
+- mobileWidth: Valor numérico que indica el ancho máximo que debe considerarse para aplicar estilos para dispositivos móviles
+- mobileStyle: Indica si se deben aplicar estilos para dispositivos móviles
 
+### Outputs
 
-### matecu-topbar-title: 
+- mobileStyleChange: Propiedad que se actualiza cuando se redimenciona el componente y se calcula utilizando el valor de mobileWidth. Indica si se deben aplicar estilos para dispositivos móviles
+- whenResize: Evento que se emite cuando se redimenciona el componente y retorna el nuevo valor del ancho.
 
-Componente para agregar título a la barra (opcional)
-### matecu-topbar-fab: 
-Componente para agregar el contenido del botón pricipal (opcional)
-Solo debe haber uno de estos componentes, si hay dos encabezados colocarlo en la segunda fila
+### Metodos
 
-Propiedades
+- scrollTop : Funcion que se puede llamar desde el componente padre y hace scroll del contenido hacia la parte superior
 
-- Input() color: Similar a la propiedad del mismo nombre de los componentes de angular-material
-- Input() extended: (boolean) Determina si el boton va a ser mas largo de lo normal (default false)
+### MatecuTopbarHeaderRow
 
-### matecu-topbar-action
-Componente  para agregar otras acciones en la barra (opcional)
-Pueden agregárse multiples elementos de este tipo.
-Utilizar el atributo position para cambiar ubicación, valores permitidos right|left|after-fab|before-search valor predeterminado right
+Crea una fila para agregar contenido en el encabezado, pueden agregarse hasta 2 filas y es necesario agregar alguno de los siguientes atributos first-row, second-row
 
-### matecu-topbar-search
-Componente para agregar un campo de búsqueda
+#### Variables de estilos
 
-Propiedades
+- --mtb-row-padding
+- --mtb-row-margin
+- --mtb-row-width
 
-- Input() searchPlaceholder: El valor del placeholder del input (default 'Buscar')
-- Input() debounceTime: (number) El tiempo en milisegundos de espera antes de emitir el evento de que el valor del input a cambiado (default 500)
-- Output() cleanWhenClose: (boolean) Determina si se quita el valor del input cuando se cierra en módo mobil (default true)
-- Input() inputType: ('text'|'search') El tipo de input que se va a utilizar (default 'text')
-- Input() value : Valor inicial para el input puede utilizarse dos vías [(value)]=value
-- Output() whenSearchChanges: (function) Acción que se ejecuta cuando el valor del input cambia requiere una función con un parametro tipo string (valor del input)
+### MatecuTopbarHeaderColumn
 
+Crea una columna para agregar contenido a una fila del encabezado es necesario agregar alguno de los siguientes atributos left-column,right-column
 
-### matecu-topbar-body: 
-Componente para agregar el contenid de la página.
+### MatecuTopbarAction
 
-Métodos
+Crea un contenedor para agregar acciones como links o botones preferentemente en formato de iconos
 
-- scrollTop(): Metodo sin parametros que realiza un scroll hasta la parte superior del elemento
+#### Variables de estilos
 
+- --mtb-action-padding
+- --mtb-action-margin
 
+### MatecuTopbarFab
+
+Crea un contenedor para agregar un boton (FAB)
+
+#### Variables de estilos
+
+- --mtb-fab-mobile-bottom-position : Posición relativa a la parte inferior del componente pricipal que se aplica cuando estan activos los estilos para dispositivos móviles.
+
+- --mtb-fab-mobile-right-position: Posición relativa a la parte i
+
+#### Propiedades
+
+- mobileStyle: Valor boolaneo que indica si se ajustan los estilos para dispositivos móviles
+
+### MatecuTopbarSearch
+
+Crea un campo de texto para hacer búsquedas
+
+#### Inputs
+
+- value: Especifica el valor de la búsqueda
+- mobileStyle: Valor boolaneo que indica si se ajustan los estilos para dispositivos móviles
+- placeholder: Valor del Placeholder del campo de búsqueda
+
+#### Outputs
+
+- valueChanges: Emite un evento con el valor del texto ingresado en el campo de búsqueda
+
+### MatecuTopbarTitle
+
+Crea un contenedor para agregar un título a la página.
+
+#### Variables de estilos
+
+- --mtb-title-padding
+- --mtb-title-margin
+
+### MatecuTopbarBody
+
+Crea un contenedor para agregar el contenido de la página
+
+#### Variables de estilos
+
+--mtb-body-padding: Padding para el contenido
+--mtb-body-background: Fondo del contenido;
+--mtb-body-padding-button: Padding inferior (Es utilizado para asignar un espacio al Botón principal (FAB) cuando tiene asignados los estilos para dispositivos móviles)
