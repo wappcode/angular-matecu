@@ -265,11 +265,12 @@ Crea un contenedor para agregar un boton (FAB)
 
 - --mtb-fab-mobile-bottom-position : Posición relativa a la parte inferior del componente pricipal que se aplica cuando estan activos los estilos para dispositivos móviles.
 
-- --mtb-fab-mobile-right-position: Posición relativa a la parte i
+- --mtb-fab-mobile-right-position: Posición relativa a la parte inferior del componente MatecuTopbarLayout
 
-#### Propiedades
+#### Inputs
 
 - mobileStyle: Valor boolaneo que indica si se ajustan los estilos para dispositivos móviles
+- display: Valor boolean que indica si se debe mostrar el componente
 
 ### MatecuTopbarSearch
 
@@ -280,6 +281,7 @@ Crea un campo de texto para hacer búsquedas
 - value: Especifica el valor de la búsqueda
 - mobileStyle: Valor boolaneo que indica si se ajustan los estilos para dispositivos móviles
 - placeholder: Valor del Placeholder del campo de búsqueda
+- display: Valor boolean que indica si se debe mostrar el componente
 
 #### Outputs
 

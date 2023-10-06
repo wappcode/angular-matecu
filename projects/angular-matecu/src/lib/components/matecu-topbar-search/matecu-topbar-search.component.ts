@@ -62,6 +62,9 @@ export class MatecuTopbarSearchComponent implements OnInit {
   }
   @Output() valueChange = new EventEmitter<string>();
   @HostBinding() className = 'matecu-topbar-search';
+  @HostBinding('style.display') get color() {
+    return this.display ? 'flex' : 'none';
+  }
   ngOnInit(): void {
     this.inputCtrl.valueChanges
       .pipe(
