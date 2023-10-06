@@ -159,50 +159,96 @@ El contenido de la página tiene una función que se puede llamar para realizar 
 
 Importar módulo o componentes
 
+```
+    // ...
     import { MatecuTopbarLayoutModule } from 'angular-matecu';
-    // o
-    import {MatecuTopbarLayoutComponent} from 'angular-matecu';
-    import {MatecuTopbarHeaderRowComponent} from 'angular-matecu';
-    import {MatecuTopbarHeaderColumnComponent} from 'angular-matecu';
-    import {MatecuTopbarActionComponent} from 'angular-matecu';
-    import {MatecuTopbarSearchComponent} from 'angular-matecu';
-    import {MatecuTopbarFabComponent} from 'angular-matecu';
-    import {MatecuTopbarTitleComponent} from 'angular-matecu';
-    import {MatecuTopbarBodyComponent} from 'angular-matecu';
+    import { MatIconModule } from '@angular/material/icon';
+    import { MatButtonModule } from '@angular/material/button';
+    // Se pueden importar los componentes de forma individual
+    // ...
+    @NgModule({
+
+    declarations: [AppComponent],
+    imports: [
+    // ...
+    MatecuTopbarLayoutModule,
+    MatIconModule,
+    MatButtonModule
+    // ...
+    ],
+    providers: [],
+    bootstrap: [AppComponent],
+    })
+    export class AppModule {}
+```
 
 Agregar a la plantilla de algún componente:
 
 ```
  <matecu-topbar-layout #topbar>
   <matecu-topbar-header-row first-row>
-  <matecu-topbar-header-column left-column>
+    <matecu-topbar-header-column left-column>
       <matecu-topbar-action>
-      <button mat-icon-button><mat-icon>menu</mat-icon></button>
+        <button mat-icon-button><mat-icon>menu</mat-icon></button>
       </matecu-topbar-action>
       <matecu-topbar-fab>
-          <button mat-fab><mat-icon>add</mat-icon></button>
+        <button mat-fab><mat-icon>add</mat-icon></button>
       </matecu-topbar-fab>
       <matecu-topbar-title>Topbar Layout</matecu-topbar-title>
-
-  </matecu-topbar-header-column>
-  <matecu-topbar-header-column right-column>
-      <matecu-topbar-search (valueChange)="searchFunction($event)"></matecu-topbar-search>
+    </matecu-topbar-header-column>
+    <matecu-topbar-header-column right-column>
+      <matecu-topbar-search
+        placeholder="Buscar..."
+        (valueChange)="searchFunction($event)"
+      ></matecu-topbar-search>
       <matecu-topbar-action>
-          <button><mat-icon>more_vert</mat-icon></button>
+        <button mat-icon-button><mat-icon>more_vert</mat-icon></button>
       </matecu-topbar-action>
-  </matecu-topbar-header-column>
+    </matecu-topbar-header-column>
   </matecu-topbar-header-row>
-      <matecu-topbar-body >
-          Contenido de la página
-          .....
-          <button (click)="topbar.scrollTop()">
-              Regresar al inicio
-          </button>
-      </matecu-topbar-body>
-
+  <matecu-topbar-body>
+    Contenido de la página .....
+    <button (click)="topbar.scrollTop()">Regresar al inicio</button>
+  </matecu-topbar-body>
 </matecu-topbar-layout>
+
 ```
 
+Agregar al componente el método para capturar el texto de búsqueda
+
+```
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
+})
+export class AppComponent {
+  searchFunction(searchText: string) {
+    console.log(searchText);
+  }
+
+}
+
+```
+
+Ajustar los colores y los estilos en el archivo de css del componente o el archivo de css global
+
+````
+// global
+:root {
+    // ...
+  --mtb-primary-color: red;
+  // ...
+}
+// en el componente
+:host {
+    // ...
+  --mtb-primary-color: red;
+  // ...
+}
+```
 ## Componentes
 
 ### MatecuTopbarLayout:
@@ -305,3 +351,4 @@ Crea un contenedor para agregar el contenido de la página
 --mtb-body-padding: Padding para el contenido
 --mtb-body-background: Fondo del contenido;
 --mtb-body-padding-button: Padding inferior (Es utilizado para asignar un espacio al Botón principal (FAB) cuando tiene asignados los estilos para dispositivos móviles)
+````
