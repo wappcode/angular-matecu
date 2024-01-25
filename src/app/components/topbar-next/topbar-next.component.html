@@ -14,12 +14,12 @@
         (valueChange)="searchFunction($event)"
       ></matecu-topbar-search>
       <matecu-topbar-action>
-        <button><mat-icon>more_vert</mat-icon></button>
+        <button mat-icon-button><mat-icon>more_vert</mat-icon></button>
       </matecu-topbar-action>
     </matecu-topbar-header-column>
   </matecu-topbar-header-row>
   <matecu-topbar-body>
     Contenido de la página .....
-    <button (click)="topbar.scrollTop()">Regresar al inicio</button>
+    <a routerLink="../topbar">Regresar al inicio</a>
   </matecu-topbar-body>
 </matecu-topbar-layout>
