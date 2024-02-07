@@ -1,6 +1,7 @@
 {
   "name": "angular-matecu",
-  "version": "4.0.3",
+  "version": "4.0.4",
+  "license": "MIT",
   "peerDependencies": {
     "@angular/common": "^15.x || ^16.x || ^17.x" ,
     "@angular/core": "^15.x || ^16.x || ^17.x",

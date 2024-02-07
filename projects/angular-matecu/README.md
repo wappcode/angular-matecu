@@ -1,5 +1,7 @@
 # Angular-Matecu
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 Libreria con complementos y utilidades para el desarrollo de aps
 
 # Instalar
