@@ -1,0 +1,48 @@
+// :host {
+//   display: block;
+//   position: relative;
+//   box-sizing: border-box;
+//   width: 100%;
+// }
+
+// /* Input ocupa todo el ancho */
+// input {
+//   width: calc(100% - 10px);
+//   height: 100%;
+// }
+
+// /* Spinner alineado como suffix de Material */
+// .loading-spinner {
+//   position: absolute;
+//   right: 12px;
+//   top: 50%;
+//   transform: translateY(-50%);
+//   pointer-events: none;
+// }
+
+// /* Ajuste para que no choque con el spinner */
+// input.loading {
+//   padding-right: 40px;
+// }
+
+// /* Opción de crear */
+// .create-option {
+//   font-style: italic;
+//   opacity: 0.85;
+// }
+
+// /* Hover más suave */
+// ::ng-deep .mat-mdc-option.create-option:hover {
+//   background: rgba(0, 0, 0, 0.04);
+// }
+
+// /* Divider más discreto */
+// ::ng-deep .mat-mdc-autocomplete-panel mat-divider {
+//   margin: 4px 0;
+// }
+
+// /* Estado disabled */
+// :host(.mat-mdc-input-disabled) {
+//   opacity: 0.6;
+//   pointer-events: none;
+// }

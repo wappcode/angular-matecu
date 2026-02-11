@@ -1,5 +1,8 @@
 <form [formGroup]="form">
     <mat-form-field appearance="outline">
+        <mat-label>
+            País
+        </mat-label>
         <matecu-autocomplete-input formControlName="country" [options]="countries" [allowCreate]="true"
             [loading]="isLoading" (searchChange)="onSearch($event)" (create)="onCreate($event)">
         </matecu-autocomplete-input>
@@ -11,3 +14,5 @@
         }
     </mat-form-field>
 </form>
+
+<h2>Valor seleccionado: {{ form.get('country')?.value }}</h2>

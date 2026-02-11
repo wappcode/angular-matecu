@@ -1,4 +1,4 @@
-<input matInput type="text" matInput [formControl]="inputControl" [matAutocomplete]="auto" />
+<input matInput type="text" matInput [formControl]="inputControl" [matAutocomplete]="auto" [class.loading]="loading" />
 
 <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected($event.option.value)"
     [displayWith]="displayLabel">
@@ -19,7 +19,7 @@
     @if( (inputControl.value || '') &&
     !(filteredOptions$ | async)?.length ){
 
-    <mat-option (click)="onCreateClick(inputControl.value!)">
+    <mat-option (click)="onCreateClick(inputControl.value!)" class="create-option">
         ➕ Crear "{{ inputControl.value }}"
     </mat-option>
     }
@@ -29,7 +29,7 @@
 
 <!-- Spinner -->
 @if(loading){
-<mat-progress-spinner diameter="20" mode="indeterminate"
+<mat-progress-spinner class="loading-spinner" diameter="20" mode="indeterminate"
     style="position:absolute; right:10px; top:50%; transform:translateY(-50%);">
 </mat-progress-spinner>
 }
