@@ -1,0 +1,35 @@
+<input matInput type="text" matInput [formControl]="inputControl" [matAutocomplete]="auto" />
+
+<mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected($event.option.value)"
+    [displayWith]="displayLabel">
+
+    @for (option of filteredOptions$ | async; track $index) {
+
+    <mat-option [value]="option[0]">
+        {{ option[1] }}
+    </mat-option>
+
+    }
+
+    <!-- Crear nuevo -->
+    @if(allowCreate){
+
+    <mat-divider></mat-divider>
+
+    @if( (inputControl.value || '') &&
+    !(filteredOptions$ | async)?.length ){
+
+    <mat-option (click)="onCreateClick(inputControl.value!)">
+        ➕ Crear "{{ inputControl.value }}"
+    </mat-option>
+    }
+    }
+
+</mat-autocomplete>
+
+<!-- Spinner -->
+@if(loading){
+<mat-progress-spinner diameter="20" mode="indeterminate"
+    style="position:absolute; right:10px; top:50%; transform:translateY(-50%);">
+</mat-progress-spinner>
+}

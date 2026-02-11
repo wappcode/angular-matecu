@@ -6,6 +6,7 @@ import { TopbarNextComponent } from './components/topbar-next/topbar-next.compon
 import { AlertBoxComponent } from './components/alert-box/alert-box.component';
 import { AlertDialogComponent } from './components/alert-dialog/alert-dialog.component';
 import { SnackbarComponent } from './components/snackbar/snackbar.component';
+import { Autocomplete } from './components/autocomplete/autocomplete';
 
 export const routes: Routes = [
   {
@@ -35,5 +36,9 @@ export const routes: Routes = [
   {
     path: 'snackbar',
     component: SnackbarComponent,
+  },
+  {
+    path: 'autocomplete',
+    component: Autocomplete,
   },
 ];
