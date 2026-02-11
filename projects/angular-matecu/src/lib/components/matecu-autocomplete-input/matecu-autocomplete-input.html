@@ -16,11 +16,10 @@
 
     <mat-divider></mat-divider>
 
-    @if( (inputControl.value || '') &&
-    !(filteredOptions$ | async)?.length ){
+    @if(showCreateOption ){
+    <mat-option (click)="onCreateClick()" class="create-option">
+        <span>➕</span><span>" {{ inputControl.value }}"</span>
 
-    <mat-option (click)="onCreateClick(inputControl.value!)" class="create-option">
-        ➕ Crear "{{ inputControl.value }}"
     </mat-option>
     }
     }

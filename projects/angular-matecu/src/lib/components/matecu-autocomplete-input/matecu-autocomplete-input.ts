@@ -24,7 +24,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatFormFieldControl } from '@angular/material/form-field';
-import { Observable, startWith, map, Subject } from 'rxjs';
+import { Observable, startWith, map, Subject, tap } from 'rxjs';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { FocusMonitor } from '@angular/cdk/a11y';
 
@@ -110,7 +110,7 @@ export class MatecuAutocompleteInput
 
   @Output() searchChange = new EventEmitter<string>();
   @Output() create = new EventEmitter<string>();
-  @Output() valueChange = new EventEmitter<string>();
+  @Output() valueChange = new EventEmitter<string | null>();
 
   // MatFormFieldControl properties
   static nextId = 0;
@@ -129,8 +129,10 @@ export class MatecuAutocompleteInput
   private elementRef: ElementRef<HTMLElement>;
   private injector: Injector;
 
+  private onChange: any = () => {};
+  private onTouched: any = () => {};
   get empty(): boolean {
-    return !this.internalValue || this.internalValue.length === 0;
+    return this.inputControl.value === '' || !this.inputControl.value;
   }
 
   get shouldLabelFloat(): boolean {
@@ -139,6 +141,17 @@ export class MatecuAutocompleteInput
 
   get errorState(): boolean {
     return !!(this.ngControl && this.ngControl.invalid && this.ngControl.touched);
+  }
+  get showCreateOption(): boolean {
+    const value = this.inputControl.value;
+
+    return (
+      this.allowCreate &&
+      typeof value === 'string' &&
+      this.internalValue !== value &&
+      this.options.some((option) => option[1].toLowerCase() === value.toLowerCase()) === false
+      // !(this.filteredOptions$ | async)?.length
+    );
   }
 
   constructor(focusMonitor: FocusMonitor, elementRef: ElementRef<HTMLElement>, injector: Injector) {
@@ -161,11 +174,16 @@ export class MatecuAutocompleteInput
       map((value) => this.filter(value ?? '')),
     );
 
-    this.inputControl.valueChanges.subscribe((value) => {
-      queueMicrotask(() => {
-        this.searchChange.emit(value ?? '');
+    this.inputControl.valueChanges
+      .pipe(
+        tap(() => this.clearValue()),
+        tap(() => this.setFocused()),
+      )
+      .subscribe((value) => {
+        queueMicrotask(() => {
+          this.searchChange.emit(value ?? '');
+        });
       });
-    });
 
     this.focusMonitor.monitor(this.elementRef, true).subscribe((focused) => {
       if (!!focused !== this.focused) {
@@ -215,15 +233,21 @@ export class MatecuAutocompleteInput
   };
 
   onOptionSelected(value: string) {
+    if (!value) {
+      return;
+    }
     this.internalValue = value;
     this.inputControl.setValue(value, { emitEvent: false });
-
     this.onChange(value);
     this.onTouched();
     this.valueChange.emit(value);
   }
 
-  onCreateClick(text: string) {
+  onCreateClick() {
+    const text = this.inputControl.value;
+    if (!text || text.trim() === '') {
+      return;
+    }
     this.create.emit(text);
   }
 
@@ -271,7 +295,18 @@ export class MatecuAutocompleteInput
       input.setAttribute('aria-describedby', ids.join(' '));
     }
   }
-
-  private onChange: any = () => {};
-  private onTouched: any = () => {};
+  private setFocused() {
+    if (typeof this.inputControl.value === 'string' && this.inputControl.value.length > 0) {
+      this.focused = true;
+    } else {
+      this.focused =
+        this.elementRef.nativeElement.querySelector('input') === document.activeElement;
+    }
+  }
+  private clearValue() {
+    this.internalValue = null;
+    this.onChange(null);
+    this.onTouched();
+    this.valueChange.emit(null);
+  }
 }
