@@ -28,8 +28,11 @@ import { Observable, startWith, map, Subject, tap } from 'rxjs';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { FocusMonitor } from '@angular/cdk/a11y';
 
-type Option = [string, string];
-
+/**
+ * [value,label]
+ */
+export type MatecuAutocompleteOption = [string, string];
+export type MatecuAutocompleteFilterFn = (optionLabel: string, search: string) => boolean;
 @Component({
   selector: 'matecu-autocomplete-input',
   imports: [
@@ -63,10 +66,10 @@ export class MatecuAutocompleteInput
     OnDestroy,
     DoCheck
 {
-  @Input() options: Option[] = [];
+  @Input() options: MatecuAutocompleteOption[] = [];
   @Input() allowCreate = false;
   @Input() loading = false;
-  @Input() filterFn: (v1: string, v2: string) => boolean = this.createFilterFn();
+  @Input() filterFn: MatecuAutocompleteFilterFn = this.createFilterFn();
 
   // MatFormFieldControl inputs
   @Input()
@@ -124,7 +127,7 @@ export class MatecuAutocompleteInput
   readonly autofilled = false;
 
   inputControl = new FormControl<string | null>(null);
-  filteredOptions$!: Observable<Option[]>;
+  filteredOptions$!: Observable<MatecuAutocompleteOption[]>;
 
   private internalValue: string | null = null;
   private focusMonitor: FocusMonitor;
@@ -220,7 +223,7 @@ export class MatecuAutocompleteInput
     }
   }
 
-  private filter(search: string): Option[] {
+  private filter(search: string): MatecuAutocompleteOption[] {
     const lower = search.toLowerCase();
     return this.options.filter((option) => this.filterFn(option[1], search));
   }
