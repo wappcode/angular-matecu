@@ -24,7 +24,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatFormFieldControl } from '@angular/material/form-field';
-import { Observable, startWith, map, Subject, tap } from 'rxjs';
+import { Observable, startWith, map, Subject, tap, combineLatest } from 'rxjs';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { FocusMonitor } from '@angular/cdk/a11y';
 
@@ -174,9 +174,10 @@ export class MatecuAutocompleteInput
       this.ngControl = null;
     }
 
-    this.filteredOptions$ = this.inputControl.valueChanges.pipe(
-      startWith(''),
-      map((value) => this.filter(value ?? '')),
+    const value$ = this.inputControl.valueChanges.pipe(startWith(this.inputControl.value ?? ''));
+
+    this.filteredOptions$ = combineLatest([value$]).pipe(
+      map(([value]) => this.filter(value ?? '')),
     );
 
     this.inputControl.valueChanges
@@ -217,7 +218,9 @@ export class MatecuAutocompleteInput
   ngOnChanges(changes: SimpleChanges) {
     if (changes['options']) {
       this.updateInputLabelFromValue();
+      this.stateChanges.next();
     }
+
     if (changes['placeholder'] || changes['required'] || changes['disabled']) {
       this.stateChanges.next();
     }

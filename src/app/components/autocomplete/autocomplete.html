@@ -3,8 +3,8 @@
         <mat-label>
             País
         </mat-label>
-        <matecu-autocomplete-input formControlName="country" [options]="countries" [allowCreate]="true"
-            [loading]="isLoading" (searchChange)="onSearch($event)" (create)="onCreate($event)">
+        <matecu-autocomplete-input formControlName="country" [options]="countries()" [allowCreate]="true"
+            [loading]="isLoading()" (searchChange)="onSearch($event)" (create)="onCreate($event)">
         </matecu-autocomplete-input>
         @if(form.get('country')?.hasError('required')){
 
