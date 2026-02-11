@@ -66,6 +66,7 @@ export class MatecuAutocompleteInput
   @Input() options: Option[] = [];
   @Input() allowCreate = false;
   @Input() loading = false;
+  @Input() filterFn: (v1: string, v2: string) => boolean = this.createFilterFn();
 
   // MatFormFieldControl inputs
   @Input()
@@ -221,7 +222,13 @@ export class MatecuAutocompleteInput
 
   private filter(search: string): Option[] {
     const lower = search.toLowerCase();
-    return this.options.filter((option) => option[1].toLowerCase().includes(lower));
+    return this.options.filter((option) => this.filterFn(option[1], search));
+  }
+
+  private createFilterFn(): (v1: string, v2: string) => boolean {
+    return (v1: string, v2: string): boolean => {
+      return v1.toLowerCase().includes(v2.toLowerCase());
+    };
   }
 
   displayLabel = (value: string | null): string => {
