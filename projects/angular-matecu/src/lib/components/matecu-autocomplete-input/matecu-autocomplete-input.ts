@@ -118,6 +118,7 @@ export class MatecuAutocompleteInput
   readonly id = `matecu-autocomplete-input-${MatecuAutocompleteInput.nextId++}`;
   ngControl: NgControl | null = null;
   focused = false;
+  lastSearchText: string | null = null;
   readonly controlType = 'matecu-autocomplete-input';
   readonly autofilled = false;
 
@@ -176,8 +177,10 @@ export class MatecuAutocompleteInput
 
     this.inputControl.valueChanges
       .pipe(
+        // Almacena el último valor valido para la búsqueda esto se utiliza para enviar una emición para crear un elemento
+        tap((value) => (this.lastSearchText = value ?? this.lastSearchText)),
+        // CUando se escribe algo se limpian los valores seleccionados para que el usuario pueda seleccionar una opción o crear una nueva
         tap(() => this.clearValue()),
-        tap(() => this.setFocused()),
       )
       .subscribe((value) => {
         queueMicrotask(() => {
@@ -244,11 +247,17 @@ export class MatecuAutocompleteInput
   }
 
   onCreateClick() {
-    const text = this.inputControl.value;
-    if (!text || text.trim() === '') {
+    if (
+      !this.lastSearchText ||
+      this.lastSearchText.trim() === '' ||
+      this.options.some(
+        (option) => option[1].toLowerCase() === this.lastSearchText!.toLowerCase(),
+      ) ||
+      this.options.some((option) => option[1].toLowerCase() === this.lastSearchText!.toLowerCase())
+    ) {
       return;
     }
-    this.create.emit(text);
+    this.create.emit(this.lastSearchText);
   }
 
   private updateInputLabelFromValue() {
@@ -295,14 +304,7 @@ export class MatecuAutocompleteInput
       input.setAttribute('aria-describedby', ids.join(' '));
     }
   }
-  private setFocused() {
-    if (typeof this.inputControl.value === 'string' && this.inputControl.value.length > 0) {
-      this.focused = true;
-    } else {
-      this.focused =
-        this.elementRef.nativeElement.querySelector('input') === document.activeElement;
-    }
-  }
+
   private clearValue() {
     this.internalValue = null;
     this.onChange(null);
