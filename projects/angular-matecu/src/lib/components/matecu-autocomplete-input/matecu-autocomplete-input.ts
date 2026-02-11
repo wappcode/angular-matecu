@@ -4,30 +4,24 @@ import {
   Input,
   Output,
   EventEmitter,
-  forwardRef,
-  Optional,
-  Self,
   OnChanges,
   SimpleChanges,
   OnInit,
-  SimpleChange,
 } from '@angular/core';
 import {
   ControlValueAccessor,
   FormsModule,
   NG_VALUE_ACCESSOR,
-  NgControl,
   ReactiveFormsModule,
 } from '@angular/forms';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatInput, MatInputModule } from '@angular/material/input';
+import { MatInput } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Observable, startWith, map } from 'rxjs';
 
-type OptionValue = string;
-type Option = [OptionValue, string];
+type Option = [string, string];
 
 @Component({
   selector: 'matecu-autocomplete-input',
@@ -57,12 +51,12 @@ export class MatecuAutocompleteInput implements ControlValueAccessor, OnChanges,
 
   @Output() searchChange = new EventEmitter<string>();
   @Output() create = new EventEmitter<string>();
-  @Output() valueChange = new EventEmitter<OptionValue>();
+  @Output() valueChange = new EventEmitter<string>();
 
-  inputControl = new FormControl<string>('');
+  inputControl = new FormControl<string | null>(null);
   filteredOptions$!: Observable<Option[]>;
 
-  private internalValue: OptionValue | null = null;
+  private internalValue: string | null = null;
 
   ngOnInit() {
     this.filteredOptions$ = this.inputControl.valueChanges.pipe(
@@ -90,7 +84,7 @@ export class MatecuAutocompleteInput implements ControlValueAccessor, OnChanges,
     return this.options.filter((option) => option[1].toLowerCase().includes(lower));
   }
 
-  displayLabel = (value: string | number | null): string => {
+  displayLabel = (value: string | null): string => {
     if (value === null || value === undefined) return '';
 
     if (!Array.isArray(this.options)) {
@@ -101,7 +95,7 @@ export class MatecuAutocompleteInput implements ControlValueAccessor, OnChanges,
     return found ? found[1] : '';
   };
 
-  onOptionSelected(value: OptionValue) {
+  onOptionSelected(value: string) {
     this.internalValue = value;
     this.inputControl.setValue(value, { emitEvent: false });
 
@@ -123,7 +117,7 @@ export class MatecuAutocompleteInput implements ControlValueAccessor, OnChanges,
 
   // ControlValueAccessor
 
-  writeValue(value: OptionValue | null): void {
+  writeValue(value: string | null): void {
     this.internalValue = value;
     this.updateInputLabelFromValue();
   }

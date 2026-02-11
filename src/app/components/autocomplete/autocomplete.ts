@@ -39,7 +39,7 @@ export class Autocomplete {
     this.isLoading = true;
     setTimeout(() => {
       this.isLoading = false;
-    }, 1000);
+    }, 300);
   }
 
   onCreate(value: string) {
