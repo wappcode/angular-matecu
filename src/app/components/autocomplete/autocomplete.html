@@ -16,3 +16,9 @@
 </form>
 
 <h2>Valor seleccionado: {{ form.get('country')?.value }}</h2>
+
+<!-- @for(let country of countries()){ -->
+@for (country of countries(); track $index) {
+<p>{{ country[0] }} - {{ country[1] }}</p>
+
+}

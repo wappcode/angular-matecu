@@ -133,6 +133,7 @@ export class MatecuAutocompleteInput
   private focusMonitor: FocusMonitor;
   private elementRef: ElementRef<HTMLElement>;
   private injector: Injector;
+  private optionMap = new Map<string, string>();
 
   private onChange: any = () => {};
   private onTouched: any = () => {};
@@ -217,6 +218,7 @@ export class MatecuAutocompleteInput
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['options']) {
+      this.rebuildOptionMap();
       this.updateInputLabelFromValue();
       this.stateChanges.next();
     }
@@ -227,7 +229,6 @@ export class MatecuAutocompleteInput
   }
 
   private filter(search: string): MatecuAutocompleteOption[] {
-    const lower = search.toLowerCase();
     return this.options.filter((option) => this.filterFn(option[1], search));
   }
 
@@ -243,9 +244,7 @@ export class MatecuAutocompleteInput
     if (!Array.isArray(this.options)) {
       return '';
     }
-
-    const found = this.options.find((o) => o[0] === value);
-    return found ? found[1] : '';
+    return this.optionMap.get(value) ?? '';
   };
 
   onOptionSelected(value: string) {
@@ -315,6 +314,13 @@ export class MatecuAutocompleteInput
     const input = this.elementRef.nativeElement.querySelector('input');
     if (input) {
       input.setAttribute('aria-describedby', ids.join(' '));
+    }
+  }
+  private rebuildOptionMap() {
+    this.optionMap.clear();
+
+    for (const [value, label] of this.options ?? []) {
+      this.optionMap.set(value, label);
     }
   }
 

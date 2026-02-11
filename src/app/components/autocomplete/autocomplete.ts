@@ -3,6 +3,7 @@ import { MatecuAutocompleteInput } from '../../../../projects/angular-matecu/src
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-autocomplete',
@@ -12,6 +13,7 @@ import { MatInputModule } from '@angular/material/input';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
+    CommonModule,
   ],
   templateUrl: './autocomplete.html',
   styleUrl: './autocomplete.scss',
@@ -44,7 +46,8 @@ export class Autocomplete {
 
   onCreate(value: string) {
     console.log('Create:', value);
-    this.countries.update((current) => [[value.toLowerCase(), value], ...current]);
-    this.form.get('country')?.setValue(value.toLowerCase());
+    const id = value.trim();
+    this.countries.update((current) => [[id, value], ...current]);
+    this.form.get('country')?.setValue(id);
   }
 }
