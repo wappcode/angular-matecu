@@ -1,0 +1,34 @@
+<h1>Alert dialog</h1>
+
+
+<h2>Seleccionar tipo</h2>
+<mat-radio-group aria-label="Select an option" [(ngModel)]="alertDialogType">
+  <mat-radio-button value="warning">Warning</mat-radio-button>
+  <mat-radio-button value="danger">Danger</mat-radio-button>
+  <mat-radio-button value="success">Success</mat-radio-button>
+  <mat-radio-button value="info">Info</mat-radio-button>
+  <mat-radio-button value="">Default</mat-radio-button>
+</mat-radio-group>
+
+<h2>Configuración de icono</h2>
+
+<mat-checkbox [(ngModel)]="showIcon"> Icono</mat-checkbox>
+
+<h2>Configuración de titulo</h2>
+<mat-form-field>
+  <mat-label>Titulo del dialogo</mat-label>
+  <input type="text" matInput [(ngModel)]="title">
+</mat-form-field>
+<h2>Configuración de boton para cerrar diálogo</h2>
+<mat-form-field>
+  <mat-label>Boton Cerrar</mat-label>
+  <input type="text" matInput [(ngModel)]="dismissText">
+</mat-form-field>
+<h2>Configuración de boton para activar acción</h2>
+<mat-form-field>
+  <mat-label>Boton action</mat-label>
+  <input type="text" matInput [(ngModel)]="action">
+</mat-form-field>
+
+<h2>Diálogo Basico</h2>
+<button mat-button color="primary" (click)="openBasicDialog()">Abrir díalogo básico</button>

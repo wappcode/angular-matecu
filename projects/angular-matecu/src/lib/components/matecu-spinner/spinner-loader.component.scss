@@ -1,0 +1,13 @@
+$size: 80px;
+:host, .matecu-spinner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    > svg {
+        width: $size;
+        height: $size;
+    }
+    &__hidden {
+        display: none;
+    }
+}

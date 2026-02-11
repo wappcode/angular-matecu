@@ -1,0 +1,24 @@
+@if (hasTitle) {
+
+<h2 mat-dialog-title>{{dialogData.title}}</h2>
+}
+<mat-dialog-content>
+
+  <matecu-alert-box [color]="dialogData.type" [icon]="!!dialogData.icon">
+    {{dialogData.message}}
+  </matecu-alert-box>
+
+</mat-dialog-content>
+@if (showActions) {
+
+<mat-dialog-actions align="end">
+  @if (hasDismissBtn) {
+  <button mat-button color="primary" tabindex="-1" mat-dialog-close>{{dialogData.dismissText}}
+  </button>
+  }
+  @if(hasActionBtn) {
+  <button mat-button color="primary" tabindex="-2" (click)="activateAction()">{{dialogData.action}}
+  </button>
+  }
+</mat-dialog-actions>
+}

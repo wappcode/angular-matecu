@@ -1,0 +1,20 @@
+@if(display){
+<button class="matecu-topbar-search-mobile-only" [ngClass]="{ 'mobile-style': mobileStyle }"
+  (click)="toggleActiveMobildeSearch()">
+  <mat-icon>search</mat-icon>
+</button>
+<div class="matecu-topbar-search" [ngClass]="{
+      'mobile-style': mobileStyle,
+      'active-mobile': activeMobileSearch
+    }">
+  <span class="matecu-topbar-search__icon matecu-topbar-search__icon--search">
+    <mat-icon>search</mat-icon>
+  </span>
+  @if(hasValue || mobileStyle){
+  <button class="matecu-topbar-search__icon matecu-topbar-search__icon--clear" (click)="clearSearch()">
+    <mat-icon>close</mat-icon>
+  </button>
+  }
+  <input type="text" [placeholder]="placeholder" [formControl]="inputCtrl" />
+</div>
+}

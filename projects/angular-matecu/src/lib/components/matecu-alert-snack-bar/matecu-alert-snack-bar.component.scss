@@ -1,0 +1,34 @@
+:host.matecu-alert-snackbar {
+    display: flex;
+    align-items: center;
+    > * {
+        &:not(:first-child) {
+            margin-left: 10px;
+            
+        }
+
+    }
+    &--success {
+        strong {
+
+            color: rgb(32, 219, 32);
+        }
+      }
+      &--danger {
+        strong {
+            color: red;
+        }
+      }
+      &--warning {
+        strong {
+            color: orange;
+        }
+      }
+      &--info {
+        strong {
+            color: rgb(7, 160, 237)
+        }
+      }
+  
+   
+}

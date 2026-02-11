@@ -1,0 +1,8 @@
+.matecu-spinner {
+    display: inline-flex;
+    justify-content: center;
+    align-content: center;
+    &__hidden {
+        display: none;
+    }
+}

@@ -3,6 +3,11 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "paths": {
+      "angular-matecu": [
+        "./dist/angular-matecu"
+      ]
+    },
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
@@ -28,6 +33,12 @@
     },
     {
       "path": "./tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/angular-matecu/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/angular-matecu/tsconfig.spec.json"
     }
   ]
 }

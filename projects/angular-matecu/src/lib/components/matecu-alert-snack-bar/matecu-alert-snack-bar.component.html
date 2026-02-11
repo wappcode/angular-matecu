@@ -1,0 +1,10 @@
+<div>
+    <strong>{{title}}</strong> &nbsp;
+    <span>{{message}}</span>
+</div>
+@if(action?.length){
+
+<div>
+    <button mat-button color="accent" (click)="dismiss()">{{action}}</button>
+</div>
+}

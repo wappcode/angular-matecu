@@ -1,0 +1,25 @@
+<matecu-topbar-layout #topbar>
+  <matecu-topbar-header-row first-row>
+    <matecu-topbar-header-column left-column>
+      <matecu-topbar-action>
+        <button mat-icon-button><mat-icon>menu</mat-icon></button>
+      </matecu-topbar-action>
+      <matecu-topbar-fab>
+        <button mat-fab><mat-icon>add</mat-icon></button>
+      </matecu-topbar-fab>
+      <matecu-topbar-title>Topbar Layout</matecu-topbar-title>
+    </matecu-topbar-header-column>
+    <matecu-topbar-header-column right-column>
+      <matecu-topbar-search
+        (valueChange)="searchFunction($event)"
+      ></matecu-topbar-search>
+      <matecu-topbar-action>
+        <button mat-icon-button><mat-icon>more_vert</mat-icon></button>
+      </matecu-topbar-action>
+    </matecu-topbar-header-column>
+  </matecu-topbar-header-row>
+  <matecu-topbar-body>
+    Contenido de la página .....
+    <a routerLink="../topbar">Regresar al inicio</a>
+  </matecu-topbar-body>
+</matecu-topbar-layout>

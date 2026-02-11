@@ -1,0 +1,60 @@
+<h2>Módulo Alert Box</h2>
+
+<p>Importar el módulo MatecuAlertBox y agregar en los imports.</p>
+<pre>
+    import {{ "{" }} MatecuAlertBoxModule {{ "}" }} from 'angular-matecu';
+    ...
+    imports: [
+     ... 
+     MatecuAlertBoxModule
+    ]
+
+</pre>
+<h3>Ejemplo Alerta Warning</h3>
+
+<matecu-alert-box color="warning">
+  Alerta Warning
+</matecu-alert-box>
+<matecu-alert-box color="success">
+  Alerta Success
+</matecu-alert-box>
+<matecu-alert-box color="danger">
+  Alerta Danger
+</matecu-alert-box>
+<matecu-alert-box color="info">
+  Alerta Info
+</matecu-alert-box>
+<matecu-alert-box>
+  Alerta
+</matecu-alert-box>
+
+<h3>Ejemplos con iconos</h3>
+
+<matecu-alert-box color="warning" [icon]="true">
+  Alerta Warning
+</matecu-alert-box>
+<matecu-alert-box color="success" [icon]="true">
+  Alerta Success
+</matecu-alert-box>
+<matecu-alert-box color="danger" [icon]="true">
+  Alerta Danger
+</matecu-alert-box>
+<matecu-alert-box color="info" [icon]="true">
+  Alerta Info
+</matecu-alert-box>
+
+<h3>Ejemplo con icono y texto largo</h3>
+
+<matecu-alert-box color="info" [icon]="true">
+  <p>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam blanditiis voluptatem, veniam sit qui veritatis, magnam
+    eum cumque numquam voluptatibus, fugiat dolorem. Similique delectus beatae illum aspernatur quasi adipisci
+    provident.
+  </p>
+  <p>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam blanditiis voluptatem, veniam sit qui veritatis, magnam
+    eum cumque numquam voluptatibus, fugiat dolorem. Similique delectus beatae illum aspernatur quasi adipisci
+    provident.
+  </p>
+
+</matecu-alert-box>
