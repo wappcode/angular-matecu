@@ -7,6 +7,7 @@ import { AlertBoxComponent } from './components/alert-box/alert-box.component';
 import { AlertDialogComponent } from './components/alert-dialog/alert-dialog.component';
 import { SnackbarComponent } from './components/snackbar/snackbar.component';
 import { Autocomplete } from './components/autocomplete/autocomplete';
+import { AutocompleteMultiple } from './components/autocomplete-multiple/autocomplete-multiple';
 
 export const routes: Routes = [
   {
@@ -40,5 +41,9 @@ export const routes: Routes = [
   {
     path: 'autocomplete',
     component: Autocomplete,
+  },
+  {
+    path: 'autocomplete-multiple',
+    component: AutocompleteMultiple,
   },
 ];

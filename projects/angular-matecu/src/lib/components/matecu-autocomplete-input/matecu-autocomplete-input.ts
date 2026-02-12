@@ -35,6 +35,7 @@ export type MatecuAutocompleteOption = [string, string];
 export type MatecuAutocompleteFilterFn = (optionLabel: string, search: string) => boolean;
 @Component({
   selector: 'matecu-autocomplete-input',
+  standalone: true,
   imports: [
     CommonModule,
     MatAutocompleteModule,

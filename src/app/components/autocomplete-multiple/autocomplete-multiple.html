@@ -1,0 +1,7 @@
+<h1>hola mundo</h1>
+
+<mat-form-field>
+    <mat-label>Countries</mat-label>
+    <matecu-autocomplete-multiple [formControl]="control" [options]="countries"></matecu-autocomplete-multiple>
+</mat-form-field>
+{{ control.value | json }}

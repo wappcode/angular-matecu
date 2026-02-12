@@ -1,0 +1,42 @@
+
+.cdk-drop-list-dragging mat-chip-option {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  transform: scale(1.05);
+  transition: transform 200ms ease;
+}
+
+.cdk-drag-placeholder {
+  opacity: 0.25;
+  transform: scale(0.95);
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+/* Disabled */
+
+.chip-list.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.chip-list.disabled .drag-handle {
+  display: none;
+}
+
+/* Readonly */
+
+.chip-list.readonly {
+  background-color: rgba(0,0,0,0.02);
+}
+
+.chip-list.readonly .drag-handle {
+  display: none;
+}
