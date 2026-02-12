@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { MatecuAutocompleteInput } from '../../../../projects/angular-matecu/src/lib/components/matecu-autocomplete-input/matecu-autocomplete-input';
+import { MatecuAutocomplete } from '../../../../projects/angular-matecu/src/lib/components/matecu-autocomplete/matecu-autocomplete';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-autocomplete',
   imports: [
-    MatecuAutocompleteInput,
+    MatecuAutocomplete,
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
@@ -16,7 +16,7 @@ import { CommonModule } from '@angular/common';
     CommonModule,
   ],
   templateUrl: './autocomplete.html',
-  styleUrl: './autocomplete.scss',
+  styleUrls: ['./autocomplete.scss'],
 })
 export class Autocomplete {
   countries = signal<[string, string][]>([
