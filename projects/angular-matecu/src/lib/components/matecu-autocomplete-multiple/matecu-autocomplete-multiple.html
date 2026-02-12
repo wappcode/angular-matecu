@@ -1,8 +1,14 @@
+@if (loading) {
+
+<mat-progress-spinner matSuffix diameter="20" mode="indeterminate">
+</mat-progress-spinner>
+}
 <mat-chip-grid #chipGrid class="chip-list">
 
     @for (item of selectedItems(); track item.value) {
 
-    <mat-chip-row [removable]="!disabled && !readonly" (removed)="remove(item.value)">
+    <mat-chip-row [removable]="!disabled && !readonly" (removed)="remove(item.value)"
+        [matTooltip]="showTooltip ? item.label : ''" matTooltipPosition="above">
 
 
 
@@ -17,21 +23,36 @@
     </mat-chip-row>
     }
 
-    <input type="text" matInput [formControl]="searchControl" [matAutocomplete]="auto" (keydown)="onKeyDown($event)" />
+    <input type="text" matInput [formControl]="searchControl" [matAutocomplete]="auto" (keydown)="onKeyDown($event)"
+        [placeholder]="placeholder" />
 
 </mat-chip-grid>
-@if (preload) {
 
-<mat-progress-spinner matSuffix diameter="20" mode="indeterminate">
-</mat-progress-spinner>
-}
 
 <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectOption($event.option.value)"
     class="autocomplete-large-panel" [displayWith]="displayLabel">
 
-    @if (enableSelectAll) {
-    <mat-option (click)="selectAll()">
-        Select All
+    @if (!readonly && !disabled && (enableSelectAll || control.value.length > 0)) {
+    <mat-option>
+        <div style="display: flex; gap: 10px; align-items: center; justify-content: center;  ">
+
+            @if (enableSelectAll) {
+            <div>
+                <button mat-icon-button (click)="selectAll()" [matTooltip]="selectAllLabel">
+                    <mat-icon>select_all</mat-icon>
+                </button>
+            </div>
+
+            }
+            @if (control.value.length > 0) {
+            <div>
+
+                <button mat-icon-button (click)="clearAll()" [matTooltip]="clearAllLabel">
+                    <mat-icon>clear_all</mat-icon>
+                </button>
+            </div>
+            }
+        </div>
     </mat-option>
     }
 

@@ -2,6 +2,8 @@
 
 <mat-form-field appearance="outline">
     <mat-label>Countries</mat-label>
-    <matecu-autocomplete-multiple [formControl]="control" [options]="countries"></matecu-autocomplete-multiple>
+    <matecu-autocomplete-multiple placeholder="Placeholder" [formControl]="control"
+        [options]="countries"></matecu-autocomplete-multiple>
+    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
 </mat-form-field>
 {{ control.value | json }}

@@ -3,17 +3,24 @@ import { MatecuAutocompleteMultiple } from '../../../../projects/angular-matecu/
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-autocomplete-multiple',
-  imports: [MatecuAutocompleteMultiple, MatFormFieldModule, ReactiveFormsModule, CommonModule],
+  imports: [
+    MatecuAutocompleteMultiple,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    CommonModule,
+    MatIconModule,
+  ],
   templateUrl: './autocomplete-multiple.html',
   styleUrls: ['./autocomplete-multiple.scss'],
 })
 export class AutocompleteMultiple {
   control = new FormControl<string[]>([]);
   countries: [string, string][] = [
-    ['hola', 'Hola Mundo'],
+    ['hola', 'Hola Mundo el pueblo unido jamás será vencido ni el prd ni el pan'],
     ['cn', 'China'],
     ['us', 'United States'],
     ['jp', 'Japan'],

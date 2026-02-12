@@ -33,6 +33,12 @@ import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 
 import { ViewChild } from '@angular/core';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import {
+  MatecuAutocompleteFilterFn,
+  MatecuAutocompleteOption,
+} from '../../types/matecu-autocomplete';
 
 @Component({
   selector: 'matecu-autocomplete-multiple',
@@ -44,8 +50,9 @@ import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
     MatIconModule,
     MatProgressSpinnerModule,
     MatAutocompleteModule,
-    CdkFixedSizeVirtualScroll,
     ScrollingModule,
+    MatButtonModule,
+    MatTooltipModule,
   ],
   templateUrl: './matecu-autocomplete-multiple.html',
   styleUrls: ['./matecu-autocomplete-multiple.scss'],
@@ -69,15 +76,18 @@ export class MatecuAutocompleteMultiple
   // ================= INPUTS =================
 
   @Input() placeholder = '';
-  @Input() preload = false;
-  @Input() debounceTime = 300;
+  @Input() loading = false;
+  @Input() searchChangeDebounceTime = 300;
   @Input() enableSelectAll = true;
   @Input() readonly = false;
-
-  private _options = signal<[string, string][]>([]);
+  @Input() selectAllLabel = 'Select All';
+  @Input() clearAllLabel = 'Clear All';
+  @Input() showTooltip = true;
+  @Input() filterFn: MatecuAutocompleteFilterFn = this.createFilterFn();
+  private _options = signal<MatecuAutocompleteOption[]>([]);
 
   @Input({ required: true })
-  set options(value: [string, string][]) {
+  set options(value: MatecuAutocompleteOption[]) {
     this._options.set(value ?? []);
   }
 
@@ -102,10 +112,10 @@ export class MatecuAutocompleteMultiple
   readonly searchText = signal<string>(''); // 🔥 AHORA SÍ existe correctamente
 
   readonly filteredOptions = computed(() => {
-    const filter = this.searchText().toLowerCase();
+    const filter = this.searchText();
 
     return this._options().filter(
-      (o) => o[1].toLowerCase().includes(filter) && !this.control.value.includes(o[0]),
+      (o) => this.filterFn(o[1], filter) && !this.control.value.includes(o[0]),
     );
   });
 
@@ -162,7 +172,7 @@ export class MatecuAutocompleteMultiple
 
       timeout = setTimeout(() => {
         this.searchChange.emit(value);
-      }, this.debounceTime);
+      }, this.searchChangeDebounceTime);
     });
   }
   value: string[] | null = null;
@@ -221,9 +231,16 @@ export class MatecuAutocompleteMultiple
     this.autocompleteTrigger.closePanel();
   }
 
-  clearAll() {
-    if (this.readonly || this.disabled) return;
+  clearAll(): void {
+    if (this.disabled || this.readonly) return;
+
+    if (this.control.value.length === 0) return;
+
     this.control.setValue([]);
+    this.searchControl.setValue('');
+    this.searchText.set('');
+
+    this.autocompleteTrigger?.closePanel();
   }
 
   // ================= DRAG & DROP =================
@@ -288,5 +305,10 @@ export class MatecuAutocompleteMultiple
   openPanel() {
     this.autocompleteTrigger.openPanel();
     setTimeout(() => this.autocompleteTrigger.updatePosition());
+  }
+  private createFilterFn(): (v1: string, v2: string) => boolean {
+    return (v1: string, v2: string): boolean => {
+      return v1.toLowerCase().includes(v2.toLowerCase());
+    };
   }
 }

@@ -24,15 +24,14 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatFormFieldControl } from '@angular/material/form-field';
-import { Observable, startWith, map, Subject, tap, combineLatest } from 'rxjs';
+import { Observable, startWith, map, Subject, tap, combineLatest, debounceTime } from 'rxjs';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { FocusMonitor } from '@angular/cdk/a11y';
+import {
+  MatecuAutocompleteFilterFn,
+  MatecuAutocompleteOption,
+} from '../../types/matecu-autocomplete';
 
-/**
- * [value,label]
- */
-export type MatecuAutocompleteOption = [string, string];
-export type MatecuAutocompleteFilterFn = (optionLabel: string, search: string) => boolean;
 @Component({
   selector: 'matecu-autocomplete-input',
   standalone: true,
@@ -70,8 +69,9 @@ export class MatecuAutocompleteInput
   @Input() options: MatecuAutocompleteOption[] = [];
   @Input() allowCreate = false;
   @Input() loading = false;
+  @Input() readonly = false;
   @Input() filterFn: MatecuAutocompleteFilterFn = this.createFilterFn();
-
+  @Input() searchChangeDebounceTime = 300;
   // MatFormFieldControl inputs
   @Input()
   get placeholder(): string {
@@ -157,7 +157,6 @@ export class MatecuAutocompleteInput
       typeof value === 'string' &&
       this.internalValue !== value &&
       this.options.some((option) => option[1].toLowerCase() === value.toLowerCase()) === false
-      // !(this.filteredOptions$ | async)?.length
     );
   }
 
@@ -188,6 +187,7 @@ export class MatecuAutocompleteInput
         tap((value) => (this.lastSearchText = value ?? this.lastSearchText)),
         // CUando se escribe algo se limpian los valores seleccionados para que el usuario pueda seleccionar una opción o crear una nueva
         tap(() => this.clearValue()),
+        debounceTime(this.searchChangeDebounceTime),
       )
       .subscribe((value) => {
         queueMicrotask(() => {
@@ -249,7 +249,7 @@ export class MatecuAutocompleteInput
   };
 
   onOptionSelected(value: string) {
-    if (!value) {
+    if (!value || this.readonly || this.disabled) {
       return;
     }
     this.internalValue = value;

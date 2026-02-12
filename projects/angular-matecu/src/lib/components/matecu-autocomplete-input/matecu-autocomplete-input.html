@@ -1,4 +1,6 @@
-<input matInput type="text" matInput [formControl]="inputControl" [matAutocomplete]="auto" [class.loading]="loading" />
+<input matInput type="text" matInput [formControl]="inputControl" [matAutocomplete]="auto" [class.loading]="loading"
+    [disabled]="disabled" [readonly]="readonly" [placeholder]="placeholder" />
+
 
 <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected($event.option.value)"
     [displayWith]="displayLabel">
