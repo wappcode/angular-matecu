@@ -24,8 +24,7 @@
     </mat-chip-row>
     }
 
-    <input matInput [matChipInputFor]="chipGrid" [matAutocomplete]="auto" [disabled]="disabled" [readonly]="readonly"
-        [value]="searchText()" (input)="onSearch($any($event.target).value)" (keydown)="onKeyDown($event)" />
+    <input type="text" matInput [formControl]="searchControl" [matAutocomplete]="auto" (keydown)="onKeyDown($event)" />
 
 </mat-chip-grid>
 @if (preload) {

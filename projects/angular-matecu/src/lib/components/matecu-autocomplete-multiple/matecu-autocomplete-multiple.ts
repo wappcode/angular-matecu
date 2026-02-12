@@ -29,7 +29,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { CdkFixedSizeVirtualScroll, ScrollingModule } from '@angular/cdk/scrolling';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+
+import { ViewChild } from '@angular/core';
+import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'matecu-autocomplete-multiple',
@@ -90,6 +93,9 @@ export class MatecuAutocompleteMultiple
 
   control = new FormControl<string[]>([], { nonNullable: true });
   controlValue$ = toSignal(this.control.valueChanges);
+  searchControl = new FormControl<string>('', { nonNullable: true });
+  @ViewChild(MatAutocompleteTrigger)
+  autocompleteTrigger!: MatAutocompleteTrigger;
 
   // ================= SIGNALS =================
 
@@ -142,6 +148,9 @@ export class MatecuAutocompleteMultiple
     // Debounce search
     let timeout: any;
 
+    this.searchControl.valueChanges.subscribe((value) => {
+      this.searchText.set(value ?? '');
+    });
     effect(() => {
       const value = this.searchText();
 
@@ -166,17 +175,12 @@ export class MatecuAutocompleteMultiple
       this.ngControl = null;
     }
     // Propagar cambios del FormControl interno
-    this.control.valueChanges.subscribe((value) => {
+    this.control.valueChanges.pipe(takeUntilDestroyed()).subscribe((value) => {
       this.onChange(value);
       this.stateChanges.next();
     });
   }
   // ================= AUTOCOMPLETE =================
-
-  onSearch(value: string) {
-    if (this.readonly || this.disabled) return;
-    this.searchText.set(value);
-  }
 
   selectOption(option: [string, string]) {
     if (this.readonly || this.disabled) return;
@@ -185,7 +189,12 @@ export class MatecuAutocompleteMultiple
       this.control.setValue([...this.control.value, option[0]]);
     }
 
+    // limpiar input correctamente
+    this.searchControl.setValue('');
     this.searchText.set('');
+
+    // cerrar panel
+    this.autocompleteTrigger.closePanel();
   }
   displayLabel(option: [string, string]): string {
     return option[1];
@@ -205,6 +214,11 @@ export class MatecuAutocompleteMultiple
     const allValues = this._options().map((o) => o[0]);
 
     this.control.setValue([...new Set([...this.control.value, ...allValues])]);
+
+    this.searchControl.setValue('');
+    this.searchText.set('');
+
+    this.autocompleteTrigger.closePanel();
   }
 
   clearAll() {
