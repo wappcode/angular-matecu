@@ -148,8 +148,12 @@ export class MatecuAutocompleteMultiple
     // Debounce search
     let timeout: any;
 
-    this.searchControl.valueChanges.subscribe((value) => {
+    this.searchControl.valueChanges.pipe(takeUntilDestroyed()).subscribe((value) => {
       this.searchText.set(value ?? '');
+    });
+    this.control.valueChanges.pipe(takeUntilDestroyed()).subscribe((value) => {
+      this.onChange(value);
+      this.stateChanges.next();
     });
     effect(() => {
       const value = this.searchText();
@@ -175,16 +179,12 @@ export class MatecuAutocompleteMultiple
       this.ngControl = null;
     }
     // Propagar cambios del FormControl interno
-    this.control.valueChanges.pipe(takeUntilDestroyed()).subscribe((value) => {
-      this.onChange(value);
-      this.stateChanges.next();
-    });
   }
   // ================= AUTOCOMPLETE =================
 
   selectOption(option: [string, string]) {
     if (this.readonly || this.disabled) return;
-
+    if (!Array.isArray(option)) return;
     if (!this.control.value.includes(option[0])) {
       this.control.setValue([...this.control.value, option[0]]);
     }
@@ -197,7 +197,7 @@ export class MatecuAutocompleteMultiple
     this.autocompleteTrigger.closePanel();
   }
   displayLabel(option: [string, string]): string {
-    return option[1];
+    return Array.isArray(option) ? option[1] : '';
   }
 
   // ================= CHIP ACTIONS =================
@@ -283,5 +283,10 @@ export class MatecuAutocompleteMultiple
 
   ngOnDestroy() {
     this.stateChanges.complete();
+  }
+  trackByValue = (_: number, item: [string, string]) => item[0];
+  openPanel() {
+    this.autocompleteTrigger.openPanel();
+    setTimeout(() => this.autocompleteTrigger.updatePosition());
   }
 }

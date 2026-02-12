@@ -1,17 +1,10 @@
-<mat-chip-grid #chipGrid cdkDropList cdkDropListOrientation="horizontal" [cdkDropListDisabled]="disabled || readonly"
-    (cdkDropListDropped)="drop($event)" class="chip-list">
+<mat-chip-grid #chipGrid class="chip-list">
 
     @for (item of selectedItems(); track item.value) {
 
-    <mat-chip-row cdkDrag [cdkDragDisabled]="disabled || readonly" [removable]="!disabled && !readonly"
-        (removed)="remove(item.value)">
+    <mat-chip-row [removable]="!disabled && !readonly" (removed)="remove(item.value)">
 
-        @if (!disabled && !readonly) {
 
-        <mat-icon cdkDragHandle class="drag-handle">
-            drag_indicator
-        </mat-icon>
-        }
 
         {{ item.label }}
         @if (!disabled && !readonly) {
@@ -34,7 +27,7 @@
 }
 
 <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectOption($event.option.value)"
-    [displayWith]="displayLabel">
+    class="autocomplete-large-panel" [displayWith]="displayLabel">
 
     @if (enableSelectAll) {
     <mat-option (click)="selectAll()">
@@ -47,10 +40,4 @@
         {{ option[1] }}
     </mat-option>
     }
-    <!-- <cdk-virtual-scroll-viewport itemSize="48" class="viewport">
-        <mat-option *cdkVirtualFor="let option of filteredOptions()" [value]="option">
-            {{ option[1] }}
-        </mat-option>
-    </cdk-virtual-scroll-viewport> -->
-
 </mat-autocomplete>
