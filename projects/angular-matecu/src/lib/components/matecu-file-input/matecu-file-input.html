@@ -1,0 +1,130 @@
+<!-- Hidden file input -->
+<input type="file" #fileInput (change)="onFileChange($event)" [multiple]="multiple" [disabled]="isDisabled"
+    [attr.aria-label]="ariaLabel || 'Seleccionar archivo'"
+    [attr.aria-describedby]="hasErrors ? 'file-input-errors' : null" [accept]="acceptedMimeTypes.join(',')" />
+
+<!-- Main drop zone and file display -->
+<div class="file-input-container" [class.drag-over]="isDragOver" [class.disabled]="isDisabled"
+    [class.has-files]="hasFiles" [class.has-errors]="hasErrors" [class.loading]="isLoading"
+    (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)"
+    (click)="openFileDialog()">
+    <!-- Loading state -->
+    @if (isLoading) {
+    <div class="loading-container">
+        <div class="spinner"></div>
+        <span class="loading-text">{{ loadingText }}</span>
+    </div>
+    }
+
+    <!-- Empty state / Drop zone -->
+    @if (!hasFiles && !isLoading) {
+    <div class="drop-zone">
+        <div class="drop-zone-icon">
+            📁
+        </div>
+        <div class="drop-zone-content">
+            <p class="drop-zone-title">{{ placeholder }}</p>
+            <button type="button" class="select-button" [disabled]="isDisabled"
+                (click)="openFileDialog(); $event.stopPropagation()">
+                {{ buttonText }}
+            </button>
+            @if (enableDragDrop && !isDisabled) {
+            <p class="drop-zone-subtitle">o arrastra archivos aquí</p>
+            }
+        </div>
+    </div>
+    }
+
+    <!-- Single file display -->
+    @if (!multiple && file && !isLoading) {
+    <div class="single-file-display">
+        <div class="file-info">
+            <!-- File preview -->
+            @if (showPreview && previewUrl) {
+            <div class="file-preview">
+                <img [src]="previewUrl" [alt]="file.name" [style.max-width.px]="previewMaxWidth"
+                    [style.max-height.px]="previewMaxHeight" />
+            </div>
+            } @else {
+            <div class="file-icon">
+                {{ getFileIcon(file) }}
+            </div>
+            }
+
+            <div class="file-details">
+                <h3 class="file-name">{{ displayName || file.name }}</h3>
+                @if (showFileSize && selectedFileSize) {
+                <p class="file-size">
+                    {{ selectedFileSize | number : '1.2-2' }} MB
+                </p>
+                }
+                <p class="file-type">{{ file.type || 'Tipo desconocido' }}</p>
+            </div>
+        </div>
+
+        <button type="button" class="remove-file-button" (click)="removeFile(file); $event.stopPropagation()"
+            [attr.aria-label]="'Eliminar ' + file.name">
+            ✕
+        </button>
+    </div>
+    }
+
+    <!-- Multiple files display -->
+    @if (multiple && files.length > 0 && !isLoading) {
+    <div class="multiple-files-display">
+        <div class="files-header">
+            <h3>{{ files.length }} archivo(s) seleccionado(s)</h3>
+            @if (maxFiles > 1) {
+            <span class="files-counter">{{ files.length }} / {{ maxFiles }}</span>
+            }
+        </div>
+
+        <div class="files-list">
+            @for (file of files; track file.name + file.size; let i = $index) {
+            <div class="file-item">
+                <!-- File preview -->
+                @if (showPreview && file.type.startsWith('image/')) {
+                <div class="file-preview-small">
+                    <img [src]="getPreviewUrl(file)" [alt]="file.name" />
+                </div>
+                } @else {
+                <div class="file-icon-small">
+                    {{ getFileIcon(file) }}
+                </div>
+                }
+
+                <div class="file-item-details">
+                    <div class="file-item-name">{{ file.name }}</div>
+                    @if (showFileSize) {
+                    <div class="file-item-size">
+                        {{ calculateFileSizeInMB(file) | number : '1.2-2' }} MB
+                    </div>
+                    }
+                </div>
+
+                <button type="button" class="remove-file-button-small"
+                    (click)="removeFile(file); $event.stopPropagation()" [attr.aria-label]="'Eliminar ' + file.name">
+                    ✕
+                </button>
+            </div>
+            }
+        </div>
+
+        <!-- Add more files button -->
+        @if (files.length < maxFiles) { <button type="button" class="add-more-button"
+            (click)="openFileDialog(); $event.stopPropagation()">
+            + Agregar más archivos
+            </button>
+            }
+    </div>
+    }
+</div>
+
+<!-- Error messages -->
+@if (hasErrors) {
+<div id="file-input-errors" class="error-messages" role="alert">
+    @for (error of validationErrors; track error) {
+    <div class="error-message">{{ error }}</div>
+    }
+</div>
+}

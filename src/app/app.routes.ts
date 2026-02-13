@@ -8,6 +8,7 @@ import { AlertDialogComponent } from './components/alert-dialog/alert-dialog.com
 import { SnackbarComponent } from './components/snackbar/snackbar.component';
 import { Autocomplete } from './components/autocomplete/autocomplete';
 import { AutocompleteMultiple } from './components/autocomplete-multiple/autocomplete-multiple';
+import { FileInput } from './components/file-input/file-input';
 
 export const routes: Routes = [
   {
@@ -45,5 +46,9 @@ export const routes: Routes = [
   {
     path: 'autocomplete-multiple',
     component: AutocompleteMultiple,
+  },
+  {
+    path: 'file-input',
+    component: FileInput,
   },
 ];
