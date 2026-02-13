@@ -40,9 +40,9 @@
     <div class="single-file-display">
         <div class="file-info">
             <!-- File preview -->
-            @if (showPreview && previewUrl) {
+            @if (showPreview && file.type.startsWith('image/')) {
             <div class="file-preview">
-                <img [src]="previewUrl" [alt]="file.name" [style.max-width.px]="previewMaxWidth"
+                <img [src]="getPreviewUrl(file)" [alt]="file.name" [style.max-width.px]="previewMaxWidth"
                     [style.max-height.px]="previewMaxHeight" />
             </div>
             } @else {
