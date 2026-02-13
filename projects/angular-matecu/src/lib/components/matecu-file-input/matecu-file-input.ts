@@ -70,19 +70,19 @@ export class MatecuFileInput implements ControlValueAccessor, OnDestroy {
   @Input() multiple = false;
   @Input() showFileSize = false;
   @Input() displayName?: string;
-  @Input() placeholder = 'Selecciona un archivo o arrastra aquí';
-  @Input() buttonText = 'Seleccionar archivo';
-  @Input() loadingText = 'Procesando...';
+  @Input() placeholder = 'Select a file or drag here';
+  @Input() buttonText = 'Select file';
+  @Input() loadingText = 'Processing...';
   @Input() ariaLabel?: string;
 
   // Inputs - Validación
   @Input() acceptedMimeTypes: string[] = [];
   @Input() acceptedExtensions: string[] = [];
   @Input() errorMessages: ErrorMessages = {
-    invalidSize: 'El archivo excede el tamaño máximo permitido',
-    invalidType: 'Tipo de archivo no permitido',
-    tooManyFiles: 'Se excedió el número máximo de archivos',
-    uploadError: 'Error al procesar el archivo',
+    invalidSize: 'File exceeds maximum allowed size',
+    invalidType: 'File type not allowed',
+    tooManyFiles: 'Maximum number of files exceeded',
+    uploadError: 'Error processing file',
   };
 
   // Inputs - UI/UX
@@ -259,7 +259,7 @@ export class MatecuFileInput implements ControlValueAccessor, OnDestroy {
   private handleMultipleFiles(files: File[]): void {
     this.files = files;
     this.file = files[0] || undefined;
-    this.fileName = files.length > 0 ? `${files.length} archivo(s) seleccionado(s)` : undefined;
+    this.fileName = files.length > 0 ? `${files.length} file(s) selected` : undefined;
   }
 
   private async processFile(file: File): Promise<File | undefined> {
