@@ -1,0 +1,519 @@
+:host {
+  display: block;
+  width: 100%;
+
+  // 🎨 Matecu Camera Input CSS Custom Properties
+  // Base color palette
+  --matecu-camera-input-color-primary: #4f46e5;
+  --matecu-camera-input-color-primary-hover: #4338ca;
+  --matecu-camera-input-color-success: #10b981;
+  --matecu-camera-input-color-error: #ef4444;
+  --matecu-camera-input-color-error-hover: #dc2626;
+  --matecu-camera-input-color-loading: #8b5cf6;
+  --matecu-camera-input-color-disabled: #9ca3af;
+  --matecu-camera-input-color-warning: #f59e0b;
+
+  // Border colors
+  --matecu-camera-input-border-default: #e1e5e9;
+  --matecu-camera-input-border-hover: var(--matecu-camera-input-color-primary);
+  --matecu-camera-input-border-success: var(--matecu-camera-input-color-success);
+  --matecu-camera-input-border-error: var(--matecu-camera-input-color-error);
+  --matecu-camera-input-border-loading: var(--matecu-camera-input-color-loading);
+
+  // Background colors
+  --matecu-camera-input-bg-default: #fafbfc;
+  --matecu-camera-input-bg-disabled: #f5f5f5;
+  --matecu-camera-input-bg-success: #f0fdf4;
+  --matecu-camera-input-bg-error: #fef2f2;
+  --matecu-camera-input-bg-loading: #faf5ff;
+  --matecu-camera-input-bg-surface: #ffffff;
+  --matecu-camera-input-bg-surface-alt: #f3f4f6;
+  --matecu-camera-input-bg-camera: #000000;
+  --matecu-camera-input-bg-capture: rgba(255, 255, 255, 0.9);
+
+  // Text colors
+  --matecu-camera-input-text-primary: #111827;
+  --matecu-camera-input-text-secondary: #374151;
+  --matecu-camera-input-text-muted: #6b7280;
+  --matecu-camera-input-text-disabled: #9ca3af;
+  --matecu-camera-input-text-on-primary: #ffffff;
+  --matecu-camera-input-text-error: #dc2626;
+  --matecu-camera-input-text-on-dark: #ffffff;
+
+  // Button colors
+  --matecu-camera-input-button-primary-bg: var(--matecu-camera-input-color-primary);
+  --matecu-camera-input-button-primary-bg-hover: var(--matecu-camera-input-color-primary-hover);
+  --matecu-camera-input-button-primary-text: var(--matecu-camera-input-text-on-primary);
+  --matecu-camera-input-button-secondary-bg: var(--matecu-camera-input-bg-surface-alt);
+  --matecu-camera-input-button-secondary-text: var(--matecu-camera-input-text-secondary);
+  --matecu-camera-input-button-danger-bg: var(--matecu-camera-input-color-error);
+  --matecu-camera-input-button-danger-bg-hover: var(--matecu-camera-input-color-error-hover);
+  --matecu-camera-input-button-danger-text: var(--matecu-camera-input-text-on-primary);
+  --matecu-camera-input-button-capture-bg: var(--matecu-camera-input-text-on-primary);
+  --matecu-camera-input-button-capture-border: var(--matecu-camera-input-color-primary);
+
+  // Spinner colors
+  --matecu-camera-input-spinner-track: #e5e7eb;
+  --matecu-camera-input-spinner-fill: var(--matecu-camera-input-color-loading);
+
+  // Shadow colors
+  --matecu-camera-input-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --matecu-camera-input-shadow-md: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --matecu-camera-input-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --matecu-camera-input-shadow-camera: 0 4px 20px rgba(0, 0, 0, 0.3);
+
+  // Spacing and sizing
+  --matecu-camera-input-border-radius-sm: 4px;
+  --matecu-camera-input-border-radius-md: 6px;
+  --matecu-camera-input-border-radius-lg: 8px;
+  --matecu-camera-input-border-radius-xl: 12px;
+  --matecu-camera-input-border-radius-full: 50%;
+  --matecu-camera-input-border-width: 2px;
+
+  input[type='file'] {
+    display: none;
+  }
+}
+
+.camera-input-container {
+  position: relative;
+  border: var(--matecu-camera-input-border-width) dashed var(--matecu-camera-input-border-default);
+  border-radius: var(--matecu-camera-input-border-radius-lg);
+  padding: 24px;
+  background-color: var(--matecu-camera-input-bg-default);
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: all 0.3s ease;
+
+  &.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: var(--matecu-camera-input-bg-disabled);
+  }
+
+  &.has-image {
+    border-style: solid;
+    border-color: var(--matecu-camera-input-border-success);
+    background-color: var(--matecu-camera-input-bg-success);
+  }
+
+  &.has-errors {
+    border-color: var(--matecu-camera-input-border-error);
+    background-color: var(--matecu-camera-input-bg-error);
+  }
+
+  &.loading {
+    border-color: var(--matecu-camera-input-border-loading);
+    background-color: var(--matecu-camera-input-bg-loading);
+  }
+
+  &.camera-active {
+    border: none;
+    padding: 0;
+    background-color: var(--matecu-camera-input-bg-camera);
+    min-height: 400px;
+    border-radius: var(--matecu-camera-input-border-radius-lg);
+  }
+}
+
+// Loading state
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: var(--matecu-camera-input-text-muted);
+
+  .spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid var(--matecu-camera-input-spinner-track);
+    border-top: 3px solid var(--matecu-camera-input-spinner-fill);
+    border-radius: var(--matecu-camera-input-border-radius-full);
+    animation: spin 1s linear infinite;
+  }
+
+  .loading-text {
+    font-size: 14px;
+    font-weight: 500;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+// Camera video element
+.camera-video {
+  display: none;
+
+  &.active {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    border-radius: var(--matecu-camera-input-border-radius-lg);
+  }
+}
+
+// Camera view
+.camera-view {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+
+  .camera-controls {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 10;
+  }
+
+  .camera-viewport {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--matecu-camera-input-border-radius-lg);
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 100px;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
+      pointer-events: none;
+    }
+  }
+
+  .camera-actions {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+  }
+}
+
+// Camera controls
+.control-button {
+  background-color: var(--matecu-camera-input-bg-capture);
+  color: var(--matecu-camera-input-text-primary);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--matecu-camera-input-border-radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: var(--matecu-camera-input-shadow-md);
+  transition: all 0.2s ease;
+
+  &:hover:not(:disabled) {
+    transform: scale(1.05);
+    box-shadow: var(--matecu-camera-input-shadow-lg);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+// Capture button
+.capture-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 12px;
+
+  .capture-button-inner {
+    width: 70px;
+    height: 70px;
+    border: 4px solid var(--matecu-camera-input-button-capture-border);
+    border-radius: var(--matecu-camera-input-border-radius-full);
+    background-color: var(--matecu-camera-input-button-capture-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    position: relative;
+
+    &::after {
+      content: '';
+      width: 50px;
+      height: 50px;
+      background-color: var(--matecu-camera-input-button-capture-border);
+      border-radius: var(--matecu-camera-input-border-radius-full);
+    }
+  }
+
+  .capture-text {
+    color: var(--matecu-camera-input-text-on-dark);
+    font-size: 14px;
+    font-weight: 500;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  }
+
+  &:hover:not(:disabled) .capture-button-inner {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.3);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+// Empty state
+.empty-state {
+  text-align: center;
+  max-width: 300px;
+
+  .empty-state-icon {
+    font-size: 64px;
+    margin-bottom: 16px;
+  }
+
+  .empty-state-content {
+    .empty-state-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--matecu-camera-input-text-secondary);
+      margin-bottom: 24px;
+    }
+  }
+
+  .action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .camera-not-supported {
+    font-size: 12px;
+    color: var(--matecu-camera-input-text-muted);
+    margin-top: 12px;
+    font-style: italic;
+  }
+}
+
+// Buttons
+.primary-button {
+  background-color: var(--matecu-camera-input-button-primary-bg);
+  color: var(--matecu-camera-input-button-primary-text);
+  border: none;
+  padding: 12px 24px;
+  border-radius: var(--matecu-camera-input-border-radius-md);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 160px;
+  justify-content: center;
+
+  &:hover:not(:disabled) {
+    background-color: var(--matecu-camera-input-button-primary-bg-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--matecu-camera-input-shadow-md);
+  }
+
+  &:disabled {
+    background-color: var(--matecu-camera-input-color-disabled);
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+.secondary-button {
+  background-color: var(--matecu-camera-input-button-secondary-bg);
+  color: var(--matecu-camera-input-button-secondary-text);
+  border: var(--matecu-camera-input-border-width) solid var(--matecu-camera-input-border-default);
+  padding: 10px 24px;
+  border-radius: var(--matecu-camera-input-border-radius-md);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 160px;
+  justify-content: center;
+
+  &:hover:not(:disabled) {
+    border-color: var(--matecu-camera-input-border-hover);
+    background-color: var(--matecu-camera-input-bg-surface);
+    transform: translateY(-1px);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+.danger-button {
+  background-color: var(--matecu-camera-input-button-danger-bg);
+  color: var(--matecu-camera-input-button-danger-text);
+  border: none;
+  padding: 8px 12px;
+  border-radius: var(--matecu-camera-input-border-radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background-color: var(--matecu-camera-input-button-danger-bg-hover);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+// Image preview
+.image-preview-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  max-width: 400px;
+
+  .image-preview {
+    border-radius: var(--matecu-camera-input-border-radius-lg);
+    overflow: hidden;
+    box-shadow: var(--matecu-camera-input-shadow-md);
+
+    .preview-image {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+  }
+
+  .image-info {
+    text-align: center;
+
+    .image-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--matecu-camera-input-text-primary);
+      margin: 0 0 4px 0;
+    }
+
+    .image-details {
+      font-size: 14px;
+      color: var(--matecu-camera-input-text-muted);
+      margin: 0;
+    }
+  }
+
+  .image-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+}
+
+// Error messages
+.error-messages {
+  margin-top: 12px;
+
+  .error-message {
+    background-color: var(--matecu-camera-input-bg-error);
+    color: var(--matecu-camera-input-text-error);
+    padding: 8px 12px;
+    border-radius: var(--matecu-camera-input-border-radius-sm);
+    border-left: 4px solid var(--matecu-camera-input-color-error);
+    font-size: 14px;
+    margin-bottom: 4px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 640px) {
+  .camera-input-container {
+    padding: 16px;
+    min-height: 180px;
+
+    &.camera-active {
+      min-height: 300px;
+    }
+  }
+
+  .empty-state {
+    max-width: 250px;
+
+    .empty-state-icon {
+      font-size: 48px;
+    }
+
+    .action-buttons {
+      .primary-button,
+      .secondary-button {
+        min-width: 140px;
+        padding: 10px 16px;
+        font-size: 14px;
+      }
+    }
+  }
+
+  .capture-button {
+    .capture-button-inner {
+      width: 60px;
+      height: 60px;
+
+      &::after {
+        width: 40px;
+        height: 40px;
+      }
+    }
+
+    .capture-text {
+      font-size: 12px;
+    }
+  }
+
+  .image-preview-container {
+    max-width: 300px;
+
+    .image-actions {
+      .secondary-button {
+        min-width: auto;
+        padding: 8px 16px;
+      }
+    }
+  }
+}

@@ -1,0 +1,120 @@
+<!-- Hidden file input for gallery picker -->
+<input type="file" #fileInput (change)="onFileSelected($event)" [disabled]="isDisabled"
+    [attr.aria-label]="ariaLabel || 'Select image file'"
+    [attr.aria-describedby]="hasErrors ? 'camera-input-errors' : null" accept="image/*" />
+
+<!-- Hidden video and canvas for camera -->
+<video #videoElement class="camera-video" [class.active]="isCameraActive" autoplay playsinline muted>
+</video>
+<canvas #canvasElement class="camera-canvas" style="display: none;"></canvas>
+
+<!-- Main camera input container -->
+<div class="camera-input-container" [class.disabled]="isDisabled" [class.has-image]="hasImage"
+    [class.has-errors]="hasErrors" [class.loading]="isLoading" [class.camera-active]="isCameraActive">
+    <!-- Loading state -->
+    @if (isLoading) {
+    <div class="loading-container">
+        <div class="spinner"></div>
+        <span class="loading-text">{{ loadingText }}</span>
+    </div>
+    }
+
+    <!-- Camera view when active -->
+    @if (isCameraActive && !isLoading) {
+    <div class="camera-view">
+        <div class="camera-controls">
+            <button type="button" class="control-button close-button" [disabled]="isDisabled" (click)="closeCamera()"
+                [attr.aria-label]="closeButtonText">
+                ✕
+            </button>
+        </div>
+
+        <div class="camera-viewport">
+            <!-- Video element is positioned here via CSS when active -->
+        </div>
+
+        <div class="camera-actions">
+            <button type="button" class="capture-button" [disabled]="!canCapture" (click)="capturePhoto()">
+                <div class="capture-button-inner"></div>
+                <span class="capture-text">{{ captureButtonText }}</span>
+            </button>
+        </div>
+    </div>
+    }
+
+    <!-- Empty state - no image and camera not active -->
+    @if (!hasImage && !isCameraActive && !isLoading) {
+    <div class="empty-state">
+        <div class="empty-state-icon">📷</div>
+        <div class="empty-state-content">
+            <p class="empty-state-title">{{ placeholder }}</p>
+
+            <div class="action-buttons">
+                @if (enableCameraCapture && cameraSupported) {
+                <button type="button" class="camera-button primary-button" [disabled]="isDisabled"
+                    (click)="openCamera()">
+                    🎥 {{ cameraButtonText }}
+                </button>
+                }
+
+                @if (enableGalleryPicker) {
+                <button type="button" class="gallery-button secondary-button" [disabled]="isDisabled"
+                    (click)="openGalleryPicker()">
+                    🖼️ {{ galleryButtonText }}
+                </button>
+                }
+            </div>
+
+            @if (enableCameraCapture && !cameraSupported) {
+            <p class="camera-not-supported">
+                Camera not supported in this browser
+            </p>
+            }
+        </div>
+    </div>
+    }
+
+    <!-- Image preview when image is captured/selected -->
+    @if (hasImage && !isCameraActive && !isLoading) {
+    <div class="image-preview-container">
+        <div class="image-preview" [style.max-width.px]="previewMaxWidth" [style.max-height.px]="previewMaxHeight">
+            @if (showPreview && imagePreviewUrl) {
+            <img [src]="imagePreviewUrl" [alt]="displayName || capturedImage?.name || 'Captured image'"
+                class="preview-image" />
+            }
+        </div>
+
+        <div class="image-info">
+            <h3 class="image-name">
+                {{ displayName || capturedImage?.name || 'Captured Image' }}
+            </h3>
+            @if (capturedImage) {
+            <p class="image-details">
+                {{ formatFileSize(capturedImage) }} • {{ capturedImage.type }}
+            </p>
+            }
+        </div>
+
+        <div class="image-actions">
+            <button type="button" class="retake-button secondary-button" [disabled]="isDisabled"
+                (click)="removeImage()">
+                {{ retakeButtonText }}
+            </button>
+
+            <button type="button" class="remove-button danger-button" [disabled]="isDisabled" (click)="removeImage()"
+                [attr.aria-label]="'Remove ' + (capturedImage?.name || 'image')">
+                🗑️
+            </button>
+        </div>
+    </div>
+    }
+</div>
+
+<!-- Error messages -->
+@if (hasErrors) {
+<div id="camera-input-errors" class="error-messages" role="alert">
+    @for (error of validationErrors; track error) {
+    <div class="error-message">{{ error }}</div>
+    }
+</div>
+}
