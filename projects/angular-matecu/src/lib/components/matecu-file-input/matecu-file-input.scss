@@ -2,6 +2,67 @@
   display: block;
   width: 100%;
 
+  // 🎨 Matecu File Input CSS Custom Properties
+  // Base color palette
+  --matecu-file-input-color-primary: #4f46e5;
+  --matecu-file-input-color-primary-hover: #4338ca;
+  --matecu-file-input-color-success: #10b981;
+  --matecu-file-input-color-error: #ef4444;
+  --matecu-file-input-color-error-hover: #dc2626;
+  --matecu-file-input-color-loading: #8b5cf6;
+  --matecu-file-input-color-disabled: #9ca3af;
+
+  // Border colors
+  --matecu-file-input-border-default: #e1e5e9;
+  --matecu-file-input-border-hover: var(--matecu-file-input-color-primary);
+  --matecu-file-input-border-success: var(--matecu-file-input-color-success);
+  --matecu-file-input-border-error: var(--matecu-file-input-color-error);
+  --matecu-file-input-border-loading: var(--matecu-file-input-color-loading);
+  --matecu-file-input-border-separator: #e5e7eb;
+
+  // Background colors
+  --matecu-file-input-bg-default: #fafbfc;
+  --matecu-file-input-bg-hover: #f8faff;
+  --matecu-file-input-bg-drag-over: #eef2ff;
+  --matecu-file-input-bg-disabled: #f5f5f5;
+  --matecu-file-input-bg-success: #f0fdf4;
+  --matecu-file-input-bg-error: #fef2f2;
+  --matecu-file-input-bg-loading: #faf5ff;
+  --matecu-file-input-bg-surface: #ffffff;
+  --matecu-file-input-bg-surface-alt: #f3f4f6;
+
+  // Text colors
+  --matecu-file-input-text-primary: #111827;
+  --matecu-file-input-text-secondary: #374151;
+  --matecu-file-input-text-muted: #6b7280;
+  --matecu-file-input-text-disabled: #9ca3af;
+  --matecu-file-input-text-on-primary: #ffffff;
+  --matecu-file-input-text-error: #dc2626;
+
+  // Button colors
+  --matecu-file-input-button-primary-bg: var(--matecu-file-input-color-primary);
+  --matecu-file-input-button-primary-bg-hover: var(--matecu-file-input-color-primary-hover);
+  --matecu-file-input-button-primary-text: var(--matecu-file-input-text-on-primary);
+  --matecu-file-input-button-danger-bg: var(--matecu-file-input-color-error);
+  --matecu-file-input-button-danger-bg-hover: var(--matecu-file-input-color-error-hover);
+  --matecu-file-input-button-danger-text: var(--matecu-file-input-text-on-primary);
+  --matecu-file-input-button-disabled-bg: var(--matecu-file-input-color-disabled);
+
+  // Spinner colors
+  --matecu-file-input-spinner-track: #e5e7eb;
+  --matecu-file-input-spinner-fill: var(--matecu-file-input-color-loading);
+
+  // Shadow colors
+  --matecu-file-input-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --matecu-file-input-shadow-md: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+  // Spacing and sizing
+  --matecu-file-input-border-radius-sm: 4px;
+  --matecu-file-input-border-radius-md: 6px;
+  --matecu-file-input-border-radius-lg: 8px;
+  --matecu-file-input-border-radius-xl: 12px;
+  --matecu-file-input-border-width: 2px;
+
   input[type='file'] {
     display: none;
   }
@@ -9,11 +70,11 @@
 
 .file-input-container {
   position: relative;
-  border: 2px dashed #e1e5e9;
-  border-radius: 8px;
+  border: var(--matecu-file-input-border-width) dashed var(--matecu-file-input-border-default);
+  border-radius: var(--matecu-file-input-border-radius-lg);
   padding: 24px;
   transition: all 0.3s ease;
-  background-color: #fafbfc;
+  background-color: var(--matecu-file-input-bg-default);
   cursor: pointer;
   min-height: 120px;
   display: flex;
@@ -21,36 +82,36 @@
   justify-content: center;
 
   &:hover:not(.disabled) {
-    border-color: #4f46e5;
-    background-color: #f8faff;
+    border-color: var(--matecu-file-input-border-hover);
+    background-color: var(--matecu-file-input-bg-hover);
   }
 
   &.drag-over {
-    border-color: #4f46e5;
-    background-color: #eef2ff;
+    border-color: var(--matecu-file-input-border-hover);
+    background-color: var(--matecu-file-input-bg-drag-over);
     transform: scale(1.02);
   }
 
   &.disabled {
     opacity: 0.6;
     cursor: not-allowed;
-    background-color: #f5f5f5;
+    background-color: var(--matecu-file-input-bg-disabled);
   }
 
   &.has-files {
     border-style: solid;
-    border-color: #10b981;
-    background-color: #f0fdf4;
+    border-color: var(--matecu-file-input-border-success);
+    background-color: var(--matecu-file-input-bg-success);
   }
 
   &.has-errors {
-    border-color: #ef4444;
-    background-color: #fef2f2;
+    border-color: var(--matecu-file-input-border-error);
+    background-color: var(--matecu-file-input-bg-error);
   }
 
   &.loading {
-    border-color: #8b5cf6;
-    background-color: #faf5ff;
+    border-color: var(--matecu-file-input-border-loading);
+    background-color: var(--matecu-file-input-bg-loading);
   }
 }
 
@@ -60,13 +121,13 @@
   flex-direction: column;
   align-items: center;
   gap: 12px;
-  color: #6b7280;
+  color: var(--matecu-file-input-text-muted);
 
   .spinner {
     width: 32px;
     height: 32px;
-    border: 3px solid #e5e7eb;
-    border-top: 3px solid #8b5cf6;
+    border: 3px solid var(--matecu-file-input-spinner-track);
+    border-top: 3px solid var(--matecu-file-input-spinner-fill);
     border-radius: 50%;
     animation: spin 1s linear infinite;
   }
@@ -100,33 +161,33 @@
     .drop-zone-title {
       font-size: 16px;
       font-weight: 600;
-      color: #374151;
+      color: var(--matecu-file-input-text-secondary);
       margin-bottom: 12px;
     }
 
     .drop-zone-subtitle {
       font-size: 14px;
-      color: #6b7280;
+      color: var(--matecu-file-input-text-muted);
       margin-top: 8px;
     }
   }
 
   .select-button {
-    background-color: #4f46e5;
-    color: white;
+    background-color: var(--matecu-file-input-button-primary-bg);
+    color: var(--matecu-file-input-button-primary-text);
     border: none;
     padding: 12px 24px;
-    border-radius: 6px;
+    border-radius: var(--matecu-file-input-border-radius-md);
     font-weight: 500;
     cursor: pointer;
     transition: background-color 0.2s ease;
 
     &:hover:not(:disabled) {
-      background-color: #4338ca;
+      background-color: var(--matecu-file-input-button-primary-bg-hover);
     }
 
     &:disabled {
-      background-color: #9ca3af;
+      background-color: var(--matecu-file-input-button-disabled-bg);
       cursor: not-allowed;
     }
   }
@@ -139,9 +200,9 @@
   justify-content: space-between;
   width: 100%;
   padding: 16px;
-  background-color: white;
-  border-radius: 6px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  background-color: var(--matecu-file-input-bg-surface);
+  border-radius: var(--matecu-file-input-border-radius-md);
+  box-shadow: var(--matecu-file-input-shadow-md);
 
   .file-info {
     display: flex;
@@ -151,7 +212,7 @@
 
     .file-preview {
       img {
-        border-radius: 4px;
+        border-radius: var(--matecu-file-input-border-radius-sm);
         object-fit: cover;
       }
     }
@@ -159,40 +220,40 @@
     .file-icon {
       width: 48px;
       height: 48px;
-      background-color: #f3f4f6;
-      border-radius: 6px;
+      background-color: var(--matecu-file-input-bg-surface-alt);
+      border-radius: var(--matecu-file-input-border-radius-md);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 24px;
-      color: #6b7280;
+      color: var(--matecu-file-input-text-muted);
     }
 
     .file-details {
       .file-name {
         font-size: 16px;
         font-weight: 600;
-        color: #111827;
+        color: var(--matecu-file-input-text-primary);
         margin: 0 0 4px 0;
       }
 
       .file-size {
         font-size: 14px;
-        color: #6b7280;
+        color: var(--matecu-file-input-text-muted);
         margin: 0 0 2px 0;
       }
 
       .file-type {
         font-size: 12px;
-        color: #9ca3af;
+        color: var(--matecu-file-input-text-disabled);
         margin: 0;
       }
     }
   }
 
   .remove-file-button {
-    background-color: #ef4444;
-    color: white;
+    background-color: var(--matecu-file-input-button-danger-bg);
+    color: var(--matecu-file-input-button-danger-text);
     border: none;
     width: 32px;
     height: 32px;
@@ -205,7 +266,7 @@
     transition: background-color 0.2s ease;
 
     &:hover {
-      background-color: #dc2626;
+      background-color: var(--matecu-file-input-button-danger-bg-hover);
     }
   }
 }
@@ -220,21 +281,21 @@
     align-items: center;
     margin-bottom: 16px;
     padding-bottom: 8px;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid var(--matecu-file-input-border-separator);
 
     h3 {
       font-size: 16px;
       font-weight: 600;
-      color: #111827;
+      color: var(--matecu-file-input-text-primary);
       margin: 0;
     }
 
     .files-counter {
       font-size: 14px;
-      color: #6b7280;
-      background-color: #f3f4f6;
+      color: var(--matecu-file-input-text-muted);
+      background-color: var(--matecu-file-input-bg-surface-alt);
       padding: 4px 8px;
-      border-radius: 12px;
+      border-radius: var(--matecu-file-input-border-radius-xl);
     }
   }
 
@@ -250,29 +311,29 @@
     align-items: center;
     gap: 12px;
     padding: 12px;
-    background-color: white;
-    border-radius: 6px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-    border: 1px solid #e5e7eb;
+    background-color: var(--matecu-file-input-bg-surface);
+    border-radius: var(--matecu-file-input-border-radius-md);
+    box-shadow: var(--matecu-file-input-shadow-sm);
+    border: 1px solid var(--matecu-file-input-border-separator);
 
     .file-preview-small,
     .file-icon-small {
       width: 32px;
       height: 32px;
-      background-color: #f3f4f6;
-      border-radius: 4px;
+      background-color: var(--matecu-file-input-bg-surface-alt);
+      border-radius: var(--matecu-file-input-border-radius-sm);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 14px;
-      color: #6b7280;
+      color: var(--matecu-file-input-text-muted);
       flex-shrink: 0;
 
       img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        border-radius: 4px;
+        border-radius: var(--matecu-file-input-border-radius-sm);
       }
     }
 
@@ -283,7 +344,7 @@
       .file-item-name {
         font-size: 14px;
         font-weight: 500;
-        color: #111827;
+        color: var(--matecu-file-input-text-primary);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -291,13 +352,13 @@
 
       .file-item-size {
         font-size: 12px;
-        color: #6b7280;
+        color: var(--matecu-file-input-text-muted);
       }
     }
 
     .remove-file-button-small {
-      background-color: #ef4444;
-      color: white;
+      background-color: var(--matecu-file-input-button-danger-bg);
+      color: var(--matecu-file-input-button-danger-text);
       border: none;
       width: 24px;
       height: 24px;
@@ -311,25 +372,25 @@
       transition: background-color 0.2s ease;
 
       &:hover {
-        background-color: #dc2626;
+        background-color: var(--matecu-file-input-button-danger-bg-hover);
       }
     }
   }
 
   .add-more-button {
     width: 100%;
-    background-color: #f3f4f6;
-    color: #4b5563;
-    border: 2px dashed #d1d5db;
+    background-color: var(--matecu-file-input-bg-surface-alt);
+    color: var(--matecu-file-input-text-muted);
+    border: var(--matecu-file-input-border-width) dashed var(--matecu-file-input-border-separator);
     padding: 12px;
-    border-radius: 6px;
+    border-radius: var(--matecu-file-input-border-radius-md);
     cursor: pointer;
     font-weight: 500;
     transition: all 0.2s ease;
 
     &:hover {
-      background-color: #e5e7eb;
-      border-color: #9ca3af;
+      background-color: var(--matecu-file-input-bg-hover);
+      border-color: var(--matecu-file-input-text-disabled);
     }
   }
 }
@@ -339,11 +400,11 @@
   margin-top: 12px;
 
   .error-message {
-    background-color: #fef2f2;
-    color: #dc2626;
+    background-color: var(--matecu-file-input-bg-error);
+    color: var(--matecu-file-input-text-error);
     padding: 8px 12px;
-    border-radius: 4px;
-    border-left: 4px solid #ef4444;
+    border-radius: var(--matecu-file-input-border-radius-sm);
+    border-left: 4px solid var(--matecu-file-input-color-error);
     font-size: 14px;
     margin-bottom: 4px;
 

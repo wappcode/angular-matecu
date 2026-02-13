@@ -1,7 +1,12 @@
-<matecu-file-input [(ngModel)]="selectedFiles" [multiple]="true" [maxFiles]="3" [maxFileSize]="maxSize"
+<matecu-file-input [(ngModel)]="selectedFiles" [multiple]="false" [maxFiles]="1" [maxFileSize]="maxSize"
     [showPreview]="true" [showFileSize]="true" [enableDragDrop]="true" [acceptedMimeTypes]="allowedTypes"
-    (filesSelected)="onFilesSelected($event)" (validationError)="onError($event)" (stateChange)="onStateChange($event)">
+    fileSizeUnit="AUTO" (filesSelected)="onFilesSelected($event)" (validationError)="onError($event)"
+    (stateChange)="onStateChange($event)">
 </matecu-file-input>
 @if(isProcessing){
 <div>Procesando archivos...</div>
 }
+<div>
+    <h2>Valor de archivos seleccionados</h2>
+    {{selectedFiles }}
+</div>

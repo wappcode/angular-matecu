@@ -4,10 +4,11 @@ import {
   FileInputState,
 } from '../../../../projects/angular-matecu/src/lib/components/matecu-file-input/matecu-file-input';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-file-input',
-  imports: [MatecuFileInput, FormsModule],
+  imports: [MatecuFileInput, FormsModule, CommonModule],
   templateUrl: './file-input.html',
   styleUrl: './file-input.scss',
 })
