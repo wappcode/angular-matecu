@@ -23,6 +23,10 @@ interface ErrorMessages {
   uploadError: string;
 }
 
+type FileSizeUnit = 'AUTO' | 'bytes' | 'KB' | 'MB' | 'GB' | 'TB';
+
+export type { FileSizeUnit };
+
 export enum FileInputState {
   IDLE = 'idle',
   LOADING = 'loading',
@@ -69,6 +73,7 @@ export class MatecuFileInput implements ControlValueAccessor, OnDestroy {
   @Input() maxFiles = 1;
   @Input() multiple = false;
   @Input() showFileSize = false;
+  @Input() fileSizeUnit: FileSizeUnit = 'AUTO';
   @Input() displayName?: string;
   @Input() placeholder = 'Select a file or drag here';
   @Input() buttonText = 'Select file';
@@ -362,6 +367,32 @@ export class MatecuFileInput implements ControlValueAccessor, OnDestroy {
   calculateFileSizeInMB(file: File): number {
     const sizeInMB = file.size / 1024 / 1024;
     return sizeInMB > 0.01 ? sizeInMB : 0.01;
+  }
+
+  formatFileSize(file: File): string {
+    const bytes = file.size;
+
+    if (bytes === 0) return '0 bytes';
+
+    const k = 1024;
+    const sizes = ['bytes', 'KB', 'MB', 'GB', 'TB'];
+
+    // Si se especifica una unidad específica, usarla
+    if (this.fileSizeUnit !== 'AUTO') {
+      const targetUnitIndex = sizes.indexOf(this.fileSizeUnit);
+      if (targetUnitIndex !== -1) {
+        const size = bytes / Math.pow(k, targetUnitIndex);
+        const formattedSize = targetUnitIndex === 0 ? size.toString() : size.toFixed(2);
+        return `${formattedSize} ${this.fileSizeUnit}`;
+      }
+    }
+
+    // Comportamiento AUTO (original)
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    const size = bytes / Math.pow(k, i);
+    const formattedSize = i === 0 ? size.toString() : size.toFixed(2);
+
+    return `${formattedSize} ${sizes[i]}`;
   }
 
   // Public Utility Methods

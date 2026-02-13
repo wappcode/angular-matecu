@@ -1,7 +1,7 @@
 <!-- Hidden file input -->
 <input type="file" #fileInput (change)="onFileChange($event)" [multiple]="multiple" [disabled]="isDisabled"
-    [attr.aria-label]="ariaLabel || 'Seleccionar archivo'"
-    [attr.aria-describedby]="hasErrors ? 'file-input-errors' : null" [accept]="acceptedMimeTypes.join(',')" />
+    [attr.aria-label]="ariaLabel || 'Select file'" [attr.aria-describedby]="hasErrors ? 'file-input-errors' : null"
+    [accept]="acceptedMimeTypes.join(',')" />
 
 <!-- Main drop zone and file display -->
 <div class="file-input-container" [class.drag-over]="isDragOver" [class.disabled]="isDisabled"
@@ -29,7 +29,7 @@
                 {{ buttonText }}
             </button>
             @if (enableDragDrop && !isDisabled) {
-            <p class="drop-zone-subtitle">o arrastra archivos aquí</p>
+            <p class="drop-zone-subtitle">or drag files here</p>
             }
         </div>
     </div>
@@ -55,15 +55,15 @@
                 <h3 class="file-name">{{ displayName || file.name }}</h3>
                 @if (showFileSize && selectedFileSize) {
                 <p class="file-size">
-                    {{ selectedFileSize | number : '1.2-2' }} MB
+                    {{ formatFileSize(file) }}
                 </p>
                 }
-                <p class="file-type">{{ file.type || 'Tipo desconocido' }}</p>
+                <p class="file-type">{{ file.type || 'Unknown type' }}</p>
             </div>
         </div>
 
         <button type="button" class="remove-file-button" (click)="removeFile(file); $event.stopPropagation()"
-            [attr.aria-label]="'Eliminar ' + file.name">
+            [attr.aria-label]="'Remove ' + file.name">
             ✕
         </button>
     </div>
@@ -73,7 +73,7 @@
     @if (multiple && files.length > 0 && !isLoading) {
     <div class="multiple-files-display">
         <div class="files-header">
-            <h3>{{ files.length }} archivo(s) seleccionado(s)</h3>
+            <h3>{{ files.length }} file(s) selected</h3>
             @if (maxFiles > 1) {
             <span class="files-counter">{{ files.length }} / {{ maxFiles }}</span>
             }
@@ -97,13 +97,13 @@
                     <div class="file-item-name">{{ file.name }}</div>
                     @if (showFileSize) {
                     <div class="file-item-size">
-                        {{ calculateFileSizeInMB(file) | number : '1.2-2' }} MB
+                        {{ formatFileSize(file) }}
                     </div>
                     }
                 </div>
 
                 <button type="button" class="remove-file-button-small"
-                    (click)="removeFile(file); $event.stopPropagation()" [attr.aria-label]="'Eliminar ' + file.name">
+                    (click)="removeFile(file); $event.stopPropagation()" [attr.aria-label]="'Remove ' + file.name">
                     ✕
                 </button>
             </div>
@@ -113,7 +113,7 @@
         <!-- Add more files button -->
         @if (files.length < maxFiles) { <button type="button" class="add-more-button"
             (click)="openFileDialog(); $event.stopPropagation()">
-            + Agregar más archivos
+            + Add more files
             </button>
             }
     </div>

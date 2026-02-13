@@ -66,6 +66,22 @@
 </matecu-file-input>
 ```
 
+### Con Formato de Tamaño Personalizado
+
+```html
+<!-- Mostrar siempre en KB -->
+<matecu-file-input [(ngModel)]="file" [showFileSize]="true" [fileSizeUnit]="'KB'">
+</matecu-file-input>
+
+<!-- Mostrar siempre en MB -->
+<matecu-file-input [(ngModel)]="file" [showFileSize]="true" [fileSizeUnit]="'MB'">
+</matecu-file-input>
+
+<!-- Automático (predeterminado) - mejor unidad según tamaño -->
+<matecu-file-input [(ngModel)]="file" [showFileSize]="true" [fileSizeUnit]="'AUTO'">
+</matecu-file-input>
+```
+
 ### Con Mensajes de Error Personalizados
 
 ```html
@@ -87,7 +103,7 @@
 
 ```typescript
 import { Component } from '@angular/core';
-import { MatecuFileInput, FileInputState } from 'angular-matecu';
+import { MatecuFileInput, FileInputState, FileSizeUnit } from 'angular-matecu';
 
 @Component({
   selector: 'app-file-upload',
@@ -114,6 +130,7 @@ export class FileUploadComponent {
   maxSize = 5 * 1024 * 1024; // 5MB
   allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
   isProcessing = false;
+  sizeUnit: FileSizeUnit = 'AUTO'; // Nueva propiedad para controlar la unidad
 
   onFilesSelected(files: File[]) {
     console.log('Archivos seleccionados:', files);
@@ -186,6 +203,7 @@ export class FileUploadComponent {
 - `enableDragDrop`: Habilita drag & drop
 - `showPreview`: Muestra preview de imágenes
 - `showFileSize`: Muestra tamaño del archivo
+- `fileSizeUnit`: Unidad para mostrar tamaño ('AUTO' | 'bytes' | 'KB' | 'MB' | 'GB' | 'TB')
 - `displayName`: Nombre personalizado a mostrar
 - `placeholder`: Texto cuando no hay archivos
 - `buttonText`: Texto del botón de selección
