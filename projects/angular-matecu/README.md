@@ -2,17 +2,39 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Libreria con complementos y utilidades para el desarrollo de aps
+Librería con componentes y utilidades para el desarrollo de aplicaciones Angular con Material Design.
 
-# Instalar
+## Tabla de Contenido
 
-    npm install angular-matecu
+- [Instalación](#instalación)
+- [Componentes de Indicadores](#componentes-de-indicadores)
+  - [matecu-spinner](#matecu-spinner-componente)
+- [Componentes de Alertas](#componentes-de-alertas)
+  - [matecu-alert-box](#matecu-alert-box-componente)
+  - [matecu-alert-dialog](#matecu-alert-dialog-componente)
+  - [MatecuSnackBarService](#matecusnackbarservice)
+- [Componentes de Entrada (Inputs)](#componentes-de-entrada-inputs)
+  - [matecu-autocomplete](#matecu-autocomplete-componente)
+  - [matecu-autocomplete-multiple](#matecu-autocomplete-multiple-componente)
+  - [matecu-file-input](#matecu-file-input-componente)
+- [Componentes de Layout](#componentes-de-layout)
+  - [MatecuTopbarLayout](#matecutopbarlayout)
 
-Para versiones de angular menores a 15 utilizar la versión ^2.0
+## Instalación
 
-    npm install angular-matecu@^2.0
+```bash
+npm install angular-matecu
+```
 
-ver [CHANGELOG](CHANGELOG.md)
+Para versiones de Angular menores a 15 utilizar la versión ^2.0
+
+```bash
+npm install angular-matecu@^2.0
+```
+
+Ver [CHANGELOG](CHANGELOG.md)
+
+## Componentes de Indicadores
 
 ## matecu-spinner (Componente)
 
@@ -22,12 +44,16 @@ Componente que genera un spinner que se puede utilizar para indicar que la app e
 
 Importar componente o módulo
 
-    import { MatecuSpinnerComponent } from 'angular-matecu';
+```typescript
+import { MatecuSpinnerComponent } from 'angular-matecu';
+```
 
 Agregar a la plantilla de algún componente
 
-    <matecu-spinner active="true" color="'red'" size="'30px'" ></matecu-spinner>
-    <matecu-spinner global="true" color="'orange'"></matecu-spinner>
+```html
+<matecu-spinner active="true" color="'red'" size="'30px'"></matecu-spinner>
+<matecu-spinner global="true" color="'orange'"></matecu-spinner>
+```
 
 Propiedades:
 
@@ -36,23 +62,25 @@ Propiedades:
 - size: (string) Tamaño del spinner
 - global: (boolean) True indica que el cambio de visible a oculto será aplicado utilizando el servicio del spinner y aplicará a todos los que tengan asignada esta propiedad como True sin importar el valor asignado a "active"
 
-## Servicio (MatecuSpinnerService)
+## MatecuSpinnerService
 
-Uso:
+### Uso:
 
-    // import { MatecuSpinnerService } from 'angular-matecu';
-    ....
-    key: string; //
-    construct( private spinnerService: MatecuSpinnerService) {}
-    ....
-    // mostrar el spinner
-    show() {
-        this.key = this.spinnerService.add();
-    }
-    // ocultar el spinner
-    hide() {
-        this.spinnerService.remove(this.key);
-    }
+```typescript
+// import { MatecuSpinnerService } from 'angular-matecu';
+// ...
+key: string;
+constructor(private spinnerService: MatecuSpinnerService) {}
+// ...
+// mostrar el spinner
+show() {
+    this.key = this.spinnerService.add();
+}
+// ocultar el spinner
+hide() {
+    this.spinnerService.remove(this.key);
+}
+```
 
 Métodos:
 
@@ -64,23 +92,29 @@ Métodos:
 
 - clear: Elimina todas las claves forzando a que el spinner pase al estado inactivo.
 
+## Componentes de Alertas
+
 ## matecu-alert-box (Componente)
 
 ### Uso:
 
 Importar componente o módulo
 
-    import { MatecuAlertBoxComponent } from 'angular-matecu';
+```typescript
+import { MatecuAlertBoxComponent } from 'angular-matecu';
+```
 
 Agregar a la plantilla de algún componente
 
-    <matecu-alert-box color="success"> Alerta Success </matecu-alert-box>
+```html
+<matecu-alert-box color="success"> Alerta Success </matecu-alert-box>
+```
 
-Colores: - warning - danger - success - info
+**Colores disponibles:** `warning` | `danger` | `success` | `info`
 
 ## matecu-alert-dialog (Componente)
 
-Dialogo de alerta o confirmación
+Diálogo de alerta o confirmación
 
 ### Uso:
 
@@ -88,106 +122,288 @@ Importar módulo
 
 En el componente
 
-    import { MatDialog } from '@angular/material/dialog';
-    import { MatecuAlertDialogComponent, MatecuAlertBoxType } from 'angular-matecu';
-    import { filter } from 'rxjs/operators';
+```typescript
+import { MatDialog } from '@angular/material/dialog';
+import { MatecuAlertDialogComponent, MatecuAlertBoxType } from 'angular-matecu';
+import { filter } from 'rxjs/operators';
 
-    // ....
-    constructor(private dialog: MatDialog) {}
+// ....
+constructor(private dialog: MatDialog) {}
 
-    openBasicDialog(): void {
-    const message = 'Mensaje a mostrar';
-    const type = 'warning'; // warning, danger, success, info
-    const icon = true
-    const dismissText = 'Cancelar'; // texto del boton para cerrar el diálogo (opcional)
-    const action = 'Confirmar'; // texto del boton para activar la acción pricipal del diálogo (opcional)
-    const title = 'Titulo del diálogo';
-    const dialogRef = this.dialog.open(MatecuAlertDialogComponent, {
-      data: { message, type, icon, dismissText, action, title },
-    });
-    // afterClosed retorna un valor boolean o null que se puede utilizar para determinar si se va a ejecutar alguna acción
-    dialogRef.afterClosed().pipe(
-      filter(execAction => !!execAction)
-    ).subscribe();
-
+openBasicDialog(): void {
+  const message = 'Mensaje a mostrar';
+  const type = 'warning'; // warning, danger, success, info
+  const icon = true
+  const dismissText = 'Cancelar'; // texto del botón para cerrar el diálogo (opcional)
+  const action = 'Confirmar'; // texto del botón para activar la acción principal del diálogo (opcional)
+  const title = 'Título del diálogo';
+  const dialogRef = this.dialog.open(MatecuAlertDialogComponent, {
+    data: { message, type, icon, dismissText, action, title },
+  });
+  // afterClosed retorna un valor boolean o null que se puede utilizar para determinar si se va a ejecutar alguna acción
+  dialogRef.afterClosed().pipe(
+    filter(execAction => !!execAction)
+  ).subscribe();
 }
+```
 
 ## MatecuSnackBarService
 
-Servicio para abrir dialogos snackBar con titulos con colores para Error, Success, Warning, Info
+Servicio para abrir diálogos snackBar con títulos con colores para Error, Success, Warning, Info
 
 ### Uso
 
 Importar en el módulo MatecuAlertBoxModule en app.module
 
-    import { MatecuAlertBoxModule } from 'angular-matecu';
-    @NgModule({
-     imports: [
-        ...
-        MatecuAlertBoxModule
-        ...
-      ],
-        ...
-    })
-    export class AppModule { }
+```typescript
+import { MatecuAlertBoxModule } from 'angular-matecu';
+
+@NgModule({
+  imports: [
+    ...
+    MatecuAlertBoxModule
+    ...
+  ],
+  ...
+})
+export class AppModule { }
+```
 
 En el componente
 
-    import { MatecuSnackBarService } from 'angular-matecu';
+```typescript
+import { MatecuSnackBarService } from 'angular-matecu';
 
-     // ....
-    constructor(private snackBar: MatecuSnackBarService) { }
+// ....
+constructor(private snackBar: MatecuSnackBarService) { }
 
-    openError(): void {
-         this.snackBar.openError('Mensaje de error');
-    }
+openError(): void {
+     this.snackBar.openError('Mensaje de error');
+}
+```
 
 ### Métodos
 
-    - openError()
-    - openInfo()
-    - openWarning()
-    - openSuccess()
-    - open()
-    - dismiss()
+- `openError()`
+- `openInfo()`
+- `openWarning()`
+- `openSuccess()`
+- `open()`
+- `dismiss()`
+
+## Componentes de Entrada (Inputs)
+
+## matecu-autocomplete (Componente)
+
+Componente de autocompletado simple que permite buscar y seleccionar una opción de una lista.
+
+### Uso:
+
+Importar componente
+
+```typescript
+import { MatecuAutocomplete } from 'angular-matecu';
+```
+
+Agregar a la plantilla
+
+```html
+<matecu-autocomplete
+  [options]="options"
+  placeholder="Buscar..."
+  [allowCreate]="false"
+  [loading]="false"
+  [readonly]="false"
+  (searchChange)="onSearchChange($event)"
+  [(ngModel)]="selectedValue"
+>
+</matecu-autocomplete>
+```
+
+### Propiedades:
+
+- `options`: Array de opciones tipo `[value, label][]`
+- `allowCreate`: Permite crear nuevas opciones sobre la marcha
+- `loading`: Muestra indicador de carga
+- `readonly`: Modo de solo lectura
+- `filterFn`: Función personalizada para filtrar opciones
+- `searchChangeDebounceTime`: Tiempo de debounce para búsqueda (default: 300ms)
+- `placeholder`: Texto de placeholder
+- `required`: Campo obligatorio
+- `disabled`: Campo deshabilitado
+
+### Eventos:
+
+- `searchChange`: Se emite cuando cambia el texto de búsqueda
+
+## matecu-autocomplete-multiple (Componente)
+
+Componente de autocompletado que permite seleccionar múltiples opciones con chips y reordenamiento por drag & drop.
+
+### Uso:
+
+```typescript
+import { MatecuAutocompleteMultiple } from 'angular-matecu';
+```
+
+```html
+<matecu-autocomplete-multiple
+  [options]="options"
+  placeholder="Seleccionar opciones..."
+  [enableSelectAll]="true"
+  [showTooltip]="true"
+  [readonly]="false"
+  [loading]="false"
+  selectAllLabel="Seleccionar Todo"
+  clearAllLabel="Limpiar Todo"
+  (searchChange)="onSearchChange($event)"
+  [(ngModel)]="selectedValues"
+>
+</matecu-autocomplete-multiple>
+```
+
+### Propiedades:
+
+- `options`: Array de opciones tipo `[value, label][]`
+- `enableSelectAll`: Habilita botones de "Seleccionar Todo" y "Limpiar Todo"
+- `showTooltip`: Muestra tooltip con el texto completo en chips largos
+- `selectAllLabel`: Texto del botón "Seleccionar Todo"
+- `clearAllLabel`: Texto del botón "Limpiar Todo"
+- `filterFn`: Función personalizada para filtrar opciones
+- `searchChangeDebounceTime`: Tiempo de debounce para búsqueda (default: 300ms)
+- `placeholder`: Texto de placeholder
+- `loading`: Muestra indicador de carga
+- `readonly`: Modo de solo lectura
+
+### Eventos:
+
+- `searchChange`: Se emite cuando cambia el texto de búsqueda
+
+### Funcionalidades:
+
+- **Drag & Drop**: Los chips seleccionados se pueden reordenar arrastrando
+- **Virtual Scrolling**: Optimizado para listas grandes de opciones
+- **Select All/Clear All**: Botones para seleccionar o limpiar todas las opciones
+- **Tooltips**: Muestra el texto completo cuando el chip es muy largo
+
+## matecu-file-input (Componente)
+
+Componente avanzado para carga de archivos con validaciones, preview, drag & drop y optimización de imágenes.
+
+### Uso:
+
+```typescript
+import { MatecuFileInput } from 'angular-matecu';
+```
+
+```html
+<matecu-file-input
+  [multiple]="false"
+  [maxFiles]="1"
+  [maxFileSize]="5242880"
+  [acceptedMimeTypes]="['image/jpeg', 'image/png']"
+  [acceptedExtensions]="['.jpg', '.png']"
+  [showPreview]="true"
+  [enableDragDrop]="true"
+  [showFileSize]="true"
+  placeholder="Selecciona un archivo o arrastra aquí"
+  buttonText="Seleccionar archivo"
+  (fileSelect)="onFileSelect($event)"
+  (fileRemove)="onFileRemove($event)"
+  [(ngModel)]="selectedFiles"
+>
+</matecu-file-input>
+```
+
+### Propiedades de Validación:
+
+- `maxFileSize`: Tamaño máximo de archivo en bytes
+- `maxFiles`: Número máximo de archivos permitidos
+- `acceptedMimeTypes`: Array de tipos MIME permitidos
+- `acceptedExtensions`: Array de extensiones de archivo permitidas
+
+### Propiedades de Funcionalidad:
+
+- `multiple`: Permite selección múltiple de archivos
+- `enableDragDrop`: Habilita funcionalidad de drag & drop
+- `showPreview`: Muestra preview de imágenes
+- `showFileSize`: Muestra el tamaño de los archivos
+- `fileSizeUnit`: Unidad para mostrar tamaño ('AUTO', 'bytes', 'KB', 'MB', 'GB', 'TB')
+
+### Propiedades de UI:
+
+- `placeholder`: Texto cuando no hay archivos seleccionados
+- `buttonText`: Texto del botón de selección
+- `changeSelectedFileText`: Texto del botón para cambiar archivo
+- `loadingText`: Texto durante procesamiento
+- `previewMaxWidth`/`previewMaxHeight`: Tamaño máximo del preview
+
+### Optimización de Imágenes:
+
+```typescript
+// Función personalizada de optimización
+optimizeImage = async (file: File): Promise<File> => {
+  // Tu lógica de optimización
+  return optimizedFile;
+};
+```
+
+```html
+<matecu-file-input [optimizeImage]="optimizeImage" [optimizeImageToSize]="1024000">
+</matecu-file-input>
+```
+
+### Eventos:
+
+- `fileSelect`: Se emite cuando se seleccionan archivos
+- `fileRemove`: Se emite cuando se remueve un archivo
+- `validationError`: Se emite cuando hay errores de validación
+
+### Estados del Componente:
+
+- `IDLE`: Estado inicial
+- `LOADING`: Procesando archivos
+- `SUCCESS`: Archivos procesados correctamente
+- `ERROR`: Error en procesamiento
+
+## Componentes de Layout
 
 ## MatecuTopbarLayout
 
-Crea la estructura para una página que contiene un topbar en posición fija a la que se le pueden agregar botones de acciones, titulo y buscador.
+Crea la estructura para una página que contiene un topbar en posición fija a la que se le pueden agregar botones de acciones, título y buscador.
 
 El contenido de la página tiene una función que se puede llamar para realizar un desplazamiento hacia arriba.
 
-## Ejemplo básico
+### Ejemplo básico
 
 Importar módulo o componentes
 
-```
-    // ...
-    import { MatecuTopbarLayoutModule } from 'angular-matecu';
-    import { MatIconModule } from '@angular/material/icon';
-    import { MatButtonModule } from '@angular/material/button';
-    // Se pueden importar los componentes de forma individual
-    // ...
-    @NgModule({
-
-    declarations: [AppComponent],
-    imports: [
+```typescript
+// ...
+import { MatecuTopbarLayoutModule } from 'angular-matecu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+// Se pueden importar los componentes de forma individual
+// ...
+@NgModule({
+  declarations: [AppComponent],
+  imports: [
     // ...
     MatecuTopbarLayoutModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
     // ...
-    ],
-    providers: [],
-    bootstrap: [AppComponent],
-    })
-    export class AppModule {}
+  ],
+  providers: [],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}
 ```
 
 Agregar a la plantilla de algún componente:
 
-```
- <matecu-topbar-layout #topbar>
+```html
+<matecu-topbar-layout #topbar>
   <matecu-topbar-header-row first-row>
     <matecu-topbar-header-column left-column>
       <matecu-topbar-action>
@@ -213,12 +429,11 @@ Agregar a la plantilla de algún componente:
     <button (click)="topbar.scrollTop()">Regresar al inicio</button>
   </matecu-topbar-body>
 </matecu-topbar-layout>
-
 ```
 
 Agregar al componente el método para capturar el texto de búsqueda
 
-```
+```typescript
 import { Component } from '@angular/core';
 
 @Component({
@@ -230,27 +445,27 @@ export class AppComponent {
   searchFunction(searchText: string) {
     console.log(searchText);
   }
-
 }
-
 ```
 
 Ajustar los colores y los estilos en el archivo de css del componente o el archivo de css global
 
-````
+```scss
 // global
 :root {
-    // ...
+  // ...
   --mtb-primary-color: red;
   // ...
 }
+
 // en el componente
 :host {
-    // ...
+  // ...
   --mtb-primary-color: red;
   // ...
 }
 ```
+
 ## Componentes
 
 ### MatecuTopbarLayout:
@@ -275,26 +490,26 @@ Componente principal
 
 ### Outputs
 
-- mobileStyleChange: Propiedad que se actualiza cuando se redimenciona el componente y se calcula utilizando el valor de mobileWidth. Indica si se deben aplicar estilos para dispositivos móviles
-- whenResize: Evento que se emite cuando se redimenciona el componente y retorna el nuevo valor del ancho.
+- mobileStyleChange: Propiedad que se actualiza cuando se redimensiona el componente y se calcula utilizando el valor de mobileWidth. Indica si se deben aplicar estilos para dispositivos móviles
+- whenResize: Evento que se emite cuando se redimensiona el componente y retorna el nuevo valor del ancho.
 
-### Metodos
+### Métodos
 
-- scrollTop : Funcion que se puede llamar desde el componente padre y hace scroll del contenido hacia la parte superior
+- scrollTop: Función que se puede llamar desde el componente padre y hace scroll del contenido hacia la parte superior
 
 ### MatecuTopbarHeaderRow
 
-Crea una fila para agregar contenido en el encabezado, pueden agregarse hasta 2 filas y es necesario agregar alguno de los siguientes atributos first-row, second-row
+Crea una fila para agregar contenido en el encabezado, pueden agregarse hasta 2 filas y es necesario agregar alguno de los siguientes atributos `first-row`, `second-row`
 
 #### Variables de estilos
 
-- --mtb-row-padding
-- --mtb-row-margin
-- --mtb-row-width
+- `--mtb-row-padding`
+- `--mtb-row-margin`
+- `--mtb-row-width`
 
 ### MatecuTopbarHeaderColumn
 
-Crea una columna para agregar contenido a una fila del encabezado es necesario agregar alguno de los siguientes atributos left-column,right-column
+Crea una columna para agregar contenido a una fila del encabezado es necesario agregar alguno de los siguientes atributos `left-column`, `right-column`
 
 ### MatecuTopbarAction
 
@@ -302,23 +517,22 @@ Crea un contenedor para agregar acciones como links o botones preferentemente en
 
 #### Variables de estilos
 
-- --mtb-action-padding
-- --mtb-action-margin
+- `--mtb-action-padding`
+- `--mtb-action-margin`
 
 ### MatecuTopbarFab
 
-Crea un contenedor para agregar un boton (FAB)
+Crea un contenedor para agregar un botón (FAB)
 
 #### Variables de estilos
 
-- --mtb-fab-mobile-bottom-position : Posición relativa a la parte inferior del componente pricipal que se aplica cuando estan activos los estilos para dispositivos móviles.
-
-- --mtb-fab-mobile-right-position: Posición relativa a la parte inferior del componente MatecuTopbarLayout
+- `--mtb-fab-mobile-bottom-position`: Posición relativa a la parte inferior del componente principal que se aplica cuando están activos los estilos para dispositivos móviles.
+- `--mtb-fab-mobile-right-position`: Posición relativa a la parte inferior del componente MatecuTopbarLayout
 
 #### Inputs
 
-- mobileStyle: Valor boolaneo que indica si se ajustan los estilos para dispositivos móviles
-- display: Valor boolean que indica si se debe mostrar el componente
+- `mobileStyle`: Valor booleano que indica si se ajustan los estilos para dispositivos móviles
+- `display`: Valor boolean que indica si se debe mostrar el componente
 
 ### MatecuTopbarSearch
 
@@ -326,14 +540,14 @@ Crea un campo de texto para hacer búsquedas
 
 #### Inputs
 
-- value: Especifica el valor de la búsqueda
-- mobileStyle: Valor boolaneo que indica si se ajustan los estilos para dispositivos móviles
-- placeholder: Valor del Placeholder del campo de búsqueda
-- display: Valor boolean que indica si se debe mostrar el componente
+- `value`: Especifica el valor de la búsqueda
+- `mobileStyle`: Valor booleano que indica si se ajustan los estilos para dispositivos móviles
+- `placeholder`: Valor del Placeholder del campo de búsqueda
+- `display`: Valor boolean que indica si se debe mostrar el componente
 
 #### Outputs
 
-- valueChanges: Emite un evento con el valor del texto ingresado en el campo de búsqueda
+- `valueChanges`: Emite un evento con el valor del texto ingresado en el campo de búsqueda
 
 ### MatecuTopbarTitle
 
@@ -341,8 +555,8 @@ Crea un contenedor para agregar un título a la página.
 
 #### Variables de estilos
 
-- --mtb-title-padding
-- --mtb-title-margin
+- `--mtb-title-padding`
+- `--mtb-title-margin`
 
 ### MatecuTopbarBody
 
@@ -350,7 +564,10 @@ Crea un contenedor para agregar el contenido de la página
 
 #### Variables de estilos
 
---mtb-body-padding: Padding para el contenido
---mtb-body-background: Fondo del contenido;
---mtb-body-padding-button: Padding inferior (Es utilizado para asignar un espacio al Botón principal (FAB) cuando tiene asignados los estilos para dispositivos móviles)
-````
+- `--mtb-body-padding`: Padding para el contenido
+- `--mtb-body-background`: Fondo del contenido
+- `--mtb-body-padding-button`: Padding inferior (Es utilizado para asignar un espacio al Botón principal (FAB) cuando tiene asignados los estilos para dispositivos móviles)
+
+```
+
+```

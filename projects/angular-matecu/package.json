@@ -1,11 +1,11 @@
 {
   "name": "angular-matecu",
-  "version": "4.0.7",
+  "version": "4.1.0",
   "license": "MIT",
   "peerDependencies": {
-    "@angular/common": "^15.x || ^16.x || ^17.x || ^18.x || 19.x",
-    "@angular/core": "^15.x || ^16.x || ^17.x || ^18.x || 19.x",
-    "@angular/material": "^15.x || ^16.x || ^17.x || ^18.x || 19.x"
+    "@angular/common": ">=17.0.0",
+    "@angular/core": ">=17.0.0",
+    "@angular/material": ">=17.0.0"
   },
   "dependencies": {},
   "devDependencies": {}
