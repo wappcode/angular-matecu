@@ -1,7 +1,8 @@
-<matecu-file-input [(ngModel)]="selectedFiles" [multiple]="false" [maxFiles]="1" [maxFileSize]="maxSize"
+<matecu-file-input [(ngModel)]="selectedFiles" [multiple]="true" [maxFiles]="3" [maxFileSize]="maxSize"
     [showPreview]="true" [showFileSize]="true" [enableDragDrop]="true" [acceptedMimeTypes]="allowedTypes"
     fileSizeUnit="AUTO" (filesSelected)="onFilesSelected($event)" (validationError)="onError($event)"
-    (stateChange)="onStateChange($event)">
+    changeSelectedFileText="Cambiar Archivos" placeholder="Selecciona o arrastra tus archivos aquí"
+    buttonText="Seleccionar Archivos" (stateChange)="onStateChange($event)">
 </matecu-file-input>
 @if(isProcessing){
 <div>Procesando archivos...</div>

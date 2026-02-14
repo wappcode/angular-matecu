@@ -77,6 +77,7 @@ export class MatecuFileInput implements ControlValueAccessor, OnDestroy {
   @Input() displayName?: string;
   @Input() placeholder = 'Select a file or drag here';
   @Input() buttonText = 'Select file';
+  @Input() changeSelectedFileText = 'Change selected file(s)';
   @Input() loadingText = 'Processing...';
   @Input() ariaLabel?: string;
 

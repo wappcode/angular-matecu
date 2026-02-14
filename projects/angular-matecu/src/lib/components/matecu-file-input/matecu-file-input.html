@@ -29,7 +29,6 @@
                 {{ buttonText }}
             </button>
             @if (enableDragDrop && !isDisabled) {
-            <p class="drop-zone-subtitle">or drag files here</p>
             }
         </div>
     </div>
@@ -73,7 +72,6 @@
     @if (multiple && files.length > 0 && !isLoading) {
     <div class="multiple-files-display">
         <div class="files-header">
-            <h3>{{ files.length }} file(s) selected</h3>
             @if (maxFiles > 1) {
             <span class="files-counter">{{ files.length }} / {{ maxFiles }}</span>
             }
@@ -113,7 +111,7 @@
         <!-- Add more files button -->
         @if (files.length < maxFiles) { <button type="button" class="add-more-button"
             (click)="openFileDialog(); $event.stopPropagation()">
-            + Add more files
+            {{ changeSelectedFileText }}
             </button>
             }
     </div>
