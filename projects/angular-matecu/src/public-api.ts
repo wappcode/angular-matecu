@@ -33,3 +33,10 @@ export * from './lib/components/matecu-alert-snack-bar/matecu-alert-snack-bar.co
 export * from './lib/types/matecu-altert-box-type';
 export * from './lib/types/matecu-alert-dialog';
 export * from './lib/services/matecu-snack-bar.service';
+
+/**
+ * inputs
+ */
+export * from './lib/components/matecu-autocomplete/matecu-autocomplete';
+export * from './lib/components/matecu-autocomplete-multiple/matecu-autocomplete-multiple';
+export * from './lib/components/matecu-file-input/matecu-file-input';
