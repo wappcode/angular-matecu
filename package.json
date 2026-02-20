@@ -4,7 +4,12 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build:library-watch": "ng build --prod --watch angular-matecu",
+    "build-library": "ng build --configuration production angular-matecu",
+    "copy-changelog-dist": "copyfiles -f projects/angular-matecu/CHANGELOG.md dist/angular-matecu",
+    "build:library": "npm-run-all --sequential build-library copy-changelog-dist",
+    "build": "npm-run-all  build:library",
+    "build-watch": "npm-run-all --parallel build:library-watch",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -41,6 +46,7 @@
     "@angular/material": "^21.1.3",
     "jsdom": "^27.1.0",
     "ng-packagr": "^21.1.0",
+    "npm-run-all": "^4.1.5",
     "typescript": "~5.9.2",
     "vitest": "^4.0.8"
   }
