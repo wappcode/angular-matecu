@@ -1,11 +1,6 @@
 <form [formGroup]="form">
-  <matecu-datetime-picker
-    apparance="outline"
-    dateLabel="Fecha"
-    formControlName="input"
-    matTimepickerMin="8:00"
-    matTimepickerMax="12:00"
-  >
+  <matecu-datetime-picker apparance="outline" dateLabel="Fecha" formControlName="input" matTimepickerMin="8:00"
+    matTimepickerMax="12:00">
     <div mat-error-date>Error Fecha</div>
     <span mat-hint-date>Formatfecha</span>
     <span mat-hint-time>FormatTime</span>
