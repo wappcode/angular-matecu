@@ -16,6 +16,7 @@ Librería con componentes y utilidades para el desarrollo de aplicaciones Angula
 - [Componentes de Entrada (Inputs)](#componentes-de-entrada-inputs)
   - [matecu-autocomplete](#matecu-autocomplete-componente)
   - [matecu-autocomplete-multiple](#matecu-autocomplete-multiple-componente)
+  - [matecu-datetime-picker](#matecu-datetime-picker-componente)
   - [matecu-file-input](#matecu-file-input-componente)
 - [Componentes de Layout](#componentes-de-layout)
   - [MatecuTopbarLayout](#matecutopbarlayout)
@@ -285,6 +286,62 @@ import { MatecuAutocompleteMultiple } from 'angular-matecu';
 - **Virtual Scrolling**: Optimizado para listas grandes de opciones
 - **Select All/Clear All**: Botones para seleccionar o limpiar todas las opciones
 - **Tooltips**: Muestra el texto completo cuando el chip es muy largo
+
+## matecu-datetime-picker (Componente)
+
+Componente para selección de fecha y hora en un solo control.
+
+### Uso:
+
+```typescript
+import { MatecuDatetimePicker } from 'angular-matecu';
+```
+
+```html
+<matecu-datetime-picker
+  dateLabel="Fecha"
+  timeLabel="Hora"
+  apparance="fill"
+  [minDate]="minDate"
+  [maxDate]="maxDate"
+  matTimepickerMin="08:00"
+  matTimepickerMax="18:00"
+  [timeInterval]="'00:30'"
+  [timeOptions]="timeOptions"
+  [matDatepickerFilter]="dateFilter"
+  (valueChange)="onDateTimeChange($event)"
+  [(ngModel)]="selectedDateTime"
+>
+  <span mat-hint-date>Selecciona una fecha válida</span>
+  <span mat-hint-time>Selecciona una hora válida</span>
+</matecu-datetime-picker>
+```
+
+### Propiedades:
+
+- `dateLabel`: Texto del campo de fecha
+- `timeLabel`: Texto del campo de hora
+- `apparance`: Apariencia del `mat-form-field` (`fill`, `outline`, etc.)
+- `disabled`: Deshabilita el componente
+- `minDate` / `maxDate`: Rango permitido para la fecha
+- `matTimepickerMin` / `matTimepickerMax`: Rango permitido para la hora (`HH:mm`)
+- `timeInterval`: Intervalo de tiempo para opciones del timepicker
+- `timeOptions`: Opciones fijas de hora (`MatTimepickerOption<Date>[]`)
+- `matDatepickerFilter`: Filtro personalizado para fechas
+
+### Eventos:
+
+- `valueChange`: Emite el valor `Date | null` al cambiar fecha u hora
+
+### Integración con Formularios:
+
+- Implementa `ControlValueAccessor`, por lo que soporta `[(ngModel)]` y formularios reactivos.
+
+### Comportamiento responsive:
+
+- El componente usa `container queries` sobre su host y adapta el layout interno cuando su ancho es menor o igual a `400px`.
+- En ese estado, los campos se muestran en columna y se aplican estilos móviles al contenedor interno.
+- Puedes personalizar el fondo móvil con la variable CSS `--matecu-datetime-picker-mobile-bg`.
 
 ## matecu-file-input (Componente)
 
