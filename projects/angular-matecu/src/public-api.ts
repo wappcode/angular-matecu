@@ -40,3 +40,4 @@ export * from './lib/services/matecu-snack-bar.service';
 export * from './lib/components/matecu-autocomplete/matecu-autocomplete';
 export * from './lib/components/matecu-autocomplete-multiple/matecu-autocomplete-multiple';
 export * from './lib/components/matecu-file-input/matecu-file-input';
+export * from './lib/components/matecu-datetime-picker/matecu-datetime-picker';
