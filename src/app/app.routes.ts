@@ -9,6 +9,7 @@ import { SnackbarComponent } from './components/snackbar/snackbar.component';
 import { Autocomplete } from './components/autocomplete/autocomplete';
 import { AutocompleteMultiple } from './components/autocomplete-multiple/autocomplete-multiple';
 import { FileInput } from './components/file-input/file-input';
+import { DatetimePicker } from './components/datetime-picker/datetime-picker';
 
 export const routes: Routes = [
   {
@@ -50,5 +51,9 @@ export const routes: Routes = [
   {
     path: 'file-input',
     component: FileInput,
+  },
+  {
+    path: 'datetime-picker',
+    component: DatetimePicker,
   },
 ];
