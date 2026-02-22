@@ -1,5 +1,11 @@
 <form [formGroup]="form">
-  <matecu-datetime-picker apparance="outline" dateLabel="Fecha" formControlName="input">
+  <matecu-datetime-picker
+    apparance="outline"
+    dateLabel="Fecha"
+    formControlName="input"
+    matTimepickerMin="8:00"
+    matTimepickerMax="12:00"
+  >
     <div mat-error-date>Error Fecha</div>
     <div mat-error-time>Error en el tiempo</div>
   </matecu-datetime-picker>
@@ -10,3 +16,5 @@
 {{ form.get('input')?.value }}
 <br />
 {{ form.get('input')?.errors | json }}
+<br />
+{{ form.invalid }}
