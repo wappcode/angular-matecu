@@ -1,4 +1,13 @@
 :host {
   display: flex;
+  >mat-form-field:last-of-type{
+max-width: 140px;
+  }
   gap: 8px;
+    --matecu-datetime-picker-mobile-max-width: 600px;
+    @media screen and (max-width: 400px) {
+      flex-direction: column;
+      gap: 2px;
+
+    }
 }
