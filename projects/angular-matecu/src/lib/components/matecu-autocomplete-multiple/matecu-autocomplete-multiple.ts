@@ -1,35 +1,34 @@
 import {
   Component,
-  Input,
-  Output,
-  EventEmitter,
-  forwardRef,
-  OnDestroy,
-  signal,
   computed,
   effect,
-  inject,
-  OnInit,
+  EventEmitter,
+  forwardRef,
   Injector,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  signal,
 } from '@angular/core';
 
 import {
   ControlValueAccessor,
-  NG_VALUE_ACCESSOR,
   FormControl,
+  NG_VALUE_ACCESSOR,
   ReactiveFormsModule,
 } from '@angular/forms';
 
-import { MatFormFieldControl } from '@angular/material/form-field';
-import { NgControl } from '@angular/forms';
-import { Subject } from 'rxjs';
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { NgControl } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatFormFieldControl } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { CdkFixedSizeVirtualScroll, ScrollingModule } from '@angular/cdk/scrolling';
-import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { Subject } from 'rxjs';
 
 import { ViewChild } from '@angular/core';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
@@ -98,6 +97,7 @@ export class MatecuAutocompleteMultiple
   // ================= OUTPUT =================
 
   @Output() searchChange = new EventEmitter<string>();
+  @Output() valueChange = new EventEmitter<string[] | null>();
 
   // ================= INTERNAL CONTROL =================
 
@@ -163,6 +163,7 @@ export class MatecuAutocompleteMultiple
     });
     this.control.valueChanges.pipe(takeUntilDestroyed()).subscribe((value) => {
       this.onChange(value);
+      this.valueChange.emit(value);
       this.stateChanges.next();
     });
     effect(() => {

@@ -1,10 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { MatTimepickerModule } from '@angular/material/timepicker';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldAppearance, MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatTimepickerModule, MatTimepickerOption } from '@angular/material/timepicker';
 
 @Component({
   selector: 'matecu-datetime-picker',
@@ -33,7 +33,16 @@ export class MatecuDatetimePicker implements ControlValueAccessor {
 
   @Input() dateLabel = 'Select date';
   @Input() timeLabel = 'Select time';
-  @Input() apparance: 'legacy' | 'standard' | 'fill' | 'outline' = 'outline';
+  @Input() apparance: MatFormFieldAppearance = 'fill';
+  @Input() matTimepickerMin: string | null = null;
+  @Input() matTimepickerMax: string | null = null;
+  @Input() minDate: Date | null = null;
+  @Input() maxDate: Date | null = null;
+  @Input() timeInterval: string | null = null;
+  @Input() timeOptions: MatTimepickerOption<Date>[] | null = null;
+  @Input() matDatepickerFilter: ((d: Date | null) => boolean) | null = null;
+
+  @Output() valueChange = new EventEmitter<Date | null>();
 
   private onChange: (value: Date | null) => void = () => {};
   private onTouched: () => void = () => {};
@@ -57,9 +66,25 @@ export class MatecuDatetimePicker implements ControlValueAccessor {
   onValueChange(value: Date | null): void {
     this.value = value;
     this.onChange(value);
+    this.valueChange.emit(value);
   }
 
   onBlur(): void {
     this.onTouched();
+  }
+  onDateChange(value: Date | null) {
+    if (this.validateDateObject(value) && this.validateDateObject(this.value)) {
+      value!.setHours(this.value!.getHours());
+      value!.setMinutes(this.value!.getMinutes());
+      value!.setSeconds(this.value!.getSeconds());
+    } else if (!this.validateDateObject(value)) {
+      this.onValueChange(null);
+    } else {
+      this.onValueChange(value);
+    }
+  }
+
+  private validateDateObject(date: unknown): boolean {
+    return date instanceof Date && !isNaN(date.getTime());
   }
 }
