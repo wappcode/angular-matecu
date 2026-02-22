@@ -14,6 +14,7 @@
   <mat-datepicker #datepicker />
   <mat-datepicker-toggle [for]="datepicker" matSuffix />
 
+  <mat-hint> <ng-content select="[mat-hint-date]"></ng-content> </mat-hint>
   <mat-error> <ng-content select="[mat-error-date]"></ng-content> </mat-error>
 </mat-form-field>
 
@@ -32,5 +33,7 @@
   />
   <mat-timepicker #timepicker [options]="timeOptions" [interval]="timeInterval" />
   <mat-timepicker-toggle [for]="timepicker" matSuffix />
+
+  <mat-hint> <ng-content select="[mat-hint-time]"></ng-content> </mat-hint>
   <mat-error> <ng-content select="[mat-error-time]"></ng-content> </mat-error>
 </mat-form-field>
