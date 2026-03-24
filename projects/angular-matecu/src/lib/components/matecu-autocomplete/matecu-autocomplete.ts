@@ -157,6 +157,7 @@ export class MatecuAutocomplete
     return (
       this.allowCreate &&
       typeof value === 'string' &&
+      value.trim() !== '' &&
       this.internalValue !== value &&
       this.options.some((option) => option[1].toLowerCase() === value.toLowerCase()) === false
     );
