@@ -1,5 +1,5 @@
 <input matInput type="text" matInput [formControl]="inputControl" [matAutocomplete]="auto" [class.loading]="loading"
-    [disabled]="disabled" [readonly]="readonly" />
+    [readonly]="readonly" />
 
 
 <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected($event.option.value)"
