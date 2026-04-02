@@ -180,13 +180,18 @@ export class MatecuAutocomplete
   }
   showCreateOption = computed(() => {
     const value = this.lastSearchText;
+    // se obtienen primero los valores de los signals porque al usarlos directamente en el return no se obtienen los valores actualizados,
+    //  probablemente porque el effect que actualiza esos signals no se ha ejecutado aún, entonces al obtenerlos antes se asegura que se tienen los valores más recientes para la comparación
+    const options = this.options();
+    const allowCreate = this.allowCreate();
+    const internalValue = this.internalValueSignal();
 
     return (
-      this.allowCreate() &&
+      allowCreate &&
       typeof value === 'string' &&
       value.trim() !== '' &&
-      this.internalValueSignal() !== value &&
-      this.options().some((option) => option[1].toLowerCase() === value.toLowerCase()) === false
+      internalValue !== value &&
+      options.some((option) => option[1].toLowerCase() === value.toLowerCase()) === false
     );
   });
 
