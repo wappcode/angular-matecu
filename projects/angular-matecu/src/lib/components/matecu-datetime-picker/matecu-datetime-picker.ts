@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, input, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  input,
+  Output,
+  output,
+} from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
@@ -55,7 +62,7 @@ export class MatecuDatetimePicker implements ControlValueAccessor, Validator {
   timeOptions = input<MatTimepickerOption<Date>[] | null>(null);
   matDatepickerFilter = input<((d: Date | null) => boolean) | null>(null);
 
-  @Output() valueChange = new EventEmitter<Date | null>();
+  valueChange = output<Date | null>();
 
   private onChange: (value: Date | null) => void = () => {};
   private onTouched: () => void = () => {};

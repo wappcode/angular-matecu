@@ -8,6 +8,7 @@ import {
   OnDestroy,
   ElementRef,
   ViewChild,
+  output,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -99,13 +100,13 @@ export class MatecuFileInput implements ControlValueAccessor, OnDestroy {
   showProgress = input(false);
 
   // Outputs
-  @Output() fileSelected = new EventEmitter<File>();
-  @Output() filesSelected = new EventEmitter<File[]>();
-  @Output() fileRemoved = new EventEmitter<File>();
-  @Output() validationError = new EventEmitter<string[]>();
-  @Output() dragEnter = new EventEmitter<DragEvent>();
-  @Output() dragLeave = new EventEmitter<DragEvent>();
-  @Output() stateChange = new EventEmitter<FileInputState>();
+  fileSelected = output<File>();
+  filesSelected = output<File[]>();
+  fileRemoved = output<File>();
+  validationError = output<string[]>();
+  dragEnter = output<DragEvent>();
+  dragLeave = output<DragEvent>();
+  stateChange = output<FileInputState>();
   // ControlValueAccessor Methods
   writeValue(value: any): void {
     if (value instanceof File) {

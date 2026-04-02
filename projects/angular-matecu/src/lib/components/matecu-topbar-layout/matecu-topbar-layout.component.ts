@@ -13,6 +13,7 @@ import {
   OnDestroy,
   Output,
   ViewChild,
+  output,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -42,9 +43,9 @@ export class MatecuTopbarLayoutComponent implements AfterViewInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   mobileStyle = input(false);
-  @Output() mobileStyleChange = new EventEmitter<boolean>();
+  mobileStyleChange = output<boolean>();
   mobileWidth = input(768);
-  @Output() whenResize = new EventEmitter<number>();
+  whenResize = output<number>();
 
   prominent = input(false);
 

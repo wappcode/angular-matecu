@@ -8,6 +8,7 @@ import {
   signal,
   OnInit,
   Output,
+  output,
 } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -35,7 +36,7 @@ export class MatecuTopbarSearchComponent implements OnInit {
   value = input('');
   mobileStyle = input(false);
 
-  @Output() valueChange = new EventEmitter<string>();
+  valueChange = output<string>();
   @HostBinding() className = 'matecu-topbar-search';
 
   constructor() {

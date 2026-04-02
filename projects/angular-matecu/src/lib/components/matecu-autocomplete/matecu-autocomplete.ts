@@ -15,6 +15,7 @@ import {
   computed,
   signal,
   effect,
+  output,
 } from '@angular/core';
 import {
   ControlValueAccessor,
@@ -38,6 +39,7 @@ import {
   debounceTime,
   distinctUntilChanged,
   takeUntil,
+  filter,
 } from 'rxjs';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { FocusMonitor } from '@angular/cdk/a11y';
@@ -159,9 +161,9 @@ export class MatecuAutocomplete
     this.stateChanges.next();
   }
 
-  @Output() searchChange = new EventEmitter<string>();
-  @Output() create = new EventEmitter<string>();
-  @Output() valueChange = new EventEmitter<string | null>();
+  searchChange = output<string>();
+  create = output<string>();
+  valueChange = output<string | null>();
 
   get empty(): boolean {
     const isEmpty = this.inputControl.value === '' || !this.inputControl.value;
@@ -177,7 +179,7 @@ export class MatecuAutocomplete
     return !!(this.ngControl && this.ngControl.invalid && this.ngControl.touched);
   }
   showCreateOption = computed(() => {
-    const value = this.inputValueSignal();
+    const value = this.lastSearchText;
 
     return (
       this.allowCreate() &&
@@ -219,6 +221,8 @@ export class MatecuAutocomplete
         tap((value) => (this.lastSearchText = value ?? this.lastSearchText)),
         tap((value) => this.inputValueSignal.set(value)),
         tap((value) => this.searchChange.emit(value ?? '')),
+        // InternalValueSingal se actualiza solo al seleccionar una opción, no al escribir en el input, por lo que aquí se compara con el valor del input para evitar emitir searchChange cuando se selecciona una opción
+        filter((value) => this.internalValueSignal() !== value),
         tap(() => this.clearValue()),
         takeUntil(this.destroy$),
       )

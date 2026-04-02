@@ -43,7 +43,7 @@ export class Autocomplete implements OnInit {
     setTimeout(() => {
       this.countries.update((current) => [...current, ...this.contriesBase]);
       // observable.next();
-    }, 4000);
+    }, 1000);
   }
 
   onSearch(search: string) {

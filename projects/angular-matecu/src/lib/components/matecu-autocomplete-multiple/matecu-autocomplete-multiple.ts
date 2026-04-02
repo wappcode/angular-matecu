@@ -10,6 +10,7 @@ import {
   OnInit,
   Output,
   signal,
+  output,
 } from '@angular/core';
 
 import {
@@ -92,8 +93,8 @@ export class MatecuAutocompleteMultiple
 
   // ================= OUTPUT =================
 
-  @Output() searchChange = new EventEmitter<string>();
-  @Output() valueChange = new EventEmitter<string[] | null>();
+  searchChange = output<string>();
+  valueChange = output<string[] | null>();
 
   // ================= INTERNAL CONTROL =================
 
