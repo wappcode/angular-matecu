@@ -1,4 +1,4 @@
-@if (loading) {
+@if (loading()) {
 
 <mat-progress-spinner matSuffix diameter="20" mode="indeterminate">
 </mat-progress-spinner>
@@ -7,13 +7,13 @@
 
     @for (item of selectedItems(); track item.value) {
 
-    <mat-chip-row [removable]="!disabled && !readonly" (removed)="remove(item.value)"
-        [matTooltip]="showTooltip ? item.label : ''" matTooltipPosition="above">
+    <mat-chip-row [removable]="!disabled && !readonly()" (removed)="remove(item.value)"
+        [matTooltip]="showTooltip() ? item.label : ''" matTooltipPosition="above">
 
 
 
         {{ item.label }}
-        @if (!disabled && !readonly) {
+        @if (!disabled && !readonly()) {
 
         <button matChipRemove aria-label="Remove {{item.label}}">
             <mat-icon>cancel</mat-icon>
@@ -24,7 +24,7 @@
     }
 
     <input type="text" matInput [formControl]="searchControl" [matAutocomplete]="auto" (keydown)="onKeyDown($event)"
-        [placeholder]="placeholder" />
+        [placeholder]="_placeholder()" />
 
 </mat-chip-grid>
 
@@ -32,13 +32,13 @@
 <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectOption($event.option.value)"
     class="autocomplete-large-panel" [displayWith]="displayLabel">
 
-    @if (!readonly && !disabled && (enableSelectAll || control.value.length > 0)) {
+    @if (!readonly() && !disabled && (enableSelectAll() || control.value.length > 0)) {
     <mat-option>
         <div style="display: flex; gap: 10px; align-items: center; justify-content: center;  ">
 
-            @if (enableSelectAll) {
+            @if (enableSelectAll()) {
             <div>
-                <button mat-icon-button (click)="selectAll()" [matTooltip]="selectAllLabel">
+                <button mat-icon-button (click)="selectAll()" [matTooltip]="selectAllLabel()">
                     <mat-icon>select_all</mat-icon>
                 </button>
             </div>
@@ -47,7 +47,7 @@
             @if (control.value.length > 0) {
             <div>
 
-                <button mat-icon-button (click)="clearAll()" [matTooltip]="clearAllLabel">
+                <button mat-icon-button (click)="clearAll()" [matTooltip]="clearAllLabel()">
                     <mat-icon>clear_all</mat-icon>
                 </button>
             </div>

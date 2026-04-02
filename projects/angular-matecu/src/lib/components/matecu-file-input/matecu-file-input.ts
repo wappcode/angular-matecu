@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import {
   Component,
   EventEmitter,
-  Input,
+  input,
   Output,
   OnDestroy,
   ElementRef,
@@ -67,36 +67,36 @@ export class MatecuFileInput implements ControlValueAccessor, OnDestroy {
   private onChange: ((value: any) => void) | undefined;
   private onTouched: (() => void) | undefined;
   // Inputs - Funcionalidad básica
-  @Input() optimizeImage?: (img: File) => Promise<File>;
-  @Input() optimizeImageToSize?: number;
-  @Input() maxFileSize?: number; // tamaño máximo en bytes
-  @Input() maxFiles = 1;
-  @Input() multiple = false;
-  @Input() showFileSize = false;
-  @Input() fileSizeUnit: FileSizeUnit = 'AUTO';
-  @Input() displayName?: string;
-  @Input() placeholder = 'Select a file or drag here';
-  @Input() buttonText = 'Select file';
-  @Input() changeSelectedFileText = 'Change selected file(s)';
-  @Input() loadingText = 'Processing...';
-  @Input() ariaLabel?: string;
+  optimizeImage = input<((img: File) => Promise<File>) | undefined>(undefined);
+  optimizeImageToSize = input<number | undefined>(undefined);
+  maxFileSize = input<number | undefined>(undefined); // tamaño máximo en bytes
+  maxFiles = input(1);
+  multiple = input(false);
+  showFileSize = input(false);
+  fileSizeUnit = input<FileSizeUnit>('AUTO');
+  displayName = input<string | undefined>(undefined);
+  placeholder = input('Select a file or drag here');
+  buttonText = input('Select file');
+  changeSelectedFileText = input('Change selected file(s)');
+  loadingText = input('Processing...');
+  ariaLabel = input<string | undefined>(undefined);
 
   // Inputs - Validación
-  @Input() acceptedMimeTypes: string[] = [];
-  @Input() acceptedExtensions: string[] = [];
-  @Input() errorMessages: ErrorMessages = {
+  acceptedMimeTypes = input<string[]>([]);
+  acceptedExtensions = input<string[]>([]);
+  errorMessages = input<ErrorMessages>({
     invalidSize: 'File exceeds maximum allowed size',
     invalidType: 'File type not allowed',
     tooManyFiles: 'Maximum number of files exceeded',
     uploadError: 'Error processing file',
-  };
+  });
 
   // Inputs - UI/UX
-  @Input() enableDragDrop = true;
-  @Input() showPreview = false;
-  @Input() previewMaxWidth = 200;
-  @Input() previewMaxHeight = 200;
-  @Input() showProgress = false;
+  enableDragDrop = input(true);
+  showPreview = input(false);
+  previewMaxWidth = input(200);
+  previewMaxHeight = input(200);
+  showProgress = input(false);
 
   // Outputs
   @Output() fileSelected = new EventEmitter<File>();
@@ -184,7 +184,7 @@ export class MatecuFileInput implements ControlValueAccessor, OnDestroy {
       URL.revokeObjectURL(previewUrl);
       this.previewUrls.delete(fileKey);
     }
-    if (this.multiple) {
+    if (this.multiple()) {
       this.files = this.files.filter((file) => file !== fileToRemove);
       this.notifyChange(this.files.length > 0 ? this.files : null);
       this.filesSelected.emit([...this.files]);
@@ -203,8 +203,8 @@ export class MatecuFileInput implements ControlValueAccessor, OnDestroy {
 
     try {
       // Validar número máximo de archivos
-      if (selectedFiles.length > this.maxFiles) {
-        this.validationErrors.push(this.errorMessages.tooManyFiles);
+      if (selectedFiles.length > this.maxFiles()) {
+        this.validationErrors.push(this.errorMessages().tooManyFiles);
         this.changeState(FileInputState.ERROR);
         return;
       }
@@ -224,7 +224,7 @@ export class MatecuFileInput implements ControlValueAccessor, OnDestroy {
             processedFiles.push(processedFile);
           }
         } catch (error) {
-          this.validationErrors.push(this.errorMessages.uploadError);
+          this.validationErrors.push(this.errorMessages().uploadError);
         }
       }
 
@@ -235,7 +235,7 @@ export class MatecuFileInput implements ControlValueAccessor, OnDestroy {
       }
 
       if (processedFiles.length > 0) {
-        if (this.multiple) {
+        if (this.multiple()) {
           this.files = processedFiles;
           this.filesSelected.emit([...this.files]);
           this.notifyChange(this.files);
@@ -249,7 +249,7 @@ export class MatecuFileInput implements ControlValueAccessor, OnDestroy {
         this.changeState(FileInputState.SUCCESS);
       }
     } catch (error) {
-      this.validationErrors.push(this.errorMessages.uploadError);
+      this.validationErrors.push(this.errorMessages().uploadError);
       this.validationError.emit([...this.validationErrors]);
       this.changeState(FileInputState.ERROR);
     }
@@ -257,7 +257,7 @@ export class MatecuFileInput implements ControlValueAccessor, OnDestroy {
 
   private handleSingleFile(file: File): void {
     this.file = file;
-    this.fileName = this.displayName || file.name;
+    this.fileName = this.displayName() || file.name;
     this.selectedFileSize = this.calculateFileSizeInMB(file);
     this.generatePreview(file);
   }
@@ -269,9 +269,10 @@ export class MatecuFileInput implements ControlValueAccessor, OnDestroy {
   }
 
   private async processFile(file: File): Promise<File | undefined> {
-    if (this.optimizeImage && file.type.includes('image') && this.optimizeImageToSize) {
+    const optimizeImage = this.optimizeImage();
+    if (optimizeImage && file.type.includes('image') && this.optimizeImageToSize()) {
       try {
-        return await this.optimizeImage(file);
+        return await optimizeImage(file);
       } catch (error) {
         console.warn('Error optimizing image:', error);
         return file; // Return original if optimization fails
@@ -284,22 +285,25 @@ export class MatecuFileInput implements ControlValueAccessor, OnDestroy {
     const errors: string[] = [];
 
     // Validar tamaño
-    if (this.maxFileSize && file.size > this.maxFileSize) {
-      errors.push(this.errorMessages.invalidSize);
+    const maxFileSize = this.maxFileSize();
+    if (maxFileSize && file.size > maxFileSize) {
+      errors.push(this.errorMessages().invalidSize);
     }
 
     // Validar tipo MIME
-    if (this.acceptedMimeTypes.length > 0) {
-      if (!this.acceptedMimeTypes.some((type) => file.type.includes(type))) {
-        errors.push(this.errorMessages.invalidType);
+    const acceptedMimeTypes = this.acceptedMimeTypes();
+    if (acceptedMimeTypes.length > 0) {
+      if (!acceptedMimeTypes.some((type) => file.type.includes(type))) {
+        errors.push(this.errorMessages().invalidType);
       }
     }
 
     // Validar extensión
-    if (this.acceptedExtensions.length > 0) {
+    const acceptedExtensions = this.acceptedExtensions();
+    if (acceptedExtensions.length > 0) {
       const fileExtension = '.' + file.name.split('.').pop()?.toLowerCase();
-      if (!this.acceptedExtensions.some((ext) => ext.toLowerCase() === fileExtension)) {
-        errors.push(this.errorMessages.invalidType);
+      if (!acceptedExtensions.some((ext) => ext.toLowerCase() === fileExtension)) {
+        errors.push(this.errorMessages().invalidType);
       }
     }
 
@@ -312,7 +316,7 @@ export class MatecuFileInput implements ControlValueAccessor, OnDestroy {
   private generatePreview(file: File): void {
     this.cleanupPreview();
 
-    if (this.showPreview && file.type.startsWith('image/')) {
+    if (this.showPreview() && file.type.startsWith('image/')) {
       const reader = new FileReader();
       reader.onload = (e) => {
         this.previewUrl = e.target?.result as string;
@@ -379,8 +383,9 @@ export class MatecuFileInput implements ControlValueAccessor, OnDestroy {
     const sizes = ['bytes', 'KB', 'MB', 'GB', 'TB'];
 
     // Si se especifica una unidad específica, usarla
-    if (this.fileSizeUnit !== 'AUTO') {
-      const targetUnitIndex = sizes.indexOf(this.fileSizeUnit);
+    const fileSizeUnit = this.fileSizeUnit();
+    if (fileSizeUnit !== 'AUTO') {
+      const targetUnitIndex = sizes.indexOf(fileSizeUnit);
       if (targetUnitIndex !== -1) {
         const size = bytes / Math.pow(k, targetUnitIndex);
         const formattedSize = targetUnitIndex === 0 ? size.toString() : size.toFixed(2);
@@ -433,6 +438,6 @@ export class MatecuFileInput implements ControlValueAccessor, OnDestroy {
   }
 
   get hasFiles(): boolean {
-    return this.multiple ? this.files.length > 0 : !!this.file;
+    return this.multiple() ? this.files.length > 0 : !!this.file;
   }
 }

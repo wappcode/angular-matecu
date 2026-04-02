@@ -1,8 +1,8 @@
 <div class="matecu-datetime-picker-content">
-  <mat-form-field [appearance]="apparance">
-    <mat-label>{{ dateLabel }}</mat-label>
+  <mat-form-field [appearance]="apparance()">
+    <mat-label>{{ dateLabel() }}</mat-label>
     <input matInput [matDatepicker]="datepicker" [ngModel]="value" (ngModelChange)="onDateChange($event)"
-      [disabled]="disabled" [min]="minDate" [max]="maxDate" [matDatepickerFilter]="matDatepickerFilter"
+      [disabled]="disabled" [min]="minDate()" [max]="maxDate()" [matDatepickerFilter]="matDatepickerFilter()"
       (blur)="onBlur()" />
     <mat-datepicker #datepicker />
     <mat-datepicker-toggle [for]="datepicker" matSuffix />
@@ -11,12 +11,12 @@
     <mat-error> <ng-content select="[mat-error-date]"></ng-content> </mat-error>
   </mat-form-field>
 
-  <mat-form-field [appearance]="apparance">
-    <mat-label>{{ timeLabel }}</mat-label>
+  <mat-form-field [appearance]="apparance()">
+    <mat-label>{{ timeLabel() }}</mat-label>
     <input matInput [matTimepicker]="timepicker" [ngModel]="value" (ngModelChange)="onValueChange($event)"
-      [ngModelOptions]="{ updateOn: 'blur' }" [disabled]="disabled" [matTimepickerMin]="matTimepickerMin"
-      [matTimepickerMax]="matTimepickerMax" (blur)="onBlur()" />
-    <mat-timepicker #timepicker [options]="timeOptions" [interval]="timeInterval" />
+      [ngModelOptions]="{ updateOn: 'blur' }" [disabled]="disabled" [matTimepickerMin]="matTimepickerMin()"
+      [matTimepickerMax]="matTimepickerMax()" (blur)="onBlur()" />
+    <mat-timepicker #timepicker [options]="timeOptions()" [interval]="timeInterval()" />
     <mat-timepicker-toggle [for]="timepicker" matSuffix />
 
     <mat-hint> <ng-content select="[mat-hint-time]"></ng-content> </mat-hint>

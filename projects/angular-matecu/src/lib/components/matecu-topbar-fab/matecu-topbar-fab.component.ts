@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostBinding, Input } from '@angular/core';
+import { Component, HostBinding, input, signal, effect } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
@@ -10,22 +10,23 @@ import { MatButtonModule } from '@angular/material/button';
   imports: [CommonModule, MatButtonModule],
 })
 export class MatecuTopbarFabComponent {
-  private _mobileStyle = false;
   private mainClassName = 'matecu-topbar-fab';
-  @Input() display = true;
-  @Input() get mobileStyle() {
-    return this._mobileStyle;
-  }
-  set mobileStyle(value: boolean) {
-    this._mobileStyle = value;
-    this.className = this.className.replace(/mobile-style/g, '').trim();
-    if (this._mobileStyle) {
-      this.className = `${this.className} mobile-style`;
-    }
-  }
+
+  display = input(true);
+  mobileStyle = input(false);
 
   @HostBinding('class') className = this.mainClassName;
+
+  constructor() {
+    effect(() => {
+      this.className = this.className.replace(/mobile-style/g, '').trim();
+      if (this.mobileStyle()) {
+        this.className = `${this.className} mobile-style`;
+      }
+    });
+  }
+
   @HostBinding('style.display') get color() {
-    return this.display ? 'flex' : 'none';
+    return this.display() ? 'flex' : 'none';
   }
 }

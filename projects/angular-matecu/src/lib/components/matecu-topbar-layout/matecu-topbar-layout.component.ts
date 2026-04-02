@@ -6,7 +6,9 @@ import {
   ElementRef,
   EventEmitter,
   HostBinding,
-  Input,
+  input,
+  effect,
+  signal,
   NgZone,
   OnDestroy,
   Output,
@@ -25,41 +27,43 @@ import { takeUntil, tap } from 'rxjs/operators';
   imports: [CommonModule, MatButtonModule, MatIconModule, MatToolbarModule],
 })
 export class MatecuTopbarLayoutComponent implements AfterViewInit, OnDestroy {
-  private _scrolled = false;
-  private _prominent = false;
+  private _scrolled = signal(false);
+
   get scrolled() {
-    return this._scrolled;
+    return this._scrolled();
   }
   set scrolled(value: boolean) {
-    this._scrolled = value;
+    this._scrolled.set(value);
     this.className = this.className.replace(/scrolled/g, '').trim();
     if (this.scrolled) {
       this.className = `${this.className} scrolled`;
     }
   }
   private destroy$ = new Subject<void>();
-  @Input() mobileStyle = false;
+
+  mobileStyle = input(false);
   @Output() mobileStyleChange = new EventEmitter<boolean>();
-  @Input() mobileWidth = 768;
+  mobileWidth = input(768);
   @Output() whenResize = new EventEmitter<number>();
-  @Input() get prominent() {
-    return this._prominent;
-  }
-  set prominent(value: boolean) {
-    this._prominent = value;
-    this.className = this.className.replace(/prominent/g, '').trim();
-    if (this.prominent) {
-      this.className = `${this.className} prominent`;
-    }
-  }
+
+  prominent = input(false);
+
   @HostBinding('class') className = 'matecu-topbar-layout';
   @ViewChild('mtbBody') bodyElement?: ElementRef;
 
   constructor(
     private elementRef: ElementRef,
     private changeDetector: ChangeDetectorRef,
-    private zone: NgZone
-  ) {}
+    private zone: NgZone,
+  ) {
+    effect(() => {
+      const prominentValue = this.prominent();
+      this.className = this.className.replace(/prominent/g, '').trim();
+      if (prominentValue) {
+        this.className = `${this.className} prominent`;
+      }
+    });
+  }
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
@@ -83,9 +87,9 @@ export class MatecuTopbarLayoutComponent implements AfterViewInit, OnDestroy {
       if (!width) {
         return;
       }
-      this.mobileStyle = width <= this.mobileWidth;
+      const isMobileStyle = width <= this.mobileWidth();
       this.zone.run(() => {
-        this.mobileStyleChange.emit(this.mobileStyle);
+        this.mobileStyleChange.emit(isMobileStyle);
         this.whenResize.emit(width);
       });
     });
@@ -95,7 +99,7 @@ export class MatecuTopbarLayoutComponent implements AfterViewInit, OnDestroy {
       fromEvent(this.bodyElement.nativeElement, 'scroll')
         .pipe(
           tap(() => this.spyScroll(this.bodyElement?.nativeElement!)),
-          takeUntil(this.destroy$)
+          takeUntil(this.destroy$),
         )
         .subscribe();
     }

@@ -1,4 +1,4 @@
-import { Component, HostBinding, Input } from '@angular/core';
+import { Component, HostBinding, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
@@ -10,9 +10,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
   styleUrls: ['./matecu-topbar-header-row.component.scss'],
 })
 export class MatecuTopbarHeaderRowComponent {
-  @Input() display = true;
+  display = input(true);
   @HostBinding('class') className = 'matecu-topbar-header-row';
   @HostBinding('style.display') get color() {
-    return this.display ? 'flex' : 'none';
+    return this.display() ? 'flex' : 'none';
   }
 }

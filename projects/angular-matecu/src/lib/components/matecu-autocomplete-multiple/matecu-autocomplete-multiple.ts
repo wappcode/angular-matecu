@@ -5,7 +5,7 @@ import {
   EventEmitter,
   forwardRef,
   Injector,
-  Input,
+  input,
   OnDestroy,
   OnInit,
   Output,
@@ -74,24 +74,20 @@ export class MatecuAutocompleteMultiple
 
   // ================= INPUTS =================
 
-  @Input() placeholder = '';
-  @Input() loading = false;
-  @Input() searchChangeDebounceTime = 300;
-  @Input() enableSelectAll = true;
-  @Input() readonly = false;
-  @Input() selectAllLabel = 'Select All';
-  @Input() clearAllLabel = 'Clear All';
-  @Input() showTooltip = true;
-  @Input() filterFn: MatecuAutocompleteFilterFn = this.createFilterFn();
-  private _options = signal<MatecuAutocompleteOption[]>([]);
+  protected _placeholder = input('');
+  loading = input(false);
+  searchChangeDebounceTime = input(300);
+  enableSelectAll = input(true);
+  readonly = input(false);
+  selectAllLabel = input('Select All');
+  clearAllLabel = input('Clear All');
+  showTooltip = input(true);
+  filterFn = input<MatecuAutocompleteFilterFn>(this.createFilterFn());
+  options = input.required<MatecuAutocompleteOption[]>();
 
-  @Input({ required: true })
-  set options(value: MatecuAutocompleteOption[]) {
-    this._options.set(value ?? []);
-  }
-
-  get options() {
-    return this._options();
+  // MatFormFieldControl compatibility
+  get placeholder(): string {
+    return this._placeholder();
   }
 
   // ================= OUTPUT =================
@@ -114,15 +110,15 @@ export class MatecuAutocompleteMultiple
   readonly filteredOptions = computed(() => {
     const filter = this.searchText();
 
-    return this._options().filter(
-      (o) => this.filterFn(o[1], filter) && !this.control.value.includes(o[0]),
+    return this.options().filter(
+      (o) => this.filterFn()(o[1], filter) && !this.control.value.includes(o[0]),
     );
   });
 
   readonly selectedItems = computed(() => {
     const values = this.controlValue$() ?? [];
     return values.map((v) => {
-      const found = this._options().find((o) => o[0] === v);
+      const found = this.options().find((o) => o[0] === v);
       return {
         value: v,
         label: found ? found[1] : v,
@@ -173,7 +169,7 @@ export class MatecuAutocompleteMultiple
 
       timeout = setTimeout(() => {
         this.searchChange.emit(value);
-      }, this.searchChangeDebounceTime);
+      }, this.searchChangeDebounceTime());
     });
   }
   value: string[] | null = null;
@@ -194,7 +190,7 @@ export class MatecuAutocompleteMultiple
   // ================= AUTOCOMPLETE =================
 
   selectOption(option: [string, string]) {
-    if (this.readonly || this.disabled) return;
+    if (this.readonly() || this.disabled) return;
     if (!Array.isArray(option)) return;
     if (!this.control.value.includes(option[0])) {
       this.control.setValue([...this.control.value, option[0]]);
@@ -214,15 +210,15 @@ export class MatecuAutocompleteMultiple
   // ================= CHIP ACTIONS =================
 
   remove(value: string) {
-    if (this.readonly || this.disabled) return;
+    if (this.readonly() || this.disabled) return;
 
     this.control.setValue(this.control.value.filter((v) => v !== value));
   }
 
   selectAll() {
-    if (this.readonly || this.disabled) return;
+    if (this.readonly() || this.disabled) return;
 
-    const allValues = this._options().map((o) => o[0]);
+    const allValues = this.options().map((o) => o[0]);
 
     this.control.setValue([...new Set([...this.control.value, ...allValues])]);
 
@@ -233,7 +229,7 @@ export class MatecuAutocompleteMultiple
   }
 
   clearAll(): void {
-    if (this.disabled || this.readonly) return;
+    if (this.disabled || this.readonly()) return;
 
     if (this.control.value.length === 0) return;
 
@@ -247,7 +243,7 @@ export class MatecuAutocompleteMultiple
   // ================= DRAG & DROP =================
 
   drop(event: CdkDragDrop<any>) {
-    if (this.disabled || this.readonly) return;
+    if (this.disabled || this.readonly()) return;
 
     const current = [...this.control.value];
     moveItemInArray(current, event.previousIndex, event.currentIndex);
@@ -257,7 +253,7 @@ export class MatecuAutocompleteMultiple
   // ================= KEYBOARD =================
 
   onKeyDown(event: KeyboardEvent) {
-    if (this.readonly || this.disabled) return;
+    if (this.readonly() || this.disabled) return;
 
     if (event.key === 'Backspace' && !this.searchText() && this.control.value.length > 0) {
       const updated = [...this.control.value];

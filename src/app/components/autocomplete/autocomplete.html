@@ -1,10 +1,11 @@
+<br>
 <form [formGroup]="form">
     <mat-form-field appearance="outline">
         <mat-label>
             País
         </mat-label>
-        <matecu-autocomplete [placeholder]="'Seleccione un país'" formControlName="country" [options]="countries()"
-            [allowCreate]="true" [loading]="isLoading()" (searchChange)="onSearch($event)" (create)="onCreate($event)">
+        <matecu-autocomplete formControlName="country" [options]="countries()" [allowCreate]="true"
+            [loading]="isLoading()" (searchChange)="onSearch($event)" (create)="onCreate($event)">
         </matecu-autocomplete>
         @if(form.get('country')?.hasError('required')){
 
@@ -15,13 +16,7 @@
     </mat-form-field>
 </form>
 
-<mat-form-field appearance="outline">
-    <mat-label>Mexico creo en ti</mat-label>
-    <input type="text" matInput placeholder="Hola mundo el pueblo unido">
-    <mat-error>
-        País requerido
-    </mat-error>
-</mat-form-field>
+
 
 <h2>Valor seleccionado: {{ form.get('country')?.value }}</h2>
 

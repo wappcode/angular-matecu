@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import { Component, HostBinding, input, effect, signal, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatecuAlertBoxType } from '../../types/matecu-altert-box-type';
 
@@ -8,38 +8,33 @@ import { MatecuAlertBoxType } from '../../types/matecu-altert-box-type';
   templateUrl: './matecu-alert-box.component.html',
   styleUrls: ['./matecu-alert-box.component.scss'],
   standalone: true,
-  imports: [CommonModule, MatIconModule]
+  imports: [CommonModule, MatIconModule],
 })
 export class MatecuAlertBoxComponent implements OnInit {
   classNameBase = 'matecu-alert-box';
-  alertColor?: MatecuAlertBoxType | undefined | string | null;
   iconValue?: string | null | undefined;
-  private alertIcon = false;
-  get color(): MatecuAlertBoxType | undefined | string | null {
-    return this.alertColor;
-  }
-  @Input() set color(value: MatecuAlertBoxType | undefined | string | null) {
-    this.alertColor = value;
-    if (!!value) {
-      this.className = `${this.classNameBase} ${this.classNameBase}--${value}`;
-    } else {
-      this.className = this.classNameBase;
-    }
-    this.updateIcon();
-  }
-  get icon(): boolean {
-    return this.alertIcon;
-  }
-  @Input() set icon(value: boolean) {
-    this.alertIcon = value;
-  }
+
+  color = input<MatecuAlertBoxType | undefined | string | null>(undefined);
+  icon = input(false);
+
   @HostBinding('class') className = this.classNameBase;
-  constructor() { }
 
-  ngOnInit(): void { }
+  constructor() {
+    effect(() => {
+      const colorValue = this.color();
+      if (!!colorValue) {
+        this.className = `${this.classNameBase} ${this.classNameBase}--${colorValue}`;
+      } else {
+        this.className = this.classNameBase;
+      }
+      this.updateIcon(colorValue);
+    });
+  }
 
-  private updateIcon(): void {
-    switch (this.color) {
+  ngOnInit(): void {}
+
+  private updateIcon(colorValue?: MatecuAlertBoxType | undefined | string | null): void {
+    switch (colorValue) {
       case MatecuAlertBoxType.danger:
         this.iconValue = 'dangerous';
         break;

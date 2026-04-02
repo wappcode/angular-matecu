@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, input, Output } from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
@@ -44,16 +44,16 @@ export class MatecuDatetimePicker implements ControlValueAccessor, Validator {
   value: Date | null = null;
   disabled = false;
 
-  @Input() dateLabel = 'Select date';
-  @Input() timeLabel = 'Select time';
-  @Input() apparance: MatFormFieldAppearance = 'fill';
-  @Input() matTimepickerMin: string | null = null;
-  @Input() matTimepickerMax: string | null = null;
-  @Input() minDate: Date | null = null;
-  @Input() maxDate: Date | null = null;
-  @Input() timeInterval: string | null = null;
-  @Input() timeOptions: MatTimepickerOption<Date>[] | null = null;
-  @Input() matDatepickerFilter: ((d: Date | null) => boolean) | null = null;
+  dateLabel = input('Select date');
+  timeLabel = input('Select time');
+  apparance = input<MatFormFieldAppearance>('fill');
+  matTimepickerMin = input<string | null>(null);
+  matTimepickerMax = input<string | null>(null);
+  minDate = input<Date | null>(null);
+  maxDate = input<Date | null>(null);
+  timeInterval = input<string | null>(null);
+  timeOptions = input<MatTimepickerOption<Date>[] | null>(null);
+  matDatepickerFilter = input<((d: Date | null) => boolean) | null>(null);
 
   @Output() valueChange = new EventEmitter<Date | null>();
 
@@ -97,33 +97,38 @@ export class MatecuDatetimePicker implements ControlValueAccessor, Validator {
 
     const dateValue = control.value as Date;
 
-    if (this.minDate && dateValue < this.minDate) {
-      return { minDate: { min: this.minDate, actual: dateValue } };
+    const minDate = this.minDate();
+    if (minDate && dateValue < minDate) {
+      return { minDate: { min: minDate, actual: dateValue } };
     }
 
-    if (this.maxDate && dateValue > this.maxDate) {
-      return { maxDate: { max: this.maxDate, actual: dateValue } };
+    const maxDate = this.maxDate();
+    if (maxDate && dateValue > maxDate) {
+      return { maxDate: { max: maxDate, actual: dateValue } };
     }
 
     // Validar tiempo mínimo
-    if (this.matTimepickerMin) {
-      const minTimeError = this.validateMinTime(dateValue, this.matTimepickerMin);
+    const matTimepickerMin = this.matTimepickerMin();
+    if (matTimepickerMin) {
+      const minTimeError = this.validateMinTime(dateValue, matTimepickerMin);
       if (minTimeError) {
         return minTimeError;
       }
     }
 
     // Validar tiempo máximo
-    if (this.matTimepickerMax) {
-      const maxTimeError = this.validateMaxTime(dateValue, this.matTimepickerMax);
+    const matTimepickerMax = this.matTimepickerMax();
+    if (matTimepickerMax) {
+      const maxTimeError = this.validateMaxTime(dateValue, matTimepickerMax);
       if (maxTimeError) {
         return maxTimeError;
       }
     }
 
     // Validar contra timeOptions si están disponibles
-    if (this.timeOptions && this.timeOptions.length > 0) {
-      const timeOptionsError = this.validateTimeOptions(dateValue, this.timeOptions);
+    const timeOptions = this.timeOptions();
+    if (timeOptions && timeOptions.length > 0) {
+      const timeOptionsError = this.validateTimeOptions(dateValue, timeOptions);
       if (timeOptionsError) {
         return timeOptionsError;
       }

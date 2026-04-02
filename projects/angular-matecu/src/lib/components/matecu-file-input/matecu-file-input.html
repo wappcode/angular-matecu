@@ -1,7 +1,7 @@
 <!-- Hidden file input -->
-<input type="file" #fileInput (change)="onFileChange($event)" [multiple]="multiple" [disabled]="isDisabled"
-    [attr.aria-label]="ariaLabel || 'Select file'" [attr.aria-describedby]="hasErrors ? 'file-input-errors' : null"
-    [accept]="acceptedMimeTypes.join(',')" />
+<input type="file" #fileInput (change)="onFileChange($event)" [multiple]="multiple()" [disabled]="isDisabled"
+    [attr.aria-label]="ariaLabel() || 'Select file'" [attr.aria-describedby]="hasErrors ? 'file-input-errors' : null"
+    [accept]="acceptedMimeTypes().join(',')" />
 
 <!-- Main drop zone and file display -->
 <div class="file-input-container" [class.drag-over]="isDragOver" [class.disabled]="isDisabled"
@@ -12,7 +12,7 @@
     @if (isLoading) {
     <div class="loading-container">
         <div class="spinner"></div>
-        <span class="loading-text">{{ loadingText }}</span>
+        <span class="loading-text">{{ loadingText() }}</span>
     </div>
     }
 
@@ -23,26 +23,26 @@
             📁
         </div>
         <div class="drop-zone-content">
-            <p class="drop-zone-title">{{ placeholder }}</p>
+            <p class="drop-zone-title">{{ placeholder() }}</p>
             <button type="button" class="select-button" [disabled]="isDisabled"
                 (click)="openFileDialog(); $event.stopPropagation()">
-                {{ buttonText }}
+                {{ buttonText() }}
             </button>
-            @if (enableDragDrop && !isDisabled) {
+            @if (enableDragDrop() && !isDisabled) {
             }
         </div>
     </div>
     }
 
     <!-- Single file display -->
-    @if (!multiple && file && !isLoading) {
+    @if (!multiple() && file && !isLoading) {
     <div class="single-file-display">
         <div class="file-info">
             <!-- File preview -->
-            @if (showPreview && file.type.startsWith('image/')) {
+            @if (showPreview() && file.type.startsWith('image/')) {
             <div class="file-preview">
-                <img [src]="getPreviewUrl(file)" [alt]="file.name" [style.max-width.px]="previewMaxWidth"
-                    [style.max-height.px]="previewMaxHeight" />
+                <img [src]="getPreviewUrl(file)" [alt]="file.name" [style.max-width.px]="previewMaxWidth()"
+                    [style.max-height.px]="previewMaxHeight()" />
             </div>
             } @else {
             <div class="file-icon">
@@ -51,8 +51,8 @@
             }
 
             <div class="file-details">
-                <h3 class="file-name">{{ displayName || file.name }}</h3>
-                @if (showFileSize && selectedFileSize) {
+                <h3 class="file-name">{{ displayName() || file.name }}</h3>
+                @if (showFileSize() && selectedFileSize) {
                 <p class="file-size">
                     {{ formatFileSize(file) }}
                 </p>
@@ -69,11 +69,11 @@
     }
 
     <!-- Multiple files display -->
-    @if (multiple && files.length > 0 && !isLoading) {
+    @if (multiple() && files.length > 0 && !isLoading) {
     <div class="multiple-files-display">
         <div class="files-header">
-            @if (maxFiles > 1) {
-            <span class="files-counter">{{ files.length }} / {{ maxFiles }}</span>
+            @if (maxFiles() > 1) {
+            <span class="files-counter">{{ files.length }} / {{ maxFiles() }}</span>
             }
         </div>
 
@@ -81,7 +81,7 @@
             @for (file of files; track file.name + file.size; let i = $index) {
             <div class="file-item">
                 <!-- File preview -->
-                @if (showPreview && file.type.startsWith('image/')) {
+                @if (showPreview() && file.type.startsWith('image/')) {
                 <div class="file-preview-small">
                     <img [src]="getPreviewUrl(file)" [alt]="file.name" />
                 </div>
@@ -93,7 +93,7 @@
 
                 <div class="file-item-details">
                     <div class="file-item-name">{{ file.name }}</div>
-                    @if (showFileSize) {
+                    @if (showFileSize()) {
                     <div class="file-item-size">
                         {{ formatFileSize(file) }}
                     </div>
@@ -109,9 +109,9 @@
         </div>
 
         <!-- Add more files button -->
-        @if (files.length < maxFiles) { <button type="button" class="add-more-button"
+        @if (files.length < maxFiles()) { <button type="button" class="add-more-button"
             (click)="openFileDialog(); $event.stopPropagation()">
-            {{ changeSelectedFileText }}
+            {{ changeSelectedFileText() }}
             </button>
             }
     </div>

@@ -1,11 +1,11 @@
-<input matInput type="text" matInput [formControl]="inputControl" [matAutocomplete]="auto" [class.loading]="loading"
+<input matInput type="text" matInput [formControl]="inputControl" [matAutocomplete]="auto" [class.loading]="loading()"
     [readonly]="readonly" />
 
 
 <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected($event.option.value)"
     [displayWith]="displayLabel">
 
-    @for (option of filteredOptions$ | async; track $index) {
+    @for (option of filteredOptions(); track $index) {
 
     <mat-option [value]="option[0]">
         {{ option[1] }}
@@ -14,11 +14,11 @@
     }
 
     <!-- Crear nuevo -->
-    @if(allowCreate){
+    @if(allowCreate()){
 
     <mat-divider></mat-divider>
 
-    @if(showCreateOption ){
+    @if(showCreateOption() ){
     <mat-option (click)="onCreateClick()" class="create-option">
         <span>➕</span><span>" {{ inputControl.value }}"</span>
 
@@ -29,7 +29,7 @@
 </mat-autocomplete>
 
 <!-- Spinner -->
-@if(loading){
+@if(loading()){
 <mat-progress-spinner class="loading-spinner" diameter="20" mode="indeterminate"
     style="position:absolute; right:10px; top:50%; transform:translateY(-50%);">
 </mat-progress-spinner>

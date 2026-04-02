@@ -11,6 +11,10 @@ import {
   ElementRef,
   DoCheck,
   Injector,
+  input,
+  computed,
+  signal,
+  effect,
 } from '@angular/core';
 import {
   ControlValueAccessor,
@@ -24,7 +28,17 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatFormFieldControl } from '@angular/material/form-field';
-import { Observable, startWith, map, Subject, tap, combineLatest, debounceTime } from 'rxjs';
+import {
+  Observable,
+  startWith,
+  map,
+  Subject,
+  tap,
+  combineLatest,
+  debounceTime,
+  distinctUntilChanged,
+  takeUntil,
+} from 'rxjs';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { FocusMonitor } from '@angular/cdk/a11y';
 import {
@@ -66,43 +80,75 @@ export class MatecuAutocomplete
     OnDestroy,
     DoCheck
 {
-  @Input() options: MatecuAutocompleteOption[] = [];
-  @Input() allowCreate = false;
-  @Input() loading = false;
-  @Input() readonly = false;
-  @Input() filterFn: MatecuAutocompleteFilterFn = this.createFilterFn();
-  @Input() searchChangeDebounceTime = 300;
-  // MatFormFieldControl inputs
-  @Input()
-  get placeholder(): string {
-    return this._placeholder;
-  }
-  set placeholder(value: string) {
-    this._placeholder = value;
-    this.stateChanges.next();
-  }
-  private _placeholder = '';
+  static nextId = 0;
+  options = input<MatecuAutocompleteOption[]>([]);
+  allowCreate = input<boolean>(false);
+  loading = input<boolean>(false);
+  filterFn = input<MatecuAutocompleteFilterFn>(this.createFilterFn());
+  searchChangeDebounceTime = input<number>(300);
+  ngControl: NgControl | null = null;
+  focused = false;
+  lastSearchText: string | null = null;
+  inputControl = new FormControl<string | null>(null);
+  filteredOptions = computed<MatecuAutocompleteOption[]>(() => {
+    const fieldValue = this.inputValueSignal() ?? '';
+    const options = this.filter(fieldValue);
+    return options;
+  });
+
+  readonly _disabled = signal(false);
+  readonly _required = signal(false);
+  readonly _readonly = signal(false);
+  readonly _placeholder = signal('');
+  readonly stateChanges = new Subject<void>();
+  readonly id = `matecu-autocomplete-${MatecuAutocomplete.nextId++}`;
+  readonly controlType = 'matecu-autocomplete';
+  readonly autofilled = false;
+
+  private destroy$ = new Subject<void>();
+  private internalValue: string | null = null;
+  private internalValueSignal = signal<string | null>(null);
+  private inputValueSignal = signal<string | null>(null);
+  private focusMonitor: FocusMonitor;
+  private elementRef: ElementRef<HTMLElement>;
+  private injector: Injector;
+  private optionMap = new Map<string, string>();
+  private onChange: any = () => {};
+  private onTouched: any = () => {};
 
   @Input()
   get required(): boolean {
-    return this._required;
+    return this._required();
   }
   set required(value: boolean) {
-    this._required = coerceBooleanProperty(value);
+    this._required.set(value);
     this.stateChanges.next();
   }
-  private _required = false;
-
+  @Input()
+  get readonly(): boolean {
+    return this._readonly();
+  }
+  set readonly(value: boolean) {
+    this._readonly.set(value);
+    this.stateChanges.next();
+  }
+  @Input()
+  get placeholder(): string {
+    return this._placeholder();
+  }
+  set placeholder(value: string) {
+    this._placeholder.set(value);
+    this.stateChanges.next();
+  }
   @Input()
   get disabled(): boolean {
-    return this._disabled;
+    return this._disabled();
   }
   set disabled(value: boolean) {
-    this._disabled = coerceBooleanProperty(value);
-    this.setDisabledState(this._disabled);
+    this._disabled.set(value);
+    this.setDisabledState(value);
     this.stateChanges.next();
   }
-  private _disabled = false;
 
   @Input()
   get value(): string | null {
@@ -117,27 +163,6 @@ export class MatecuAutocomplete
   @Output() create = new EventEmitter<string>();
   @Output() valueChange = new EventEmitter<string | null>();
 
-  // MatFormFieldControl properties
-  static nextId = 0;
-  readonly stateChanges = new Subject<void>();
-  readonly id = `matecu-autocomplete-${MatecuAutocomplete.nextId++}`;
-  ngControl: NgControl | null = null;
-  focused = false;
-  lastSearchText: string | null = null;
-  readonly controlType = 'matecu-autocomplete';
-  readonly autofilled = false;
-
-  inputControl = new FormControl<string | null>(null);
-  filteredOptions$!: Observable<MatecuAutocompleteOption[]>;
-
-  private internalValue: string | null = null;
-  private focusMonitor: FocusMonitor;
-  private elementRef: ElementRef<HTMLElement>;
-  private injector: Injector;
-  private optionMap = new Map<string, string>();
-
-  private onChange: any = () => {};
-  private onTouched: any = () => {};
   get empty(): boolean {
     const isEmpty = this.inputControl.value === '' || !this.inputControl.value;
     return isEmpty;
@@ -151,22 +176,31 @@ export class MatecuAutocomplete
   get errorState(): boolean {
     return !!(this.ngControl && this.ngControl.invalid && this.ngControl.touched);
   }
-  get showCreateOption(): boolean {
-    const value = this.inputControl.value;
+  showCreateOption = computed(() => {
+    const value = this.inputValueSignal();
 
     return (
-      this.allowCreate &&
+      this.allowCreate() &&
       typeof value === 'string' &&
       value.trim() !== '' &&
-      this.internalValue !== value &&
-      this.options.some((option) => option[1].toLowerCase() === value.toLowerCase()) === false
+      this.internalValueSignal() !== value &&
+      this.options().some((option) => option[1].toLowerCase() === value.toLowerCase()) === false
     );
-  }
+  });
 
   constructor(focusMonitor: FocusMonitor, elementRef: ElementRef<HTMLElement>, injector: Injector) {
     this.focusMonitor = focusMonitor;
     this.elementRef = elementRef;
     this.injector = injector;
+    // Inicializar el signal con el valor inicial del inputControl
+    this.inputValueSignal.set(this.inputControl.value);
+
+    effect(() => {
+      this.options();
+      this.rebuildOptionMap();
+      this.updateInputLabelFromValue();
+      this.stateChanges.next();
+    });
   }
 
   ngOnInit() {
@@ -177,37 +211,33 @@ export class MatecuAutocomplete
       // Ignorar si no se puede obtener NgControl
       this.ngControl = null;
     }
-
-    const value$ = this.inputControl.valueChanges.pipe(startWith(this.inputControl.value ?? ''));
-
-    this.filteredOptions$ = combineLatest([value$]).pipe(
-      map(([value]) => this.filter(value ?? '')),
-    );
-
     this.inputControl.valueChanges
       .pipe(
-        // Almacena el último valor valido para la búsqueda esto se utiliza para enviar una emición para crear un elemento
+        startWith(this.inputControl.value ?? ''),
+        debounceTime(this.searchChangeDebounceTime()),
+        distinctUntilChanged(),
         tap((value) => (this.lastSearchText = value ?? this.lastSearchText)),
-        // CUando se escribe algo se limpian los valores seleccionados para que el usuario pueda seleccionar una opción o crear una nueva
+        tap((value) => this.inputValueSignal.set(value)),
+        tap((value) => this.searchChange.emit(value ?? '')),
         tap(() => this.clearValue()),
-        debounceTime(this.searchChangeDebounceTime),
+        takeUntil(this.destroy$),
       )
-      .subscribe((value) => {
-        queueMicrotask(() => {
-          this.searchChange.emit(value ?? '');
-        });
+      .subscribe();
+    this.focusMonitor
+      .monitor(this.elementRef, true)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((focused) => {
+        if (!!focused !== this.focused) {
+          this.focused = !!focused;
+          this.stateChanges.next();
+        }
       });
-
-    this.focusMonitor.monitor(this.elementRef, true).subscribe((focused) => {
-      if (!!focused !== this.focused) {
-        this.focused = !!focused;
-        this.stateChanges.next();
-      }
-    });
   }
 
   ngOnDestroy() {
     this.stateChanges.complete();
+    this.destroy$.next();
+    this.destroy$.complete();
     this.focusMonitor.stopMonitoring(this.elementRef);
   }
 
@@ -227,13 +257,13 @@ export class MatecuAutocomplete
       this.stateChanges.next();
     }
 
-    if (changes['placeholder'] || changes['required'] || changes['disabled']) {
+    if (changes['placeholder']) {
       this.stateChanges.next();
     }
   }
 
   private filter(search: string): MatecuAutocompleteOption[] {
-    return this.options.filter((option) => this.filterFn(option[1], search));
+    return this.options().filter((option) => this.filterFn()(option[1], search));
   }
 
   private createFilterFn(): (v1: string, v2: string) => boolean {
@@ -244,18 +274,19 @@ export class MatecuAutocomplete
 
   displayLabel = (value: string | null): string => {
     if (value === null || value === undefined) return '';
-
-    if (!Array.isArray(this.options)) {
+    if (!Array.isArray(this.options())) {
       return '';
     }
-    return this.optionMap.get(value) ?? '';
+    const mapValue = this.optionMap.get(value) ?? '';
+    return mapValue;
   };
 
   onOptionSelected(value: string) {
-    if (!value || this.readonly || this.disabled) {
+    if (!value || this.readonly) {
       return;
     }
     this.internalValue = value;
+    this.internalValueSignal.set(value);
     this.inputControl.setValue(value, { emitEvent: false });
     this.onChange(value);
     this.onTouched();
@@ -266,10 +297,9 @@ export class MatecuAutocomplete
     if (
       !this.lastSearchText ||
       this.lastSearchText.trim() === '' ||
-      this.options.some(
+      this.options().some(
         (option) => option[1].toLowerCase() === this.lastSearchText!.toLowerCase(),
-      ) ||
-      this.options.some((option) => option[1].toLowerCase() === this.lastSearchText!.toLowerCase())
+      )
     ) {
       return;
     }
@@ -287,6 +317,7 @@ export class MatecuAutocomplete
 
   writeValue(value: string | null): void {
     this.internalValue = value;
+    this.internalValueSignal.set(value);
     this.updateInputLabelFromValue();
     this.stateChanges.next();
   }
@@ -300,8 +331,8 @@ export class MatecuAutocomplete
   }
 
   setDisabledState(isDisabled: boolean): void {
-    this._disabled = isDisabled;
     isDisabled ? this.inputControl.disable() : this.inputControl.enable();
+    this._disabled.set(isDisabled);
     this.stateChanges.next();
   }
 
@@ -323,13 +354,14 @@ export class MatecuAutocomplete
   private rebuildOptionMap() {
     this.optionMap.clear();
 
-    for (const [value, label] of this.options ?? []) {
+    for (const [value, label] of this.options() ?? []) {
       this.optionMap.set(value, label);
     }
   }
 
   private clearValue() {
     this.internalValue = null;
+    this.internalValueSignal.set(null);
     this.onChange(null);
     this.onTouched();
     this.valueChange.emit(null);
