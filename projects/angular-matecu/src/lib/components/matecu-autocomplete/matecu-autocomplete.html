@@ -19,7 +19,7 @@
     <mat-divider></mat-divider>
 
     @if(showCreateOption() ){
-    <mat-option (click)="onCreateClick()" class="create-option">
+    <mat-option (click)="onCreateClick()" class="create-option" [value]="inputControl.value">
         <span>➕</span><span>" {{ inputControl.value }}"</span>
 
     </mat-option>

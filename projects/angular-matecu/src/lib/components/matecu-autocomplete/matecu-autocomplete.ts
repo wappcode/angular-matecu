@@ -83,6 +83,7 @@ export class MatecuAutocomplete
     DoCheck
 {
   static nextId = 0;
+  creatingFlag = false;
   options = input<MatecuAutocompleteOption[]>([]);
   allowCreate = input<boolean>(false);
   loading = input<boolean>(false);
@@ -179,20 +180,21 @@ export class MatecuAutocomplete
     return !!(this.ngControl && this.ngControl.invalid && this.ngControl.touched);
   }
   showCreateOption = computed(() => {
-    const value = this.lastSearchText;
     // se obtienen primero los valores de los signals porque al usarlos directamente en el return no se obtienen los valores actualizados,
     //  probablemente porque el effect que actualiza esos signals no se ha ejecutado aún, entonces al obtenerlos antes se asegura que se tienen los valores más recientes para la comparación
     const options = this.options();
     const allowCreate = this.allowCreate();
     const internalValue = this.internalValueSignal();
-
-    return (
+    const value = this.inputValueSignal() ?? '';
+    const valueTrimmed = value.trim();
+    const show =
       allowCreate &&
       typeof value === 'string' &&
-      value.trim() !== '' &&
-      internalValue !== value &&
-      options.some((option) => option[1].toLowerCase() === value.toLowerCase()) === false
-    );
+      valueTrimmed !== '' &&
+      internalValue !== valueTrimmed &&
+      options.some((option) => option[1].trim().toLowerCase() === valueTrimmed.toLowerCase()) ===
+        false;
+    return show;
   });
 
   constructor(focusMonitor: FocusMonitor, elementRef: ElementRef<HTMLElement>, injector: Injector) {
@@ -223,11 +225,11 @@ export class MatecuAutocomplete
         startWith(this.inputControl.value ?? ''),
         debounceTime(this.searchChangeDebounceTime()),
         distinctUntilChanged(),
+        // InternalValueSingal se actualiza solo al seleccionar una opción, no al escribir en el input, por lo que aquí se compara con el valor del input para evitar emitir searchChange cuando se selecciona una opción
+        filter((value) => this.internalValueSignal() !== value),
         tap((value) => (this.lastSearchText = value ?? this.lastSearchText)),
         tap((value) => this.inputValueSignal.set(value)),
         tap((value) => this.searchChange.emit(value ?? '')),
-        // InternalValueSingal se actualiza solo al seleccionar una opción, no al escribir en el input, por lo que aquí se compara con el valor del input para evitar emitir searchChange cuando se selecciona una opción
-        filter((value) => this.internalValueSignal() !== value),
         tap(() => this.clearValue()),
         takeUntil(this.destroy$),
       )
@@ -260,12 +262,6 @@ export class MatecuAutocomplete
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['options']) {
-      this.rebuildOptionMap();
-      this.updateInputLabelFromValue();
-      this.stateChanges.next();
-    }
-
     if (changes['placeholder']) {
       this.stateChanges.next();
     }
@@ -283,10 +279,8 @@ export class MatecuAutocomplete
 
   displayLabel = (value: string | null): string => {
     if (value === null || value === undefined) return '';
-    if (!Array.isArray(this.options())) {
-      return '';
-    }
-    const mapValue = this.optionMap.get(value) ?? '';
+
+    const mapValue = this.optionMap.get(value) ?? (this.creatingFlag ? value : '');
     return mapValue;
   };
 
@@ -312,6 +306,9 @@ export class MatecuAutocomplete
     ) {
       return;
     }
+    this.inputValueSignal.set(this.lastSearchText);
+    this.internalValue = this.lastSearchText;
+    this.creatingFlag = true;
     this.create.emit(this.lastSearchText);
   }
 

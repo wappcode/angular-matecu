@@ -43,7 +43,7 @@ export class Autocomplete implements OnInit {
     setTimeout(() => {
       this.countries.update((current) => [...current, ...this.contriesBase]);
       // observable.next();
-    }, 1000);
+    }, 4000);
   }
 
   onSearch(search: string) {
@@ -51,13 +51,19 @@ export class Autocomplete implements OnInit {
     this.isLoading.set(true);
     setTimeout(() => {
       this.isLoading.set(false);
-    }, 3000);
+      const filtered = this.contriesBase.filter((option) =>
+        option[1].toLowerCase().includes(search.toLowerCase()),
+      );
+      this.countries.set(filtered);
+      // this.countries.update((current) => [...current, ...this.contriesBase]);
+    }, 5000);
   }
 
   onCreate(value: string) {
     console.log('Create:', value);
     const id = value.trim();
-    this.countries.update((current) => [[id, value], ...current]);
+    this.contriesBase.push([id, value]);
+    this.countries.set(this.contriesBase);
     this.form.get('country')?.setValue(id);
   }
 }
