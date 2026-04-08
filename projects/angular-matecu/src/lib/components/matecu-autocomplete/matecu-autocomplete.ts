@@ -16,6 +16,7 @@ import {
   signal,
   effect,
   output,
+  ViewChild,
 } from '@angular/core';
 import {
   ControlValueAccessor,
@@ -25,7 +26,11 @@ import {
   NgControl,
 } from '@angular/forms';
 import { FormControl } from '@angular/forms';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import {
+  MatAutocompleteModule,
+  MatAutocompleteSelectedEvent,
+  MatAutocompleteTrigger,
+} from '@angular/material/autocomplete';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatFormFieldControl } from '@angular/material/form-field';
@@ -88,6 +93,7 @@ export class MatecuAutocomplete
   allowCreate = input<boolean>(false);
   loading = input<boolean>(false);
   filterFn = input<MatecuAutocompleteFilterFn>(this.createFilterFn());
+  deselectOption = input<boolean>(false);
   searchChangeDebounceTime = input<number>(300);
   ngControl: NgControl | null = null;
   focused = false;
@@ -166,6 +172,9 @@ export class MatecuAutocomplete
   create = output<string>();
   valueChange = output<string | null>();
 
+  @ViewChild(MatAutocompleteTrigger)
+  autocompleteTrigger!: MatAutocompleteTrigger;
+
   get empty(): boolean {
     const isEmpty = this.inputControl.value === '' || !this.inputControl.value;
     return isEmpty;
@@ -195,6 +204,10 @@ export class MatecuAutocomplete
       options.some((option) => option[1].trim().toLowerCase() === valueTrimmed.toLowerCase()) ===
         false;
     return show;
+  });
+  hasOptions = computed(() => {
+    const options = this.filteredOptions();
+    return options.length > 0;
   });
 
   constructor(focusMonitor: FocusMonitor, elementRef: ElementRef<HTMLElement>, injector: Injector) {
@@ -284,16 +297,24 @@ export class MatecuAutocomplete
     return mapValue;
   };
 
-  onOptionSelected(value: string) {
+  onOptionSelected(event: MatAutocompleteSelectedEvent) {
+    const value: string = event.option.value;
     if (!value || this.readonly) {
       return;
     }
+
+    if (this.deselectOption()) {
+      event.option.deselect(); // Deseleccionar la opción para que el usuario pueda seleccionarla nuevamente si lo desea
+    }
     this.internalValue = value;
     this.internalValueSignal.set(value);
-    this.inputControl.setValue(value, { emitEvent: false });
+    this.inputControl.setValue('', { emitEvent: false });
     this.onChange(value);
     this.onTouched();
     this.valueChange.emit(value);
+    setTimeout(() => {
+      this.searchChange.emit('');
+    }, 300);
   }
 
   onCreateClick() {
@@ -324,6 +345,9 @@ export class MatecuAutocomplete
   writeValue(value: string | null): void {
     this.internalValue = value;
     this.internalValueSignal.set(value);
+    setTimeout(() => {
+      this.inputValueSignal.set(value);
+    }, 300);
     this.updateInputLabelFromValue();
     this.stateChanges.next();
   }

@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatecuAutocompleteMultiple } from '../../../../projects/angular-matecu/src/lib/components/matecu-autocomplete-multiple/matecu-autocomplete-multiple';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-autocomplete-multiple',
@@ -13,12 +14,13 @@ import { MatIconModule } from '@angular/material/icon';
     ReactiveFormsModule,
     CommonModule,
     MatIconModule,
+    MatButtonModule,
   ],
   templateUrl: './autocomplete-multiple.html',
   styleUrls: ['./autocomplete-multiple.scss'],
 })
 export class AutocompleteMultiple {
-  control = new FormControl<string[]>([]);
+  control = new FormControl<string[]>(['hola']);
   countries: [string, string][] = [
     ['hola', 'Hola Mundo el pueblo unido jamás será vencido ni el prd ni el pan'],
     ['cn', 'China'],
@@ -99,4 +101,14 @@ export class AutocompleteMultiple {
     ['sm', 'San Marino'],
     ['va', 'Vatican City'],
   ];
+  @ViewChild(MatecuAutocompleteMultiple)
+  matecuAutocompleteMultiple!: MatecuAutocompleteMultiple;
+
+  selectAll() {
+    this.matecuAutocompleteMultiple.selectAll();
+  }
+
+  clearAll() {
+    this.matecuAutocompleteMultiple.clearAll();
+  }
 }

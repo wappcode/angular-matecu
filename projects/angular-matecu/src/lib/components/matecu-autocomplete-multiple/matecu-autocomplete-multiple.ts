@@ -1,14 +1,11 @@
 import {
   Component,
   computed,
-  effect,
-  EventEmitter,
   forwardRef,
   Injector,
   input,
   OnDestroy,
   OnInit,
-  Output,
   signal,
   output,
 } from '@angular/core';
@@ -16,6 +13,7 @@ import {
 import {
   ControlValueAccessor,
   FormControl,
+  FormsModule,
   NG_VALUE_ACCESSOR,
   ReactiveFormsModule,
 } from '@angular/forms';
@@ -32,13 +30,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Subject } from 'rxjs';
 
 import { ViewChild } from '@angular/core';
-import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {
   MatecuAutocompleteFilterFn,
   MatecuAutocompleteOption,
 } from '../../types/matecu-autocomplete';
+import { MatecuAutocomplete } from '../matecu-autocomplete/matecu-autocomplete';
 
 @Component({
   selector: 'matecu-autocomplete-multiple',
@@ -53,6 +51,9 @@ import {
     ScrollingModule,
     MatButtonModule,
     MatTooltipModule,
+    MatecuAutocomplete,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   templateUrl: './matecu-autocomplete-multiple.html',
   styleUrls: ['./matecu-autocomplete-multiple.scss'],
@@ -77,12 +78,9 @@ export class MatecuAutocompleteMultiple
 
   protected _placeholder = input('');
   loading = input(false);
-  searchChangeDebounceTime = input(300);
-  enableSelectAll = input(true);
   readonly = input(false);
-  selectAllLabel = input('Select All');
-  clearAllLabel = input('Clear All');
   showTooltip = input(true);
+  allowCreate = input(false);
   filterFn = input<MatecuAutocompleteFilterFn>(this.createFilterFn());
   options = input.required<MatecuAutocompleteOption[]>();
 
@@ -93,7 +91,7 @@ export class MatecuAutocompleteMultiple
 
   // ================= OUTPUT =================
 
-  searchChange = output<string>();
+  searchChange = output<string | undefined | null>();
   valueChange = output<string[] | null>();
 
   // ================= INTERNAL CONTROL =================
@@ -101,8 +99,8 @@ export class MatecuAutocompleteMultiple
   control = new FormControl<string[]>([], { nonNullable: true });
   controlValue$ = toSignal(this.control.valueChanges);
   searchControl = new FormControl<string>('', { nonNullable: true });
-  @ViewChild(MatAutocompleteTrigger)
-  autocompleteTrigger!: MatAutocompleteTrigger;
+  @ViewChild(MatecuAutocomplete)
+  matecuAutocomplete!: MatecuAutocomplete;
 
   // ================= SIGNALS =================
 
@@ -110,10 +108,8 @@ export class MatecuAutocompleteMultiple
 
   readonly filteredOptions = computed(() => {
     const filter = this.searchText();
-
-    return this.options().filter(
-      (o) => this.filterFn()(o[1], filter) && !this.control.value.includes(o[0]),
-    );
+    const filtered = this.options().filter((o) => !this.control.value.includes(o[0]));
+    return filtered;
   });
 
   readonly selectedItems = computed(() => {
@@ -155,22 +151,10 @@ export class MatecuAutocompleteMultiple
     // Debounce search
     let timeout: any;
 
-    this.searchControl.valueChanges.pipe(takeUntilDestroyed()).subscribe((value) => {
-      this.searchText.set(value ?? '');
-    });
     this.control.valueChanges.pipe(takeUntilDestroyed()).subscribe((value) => {
       this.onChange(value);
       this.valueChange.emit(value);
       this.stateChanges.next();
-    });
-    effect(() => {
-      const value = this.searchText();
-
-      clearTimeout(timeout);
-
-      timeout = setTimeout(() => {
-        this.searchChange.emit(value);
-      }, this.searchChangeDebounceTime());
     });
   }
   value: string[] | null = null;
@@ -190,11 +174,14 @@ export class MatecuAutocompleteMultiple
   }
   // ================= AUTOCOMPLETE =================
 
-  selectOption(option: [string, string]) {
+  selectOption(value: string | null) {
     if (this.readonly() || this.disabled) return;
-    if (!Array.isArray(option)) return;
-    if (!this.control.value.includes(option[0])) {
-      this.control.setValue([...this.control.value, option[0]]);
+    if (value === null) return;
+    if (!this.control.value.includes(value)) {
+      const option = this.options().find((o) => o[0] === value);
+      if (option) {
+        this.control.setValue([...this.control.value, value]);
+      }
     }
 
     // limpiar input correctamente
@@ -202,8 +189,9 @@ export class MatecuAutocompleteMultiple
     this.searchText.set('');
 
     // cerrar panel
-    this.autocompleteTrigger.closePanel();
+    this.matecuAutocomplete.autocompleteTrigger.closePanel();
   }
+
   displayLabel(option: [string, string]): string {
     return Array.isArray(option) ? option[1] : '';
   }
@@ -226,9 +214,8 @@ export class MatecuAutocompleteMultiple
     this.searchControl.setValue('');
     this.searchText.set('');
 
-    this.autocompleteTrigger.closePanel();
+    this.matecuAutocomplete.autocompleteTrigger.closePanel();
   }
-
   clearAll(): void {
     if (this.disabled || this.readonly()) return;
 
@@ -238,7 +225,12 @@ export class MatecuAutocompleteMultiple
     this.searchControl.setValue('');
     this.searchText.set('');
 
-    this.autocompleteTrigger?.closePanel();
+    this.matecuAutocomplete.autocompleteTrigger.closePanel();
+  }
+
+  onSearchText(text?: string) {
+    this.searchText.set(text ?? '');
+    this.searchChange.emit(text);
   }
 
   // ================= DRAG & DROP =================
@@ -255,8 +247,12 @@ export class MatecuAutocompleteMultiple
 
   onKeyDown(event: KeyboardEvent) {
     if (this.readonly() || this.disabled) return;
-
-    if (event.key === 'Backspace' && !this.searchText() && this.control.value.length > 0) {
+    const searchText = this.searchText();
+    if (
+      event.key === 'Backspace' &&
+      (!searchText || searchText === '') &&
+      this.control.value.length > 0
+    ) {
       const updated = [...this.control.value];
       updated.pop();
       this.control.setValue(updated);
@@ -269,7 +265,7 @@ export class MatecuAutocompleteMultiple
   onTouched: () => void = () => {};
 
   writeValue(value: string[] | null): void {
-    this.control.setValue(value ?? [], { emitEvent: false });
+    this.control.setValue(value ?? [], { emitEvent: true });
   }
 
   registerOnChange(fn: any): void {
@@ -301,8 +297,8 @@ export class MatecuAutocompleteMultiple
   }
   trackByValue = (_: number, item: [string, string]) => item[0];
   openPanel() {
-    this.autocompleteTrigger.openPanel();
-    setTimeout(() => this.autocompleteTrigger.updatePosition());
+    this.matecuAutocomplete.autocompleteTrigger.openPanel();
+    setTimeout(() => this.matecuAutocomplete.autocompleteTrigger.updatePosition());
   }
   private createFilterFn(): (v1: string, v2: string) => boolean {
     return (v1: string, v2: string): boolean => {

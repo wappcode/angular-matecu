@@ -2,8 +2,7 @@
     [readonly]="readonly" />
 
 
-<mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected($event.option.value)"
-    [displayWith]="displayLabel">
+<mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)" [displayWith]="displayLabel">
 
     @for (option of filteredOptions(); track $index) {
 
@@ -14,17 +13,18 @@
     }
 
     <!-- Crear nuevo -->
-    @if(allowCreate()){
 
-    <mat-divider></mat-divider>
+
 
     @if(showCreateOption() ){
+    @if(hasOptions()) {
+    <mat-divider></mat-divider>
+    }
     <mat-option (click)="onCreateClick()" class="create-option" [value]="inputControl.value">
         <span>➕</span><span>" {{ inputControl.value }}"</span>
-
     </mat-option>
     }
-    }
+
 
 </mat-autocomplete>
 

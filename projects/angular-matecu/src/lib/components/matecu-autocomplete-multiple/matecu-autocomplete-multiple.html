@@ -3,6 +3,7 @@
 <mat-progress-spinner matSuffix diameter="20" mode="indeterminate">
 </mat-progress-spinner>
 }
+{{searchControl.value}}
 <mat-chip-grid #chipGrid class="chip-list">
 
     @for (item of selectedItems(); track item.value) {
@@ -23,42 +24,10 @@
     </mat-chip-row>
     }
 
-    <input type="text" matInput [formControl]="searchControl" [matAutocomplete]="auto" (keydown)="onKeyDown($event)"
-        [placeholder]="_placeholder()" />
+
 
 </mat-chip-grid>
 
-
-<mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectOption($event.option.value)"
-    class="autocomplete-large-panel" [displayWith]="displayLabel">
-
-    @if (!readonly() && !disabled && (enableSelectAll() || control.value.length > 0)) {
-    <mat-option>
-        <div style="display: flex; gap: 10px; align-items: center; justify-content: center;  ">
-
-            @if (enableSelectAll()) {
-            <div>
-                <button mat-icon-button (click)="selectAll()" [matTooltip]="selectAllLabel()">
-                    <mat-icon>select_all</mat-icon>
-                </button>
-            </div>
-
-            }
-            @if (control.value.length > 0) {
-            <div>
-
-                <button mat-icon-button (click)="clearAll()" [matTooltip]="clearAllLabel()">
-                    <mat-icon>clear_all</mat-icon>
-                </button>
-            </div>
-            }
-        </div>
-    </mat-option>
-    }
-
-    @for (option of filteredOptions(); track $index) {
-    <mat-option [value]="option">
-        {{ option[1] }}
-    </mat-option>
-    }
-</mat-autocomplete>
+<matecu-autocomplete [options]="filteredOptions()" (valueChange)="selectOption($event)" [filterFn]="filterFn()"
+    (searchChange)="onSearchText($event)" [formControl]="searchControl" [allowCreate]="allowCreate()"
+    [deselectOption]="true" (keydown)="onKeyDown($event)"></matecu-autocomplete>

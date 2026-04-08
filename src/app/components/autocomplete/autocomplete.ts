@@ -47,7 +47,6 @@ export class Autocomplete implements OnInit {
   }
 
   onSearch(search: string) {
-    console.log('Search:', search);
     this.isLoading.set(true);
     setTimeout(() => {
       this.isLoading.set(false);
@@ -60,7 +59,6 @@ export class Autocomplete implements OnInit {
   }
 
   onCreate(value: string) {
-    console.log('Create:', value);
     const id = value.trim();
     this.contriesBase.push([id, value]);
     this.countries.set(this.contriesBase);

@@ -3,4 +3,19 @@
   //   mat-form-field {
   //     width: 100%;
   //   }
+  .suffix-top {
+    align-self: flex-start !important;
+    margin-top: 4px; /* Ajuste manual para que no toque el borde */
+  }
+}
+::ng-deep .mat-mdc-form-field-icon-suffix {
+  align-self: flex-start !important;
+  padding-top: 8px !important; /* Ajusta este valor según tu diseño */
+}
+
+/* 2. Opcional: Si los botones quedan muy grandes, redúcelos un poco */
+.suffix-top {
+  display: flex;
+  flex-direction: column; /* Apila los botones si quieres ahorrar espacio lateral */
+  align-items: center;
 }
