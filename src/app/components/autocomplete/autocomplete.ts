@@ -53,7 +53,10 @@ export class Autocomplete implements OnInit {
       const filtered = this.contriesBase.filter((option) =>
         option[1].toLowerCase().includes(search.toLowerCase()),
       );
-      this.countries.set(filtered);
+      const curent = search && search.trim().length > 0 ? filtered : this.contriesBase;
+      this.countries.set(curent);
+      console.log('search', search);
+      console.log('current', curent);
       // this.countries.update((current) => [...current, ...this.contriesBase]);
     }, 5000);
   }

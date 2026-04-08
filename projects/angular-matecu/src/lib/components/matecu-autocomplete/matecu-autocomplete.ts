@@ -293,7 +293,7 @@ export class MatecuAutocomplete
   displayLabel = (value: string | null): string => {
     if (value === null || value === undefined) return '';
 
-    const mapValue = this.optionMap.get(value) ?? (this.creatingFlag ? value : '');
+    const mapValue = this.optionMap.get(value) ?? value;
     return mapValue;
   };
 
@@ -308,7 +308,7 @@ export class MatecuAutocomplete
     }
     this.internalValue = value;
     this.internalValueSignal.set(value);
-    this.inputControl.setValue('', { emitEvent: false });
+    // this.inputControl.setValue('', { emitEvent: false });
     this.onChange(value);
     this.onTouched();
     this.valueChange.emit(value);
