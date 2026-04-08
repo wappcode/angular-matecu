@@ -215,6 +215,7 @@ Agregar a la plantilla
   [allowCreate]="false"
   [loading]="false"
   [readonly]="false"
+  [deselectOption]="true"
   (searchChange)="onSearchChange($event)"
   [(ngModel)]="selectedValue"
 >
@@ -229,9 +230,70 @@ Agregar a la plantilla
 - `readonly`: Modo de solo lectura
 - `filterFn`: Función personalizada para filtrar opciones
 - `searchChangeDebounceTime`: Tiempo de debounce para búsqueda (default: 300ms)
+- `deselectOption`: (boolean) Permite deseleccionar automáticamente las opciones después de ser seleccionadas (default: false)
 - `placeholder`: Texto de placeholder
 - `required`: Campo obligatorio
 - `disabled`: Campo deshabilitado
+
+### ViewChild - autocompleteTrigger:
+
+El componente expone una referencia al `MatAutocompleteTrigger` que permite control programático del autocomplete:
+
+```typescript
+import { MatecuAutocomplete } from 'angular-matecu';
+import { ViewChild } from '@angular/core';
+
+export class MyComponent {
+  @ViewChild(MatecuAutocomplete) autocomplete!: MatecuAutocomplete;
+
+  // Abrir el panel programáticamente
+  openPanel() {
+    this.autocomplete.autocompleteTrigger.openPanel();
+  }
+
+  // Cerrar el panel programáticamente
+  closePanel() {
+    this.autocomplete.autocompleteTrigger.closePanel();
+  }
+
+  // Verificar si el panel está abierto
+  isPanelOpen(): boolean {
+    return this.autocomplete.autocompleteTrigger.panelOpen;
+  }
+}
+```
+
+### Uso de deselectOption:
+
+La propiedad `deselectOption` es útil cuando necesitas permitir que los usuarios seleccionen la misma opción múltiples veces o cuando quieres que la opción no permanezca seleccionada visualmente:
+
+```html
+<!-- Permite reseleccionar la misma opción -->
+<matecu-autocomplete
+  [options]="actions"
+  [deselectOption]="true"
+  placeholder="Selecciona una acción..."
+  (valueChange)="executeAction($event)"
+>
+</matecu-autocomplete>
+```
+
+```typescript
+export class MyComponent {
+  actions = [
+    ['refresh', 'Actualizar datos'],
+    ['export', 'Exportar reporte'],
+    ['send', 'Enviar notificación'],
+  ];
+
+  executeAction(action: string | null) {
+    if (action) {
+      console.log('Ejecutando acción:', action);
+      // La opción se deseleccionará automáticamente permitiendo reselección
+    }
+  }
+}
+```
 
 ### Eventos:
 
@@ -239,53 +301,249 @@ Agregar a la plantilla
 
 ## matecu-autocomplete-multiple (Componente)
 
-Componente de autocompletado que permite seleccionar múltiples opciones con chips y reordenamiento por drag & drop.
+Componente de autocompletado que permite seleccionar múltiples opciones con chips y controles para seleccionar/limpiar todo.
 
 ### Uso:
+
+Importar componente:
 
 ```typescript
 import { MatecuAutocompleteMultiple } from 'angular-matecu';
 ```
 
+### Uso Básico:
+
 ```html
-<matecu-autocomplete-multiple
-  [options]="options"
-  placeholder="Seleccionar opciones..."
-  [enableSelectAll]="true"
-  [showTooltip]="true"
-  [readonly]="false"
-  [loading]="false"
-  selectAllLabel="Seleccionar Todo"
-  clearAllLabel="Limpiar Todo"
-  (searchChange)="onSearchChange($event)"
-  [(ngModel)]="selectedValues"
->
-</matecu-autocomplete-multiple>
+<mat-form-field appearance="outline">
+  <mat-label>Seleccionar países</mat-label>
+  <matecu-autocomplete-multiple
+    [options]="countries"
+    placeholder="Buscar países..."
+    [loading]="false"
+    [readonly]="false"
+    [showTooltip]="true"
+    [allowCreate]="false"
+    (searchChange)="onSearchChange($event)"
+    (valueChange)="onValueChange($event)"
+    [(ngModel)]="selectedValues"
+  >
+  </matecu-autocomplete-multiple>
+</mat-form-field>
 ```
 
-### Propiedades:
+### Uso con Botones de Control Externo:
 
-- `options`: Array de opciones tipo `[value, label][]`
-- `enableSelectAll`: Habilita botones de "Seleccionar Todo" y "Limpiar Todo"
-- `showTooltip`: Muestra tooltip con el texto completo en chips largos
-- `selectAllLabel`: Texto del botón "Seleccionar Todo"
-- `clearAllLabel`: Texto del botón "Limpiar Todo"
-- `filterFn`: Función personalizada para filtrar opciones
-- `searchChangeDebounceTime`: Tiempo de debounce para búsqueda (default: 300ms)
-- `placeholder`: Texto de placeholder
-- `loading`: Muestra indicador de carga
-- `readonly`: Modo de solo lectura
+```html
+<mat-form-field appearance="outline">
+  <mat-label>Countries</mat-label>
+  <matecu-autocomplete-multiple
+    placeholder="Seleccionar países"
+    [formControl]="countriesControl"
+    [options]="countries"
+    [showTooltip]="true"
+  ></matecu-autocomplete-multiple>
 
-### Eventos:
+  <div matSuffix class="suffix-top">
+    <button mat-icon-button (click)="selectAll()" title="Seleccionar todo">
+      <mat-icon>select_all</mat-icon>
+    </button>
+    <button mat-icon-button (click)="clearAll()" title="Limpiar todo">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </div>
+</mat-form-field>
+```
 
-- `searchChange`: Se emite cuando cambia el texto de búsqueda
+### Componente TypeScript:
+
+```typescript
+import { Component, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { MatecuAutocompleteMultiple } from 'angular-matecu';
+
+export class MyComponent {
+  countriesControl = new FormControl<string[]>([]);
+
+  countries: [string, string][] = [
+    ['us', 'United States'],
+    ['mx', 'Mexico'],
+    ['ca', 'Canada'],
+    ['br', 'Brazil'],
+    ['ar', 'Argentina'],
+    ['fr', 'France'],
+    ['de', 'Germany'],
+    ['it', 'Italy'],
+    ['es', 'Spain'],
+    ['jp', 'Japan'],
+    // ... más países
+  ];
+
+  @ViewChild(MatecuAutocompleteMultiple)
+  matecuAutocompleteMultiple!: MatecuAutocompleteMultiple;
+
+  selectAll() {
+    this.matecuAutocompleteMultiple.selectAll();
+  }
+
+  clearAll() {
+    this.matecuAutocompleteMultiple.clearAll();
+  }
+
+  onSearchChange(searchText: string | undefined | null) {
+    console.log('Búsqueda:', searchText);
+    // Aquí puedes implementar lógica para carga dinámica de opciones
+  }
+
+  onValueChange(values: string[] | null) {
+    console.log('Valores seleccionados:', values);
+  }
+}
+```
+
+### Estilos CSS para Botones de Control:
+
+Para posicionar correctamente los botones de "Seleccionar Todo" y "Limpiar Todo", agrega estos estilos:
+
+```scss
+:host {
+  display: block;
+
+  .suffix-top {
+    align-self: flex-start !important;
+    margin-top: 4px; /* Ajuste para que no toque el borde superior */
+    display: flex;
+    flex-direction: column; /* Apila los botones verticalmente */
+    align-items: center;
+  }
+}
+
+// Ajuste global para posicionar el sufijo en la parte superior
+::ng-deep .mat-mdc-form-field-icon-suffix {
+  align-self: flex-start !important;
+  padding-top: 8px !important; /* Ajusta según tu diseño */
+}
+```
+
+### Inputs (Propiedades):
+
+- `options` _(requerido)_: `MatecuAutocompleteOption[]` - Array de opciones tipo `[value, label][]`
+- `placeholder`: `string` - Texto de placeholder (default: `''`)
+- `loading`: `boolean` - Muestra indicador de carga (default: `false`)
+- `readonly`: `boolean` - Modo de solo lectura (default: `false`)
+- `showTooltip`: `boolean` - Muestra tooltip con texto completo en chips largos (default: `true`)
+- `allowCreate`: `boolean` - Permite crear nuevas opciones (default: `false`)
+- `filterFn`: `MatecuAutocompleteFilterFn` - Función personalizada para filtrar opciones
+
+### Outputs (Eventos):
+
+- `searchChange`: `EventEmitter<string | undefined | null>` - Se emite cuando cambia el texto de búsqueda
+- `valueChange`: `EventEmitter<string[] | null>` - Se emite cuando cambian los valores seleccionados
+
+### Métodos Públicos:
+
+#### selectAll()
+
+Selecciona todas las opciones disponibles:
+
+```typescript
+// Seleccionar todas las opciones
+this.matecuAutocompleteMultiple.selectAll();
+```
+
+#### clearAll()
+
+Limpia todas las selecciones:
+
+```typescript
+// Limpiar todas las selecciones
+this.matecuAutocompleteMultiple.clearAll();
+```
+
+#### selectOption(value: string | null)
+
+Selecciona una opción específica programáticamente:
+
+```typescript
+// Seleccionar opción específica
+this.matecuAutocompleteMultiple.selectOption('us');
+```
+
+#### remove(value: string)
+
+Remueve una opción específica de las selecciones:
+
+```typescript
+// Remover opción específica
+this.matecuAutocompleteMultiple.remove('us');
+```
+
+#### openPanel()
+
+Abre el panel de opciones programáticamente:
+
+```typescript
+// Abrir panel
+this.matecuAutocompleteMultiple.openPanel();
+```
 
 ### Funcionalidades:
 
-- **Drag & Drop**: Los chips seleccionados se pueden reordenar arrastrando
-- **Virtual Scrolling**: Optimizado para listas grandes de opciones
-- **Select All/Clear All**: Botones para seleccionar o limpiar todas las opciones
-- **Tooltips**: Muestra el texto completo cuando el chip es muy largo
+- **Tooltips**: Muestra el texto completo cuando el chip es demasiado largo
+- **Teclado**: Soporte para tecla Backspace para eliminar el último chip seleccionado
+- **ControlValueAccessor**: Totalmente compatible con Angular Forms (ngModel, FormControl, etc.)
+- **MatFormFieldControl**: Integración completa con Angular Material Form Field
+
+### Ejemplo Completo con FormControl:
+
+```typescript
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+
+@Component({
+  selector: 'app-example',
+  template: `
+    <form [formGroup]="myForm">
+      <mat-form-field appearance="outline">
+        <mat-label>Tecnologías</mat-label>
+        <matecu-autocomplete-multiple
+          formControlName="technologies"
+          [options]="techOptions"
+          placeholder="Seleccionar tecnologías..."
+          [showTooltip]="true"
+          (searchChange)="onTechSearch($event)"
+        ></matecu-autocomplete-multiple>
+      </mat-form-field>
+    </form>
+
+    <p>Valores seleccionados: {{ myForm.get('technologies')?.value | json }}</p>
+  `,
+})
+export class ExampleComponent {
+  myForm: FormGroup;
+
+  techOptions: [string, string][] = [
+    ['angular', 'Angular'],
+    ['react', 'React'],
+    ['vue', 'Vue.js'],
+    ['typescript', 'TypeScript'],
+    ['javascript', 'JavaScript'],
+    ['nodejs', 'Node.js'],
+    ['python', 'Python'],
+    ['java', 'Java'],
+  ];
+
+  constructor(private fb: FormBuilder) {
+    this.myForm = this.fb.group({
+      technologies: [['angular', 'typescript']], // valores iniciales
+    });
+  }
+
+  onTechSearch(searchText: string | undefined | null) {
+    // Implementar búsqueda dinámica si es necesario
+    console.log('Buscando:', searchText);
+  }
+}
+```
 
 ## matecu-datetime-picker (Componente)
 
