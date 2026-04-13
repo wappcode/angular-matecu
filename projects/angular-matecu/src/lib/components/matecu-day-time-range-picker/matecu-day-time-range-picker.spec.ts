@@ -21,7 +21,7 @@ describe('MatecuDayTimeRangePicker', () => {
   });
 
   it('should emit range when date and times are selected', () => {
-    spyOn(component.rangeChange, 'emit');
+    spyOn(component.valueChange, 'emit');
 
     const testDate = new Date('2024-04-10');
     const startTime = new Date();
@@ -33,7 +33,7 @@ describe('MatecuDayTimeRangePicker', () => {
     component.onStartTimeChange(startTime);
     component.onEndTimeChange(endTime);
 
-    expect(component.rangeChange.emit).toHaveBeenCalled();
+    expect(component.valueChange.emit).toHaveBeenCalled();
   });
 
   it('should validate that end time is after start time', () => {

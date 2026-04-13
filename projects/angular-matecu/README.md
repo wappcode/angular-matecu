@@ -667,7 +667,6 @@ interface DatetimeRange {
 ### Eventos:
 
 - `valueChange`: Emite el valor `DatetimeRange | null` al cambiar fecha u horas
-- `rangeChange`: Alias de `valueChange` para mayor claridad semántica
 
 ### Validaciones:
 

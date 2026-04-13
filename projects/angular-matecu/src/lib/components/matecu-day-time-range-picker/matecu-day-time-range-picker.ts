@@ -66,9 +66,9 @@ export class MatecuDayTimeRangePicker implements ControlValueAccessor, Validator
   endTimeOptions = input<MatTimepickerOption<Date>[] | null>(null);
   matDatepickerFilter = input<((d: Date | null) => boolean) | null>(null);
 
-  rangeChange = output<DatetimeRange>();
+  valueChange = output<DatetimeRange | null>();
 
-  private onChange: (value: DatetimeRange) => void = () => {};
+  private onChange: (value: DatetimeRange | null) => void = () => {};
   private onTouched: () => void = () => {};
 
   writeValue(value: DatetimeRange | null): void {
@@ -83,7 +83,7 @@ export class MatecuDayTimeRangePicker implements ControlValueAccessor, Validator
     }
   }
 
-  registerOnChange(fn: (value: DatetimeRange) => void): void {
+  registerOnChange(fn: (value: DatetimeRange | null) => void): void {
     this.onChange = fn;
   }
 
@@ -116,17 +116,19 @@ export class MatecuDayTimeRangePicker implements ControlValueAccessor, Validator
 
   private updateDateRange(): void {
     if (!this.selectedDate) {
-      const range: DatetimeRange = {
-        startDate: null,
-        endDate: null,
-      };
-      this.onChange(range);
-      this.rangeChange.emit(range);
+      this.onChange(null);
+      this.valueChange.emit(null);
       return;
     }
 
     const startDate = this.createDateTime(this.selectedDate, this.startTime);
     const endDate = this.createDateTime(this.selectedDate, this.endTime);
+
+    if (!startDate || !endDate) {
+      this.onChange(null);
+      this.valueChange.emit(null);
+      return;
+    }
 
     const range: DatetimeRange = {
       startDate,
@@ -134,7 +136,7 @@ export class MatecuDayTimeRangePicker implements ControlValueAccessor, Validator
     };
 
     this.onChange(range);
-    this.rangeChange.emit(range);
+    this.valueChange.emit(range);
   }
 
   private createDateTime(date: Date, time: Date | null): Date | null {
