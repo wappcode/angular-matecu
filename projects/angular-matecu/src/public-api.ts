@@ -41,4 +41,5 @@ export * from './lib/components/matecu-autocomplete/matecu-autocomplete';
 export * from './lib/components/matecu-autocomplete-multiple/matecu-autocomplete-multiple';
 export * from './lib/components/matecu-file-input/matecu-file-input';
 export * from './lib/components/matecu-datetime-picker/matecu-datetime-picker';
+export * from './lib/components/matecu-day-time-range-picker/matecu-day-time-range-picker';
 export * from './lib/types/matecu-autocomplete';

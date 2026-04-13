@@ -1,0 +1,31 @@
+:host {
+  display: block;
+  container-type: inline-size;
+  --matecu-day-time-range-picker-mobile-bg: #f1f5f9;
+
+  .matecu-day-time-range-picker-content {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .matecu-day-time-range-picker-content > mat-form-field:nth-child(2),
+  .matecu-day-time-range-picker-content > mat-form-field:nth-child(3) {
+    max-width: 140px;
+  }
+
+  @container (width <= 600px) {
+    .matecu-day-time-range-picker-content {
+      flex-direction: column;
+      background-color: var(--matecu-day-time-range-picker-mobile-bg);
+      gap: 25px;
+      padding: 10px;
+      padding-bottom: 15px;
+    }
+
+    .matecu-day-time-range-picker-content > mat-form-field:nth-child(2),
+    .matecu-day-time-range-picker-content > mat-form-field:nth-child(3) {
+      max-width: unset;
+    }
+  }
+}

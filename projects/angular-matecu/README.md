@@ -17,6 +17,7 @@ Librería con componentes y utilidades para el desarrollo de aplicaciones Angula
   - [matecu-autocomplete](#matecu-autocomplete-componente)
   - [matecu-autocomplete-multiple](#matecu-autocomplete-multiple-componente)
   - [matecu-datetime-picker](#matecu-datetime-picker-componente)
+  - [matecu-day-time-range-picker](#matecu-day-time-range-picker-componente)
   - [matecu-file-input](#matecu-file-input-componente)
 - [Componentes de Layout](#componentes-de-layout)
   - [MatecuTopbarLayout](#matecutopbarlayout)
@@ -600,6 +601,147 @@ import { MatecuDatetimePicker } from 'angular-matecu';
 - El componente usa `container queries` sobre su host y adapta el layout interno cuando su ancho es menor o igual a `400px`.
 - En ese estado, los campos se muestran en columna y se aplican estilos móviles al contenedor interno.
 - Puedes personalizar el fondo móvil con la variable CSS `--matecu-datetime-picker-mobile-bg`.
+
+## matecu-day-time-range-picker (Componente)
+
+Componente para selección de un rango de tiempo en el mismo día. Permite seleccionar una fecha y dos horas diferentes (inicio y fin) retornando dos objetos `Date` completos con la misma fecha pero diferentes tiempos.
+
+### Uso:
+
+```typescript
+import { MatecuDayTimeRangePicker } from 'angular-matecu';
+```
+
+```html
+<matecu-day-time-range-picker
+  dateLabel="Fecha"
+  startTimeLabel="Hora inicio"
+  endTimeLabel="Hora fin"
+  appearance="outline"
+  [minDate]="minDate"
+  [maxDate]="maxDate"
+  [startTimeMin]="'08:00'"
+  [startTimeMax]="'18:00'"
+  [endTimeMin]="'08:00'"
+  [endTimeMax]="'22:00'"
+  [timeInterval]="'00:15'"
+  [startTimeOptions]="startOptions"
+  [endTimeOptions]="endOptions"
+  [matDatepickerFilter]="dateFilter"
+  (valueChange)="onRangeChange($event)"
+  [(ngModel)]="selectedRange"
+>
+  <span mat-hint-date>Selecciona la fecha del evento</span>
+  <span mat-hint-start-time>Hora de inicio del evento</span>
+  <span mat-hint-end-time>Hora de finalización del evento</span>
+  <div mat-error-date>Error en la fecha</div>
+  <div mat-error-start-time>Error en la hora de inicio</div>
+  <div mat-error-end-time>Error en la hora de fin</div>
+</matecu-day-time-range-picker>
+```
+
+### Propiedades:
+
+- `dateLabel`: Texto del campo de fecha
+- `startTimeLabel`: Texto del campo de hora de inicio
+- `endTimeLabel`: Texto del campo de hora de fin
+- `appearance`: Apariencia del `mat-form-field` (`fill`, `outline`, etc.)
+- `disabled`: Deshabilita el componente
+- `minDate` / `maxDate`: Rango permitido para la fecha
+- `startTimeMin` / `startTimeMax`: Rango permitido para la hora de inicio (`HH:mm`)
+- `endTimeMin` / `endTimeMax`: Rango permitido para la hora de fin (`HH:mm`)
+- `timeInterval`: Intervalo de tiempo para opciones del timepicker
+- `startTimeOptions`: Opciones fijas de hora para el selector de inicio (`MatTimepickerOption<Date>[]`)
+- `endTimeOptions`: Opciones fijas de hora para el selector de fin (`MatTimepickerOption<Date>[]`)
+- `matDatepickerFilter`: Filtro personalizado para fechas
+
+### Interfaz de Retorno:
+
+```typescript
+interface DatetimeRange {
+  startDate: Date | null;
+  endDate: Date | null;
+}
+```
+
+### Eventos:
+
+- `valueChange`: Emite el valor `DatetimeRange | null` al cambiar fecha u horas
+- `rangeChange`: Alias de `valueChange` para mayor claridad semántica
+
+### Validaciones:
+
+El componente incluye validaciones automáticas:
+
+- **Campos requeridos**: Valida que fecha, hora inicio y hora fin estén presentes
+- **Orden temporal**: Valida que la hora de fin sea posterior a la hora de inicio
+- **Rango mínimo/máximo**: Respeta los límites configurados en `startTimeMin`, `startTimeMax`, `endTimeMin`, `endTimeMax`
+
+### Integración con Formularios:
+
+```typescript
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { DatetimeRange } from 'angular-matecu';
+
+@Component({
+  selector: 'app-example',
+  template: `
+    <form [formGroup]="eventForm">
+      <matecu-day-time-range-picker
+        formControlName="schedule"
+        dateLabel="Fecha del evento"
+        startTimeLabel="Hora de inicio"
+        endTimeLabel="Hora de fin"
+        appearance="outline"
+        [startTimeMin]="'08:00'"
+        [startTimeMax]="'18:00'"
+        [endTimeMin]="'08:00'"
+        [endTimeMax]="'22:00'"
+      >
+        <span mat-hint-date>Selecciona la fecha</span>
+        <span mat-error-start-time *ngIf="eventForm.get('schedule')?.hasError('invalidTimeOrder')">
+          La hora de fin debe ser posterior a la hora de inicio
+        </span>
+      </matecu-day-time-range-picker>
+    </form>
+  `,
+})
+export class ExampleComponent {
+  eventForm = new FormGroup({
+    schedule: new FormControl<DatetimeRange | null>(null, Validators.required),
+  });
+
+  onSubmit() {
+    const range = this.eventForm.get('schedule')?.value;
+    if (range) {
+      console.log('Fecha y hora de inicio:', range.startDate);
+      console.log('Fecha y hora de fin:', range.endDate);
+    }
+  }
+}
+```
+
+### Comportamiento Responsive:
+
+- El componente usa `container queries` sobre su host y adapta el layout interno cuando su ancho es menor o igual a `600px`
+- En ese estado, los tres campos se muestran en columna y se aplican estilos móviles al contenedor interno
+- Puedes personalizar el fondo móvil con la variable CSS `--matecu-day-time-range-picker-mobile-bg`
+
+### Personalización de Estilos:
+
+```scss
+matecu-day-time-range-picker {
+  --matecu-day-time-range-picker-mobile-bg: #f1f5f9; // Fondo en modo móvil
+}
+```
+
+### Casos de Uso:
+
+- **Reservas y citas**: Seleccionar el horario de una cita o reserva en un día específico
+- **Eventos**: Programar eventos que ocurren en un mismo día
+- **Turnos laborales**: Asignar horarios de trabajo diarios
+- **Control de tiempo**: Registrar rangos de tiempo para actividades del mismo día
 
 ## matecu-file-input (Componente)
 

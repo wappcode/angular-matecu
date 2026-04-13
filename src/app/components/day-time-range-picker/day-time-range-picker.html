@@ -1,0 +1,26 @@
+<h2>Day Time Range Picker Demo</h2>
+
+<form [formGroup]="form">
+    <matecu-day-time-range-picker appearance="outline" dateLabel="Fecha" startTimeLabel="Hora inicio"
+        endTimeLabel="Hora fin" formControlName="datetimeRange" startTimeMin="8:00" startTimeMax="18:00"
+        endTimeMin="8:00" endTimeMax="22:00">
+
+        <div mat-error-date>Error en la fecha</div>
+        <span mat-hint-date>Selecciona la fecha del evento</span>
+        <span mat-hint-start-time>Hora de inicio del evento</span>
+        <span mat-hint-end-time>Hora de finalización del evento</span>
+        <div mat-error-start-time>Error en la hora de inicio</div>
+        <div mat-error-end-time>Error en la hora de fin</div>
+    </matecu-day-time-range-picker>
+</form>
+
+<br />&nbsp; <br />&nbsp; <br />&nbsp; <br />&nbsp;
+
+<h3>Form Value:</h3>
+<pre>{{ form.get('datetimeRange')?.value | json }}</pre>
+
+<h3>Form Errors:</h3>
+<pre>{{ form.get('datetimeRange')?.errors | json }}</pre>
+
+<h3>Form Valid:</h3>
+<div>{{ !form.invalid }}</div>

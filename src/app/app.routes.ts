@@ -10,6 +10,7 @@ import { Autocomplete } from './components/autocomplete/autocomplete';
 import { AutocompleteMultiple } from './components/autocomplete-multiple/autocomplete-multiple';
 import { FileInput } from './components/file-input/file-input';
 import { DatetimePicker } from './components/datetime-picker/datetime-picker';
+import { DayTimeRangePicker } from './components/day-time-range-picker/day-time-range-picker';
 
 export const routes: Routes = [
   {
@@ -55,5 +56,9 @@ export const routes: Routes = [
   {
     path: 'datetime-picker',
     component: DatetimePicker,
+  },
+  {
+    path: 'day-time-range-picker',
+    component: DayTimeRangePicker,
   },
 ];

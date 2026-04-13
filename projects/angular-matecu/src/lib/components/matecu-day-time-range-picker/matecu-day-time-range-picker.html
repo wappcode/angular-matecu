@@ -1,0 +1,41 @@
+<div class="matecu-day-time-range-picker-content">
+    <!-- Date picker -->
+    <mat-form-field [appearance]="appearance()">
+        <mat-label>{{ dateLabel() }}</mat-label>
+        <input matInput [matDatepicker]="datepicker" [ngModel]="selectedDate" (ngModelChange)="onDateChange($event)"
+            [disabled]="disabled" [min]="minDate()" [max]="maxDate()" [matDatepickerFilter]="matDatepickerFilter()"
+            (blur)="onBlur()" />
+        <mat-datepicker #datepicker />
+        <mat-datepicker-toggle [for]="datepicker" matSuffix />
+
+        <mat-hint> <ng-content select="[mat-hint-date]"></ng-content> </mat-hint>
+        <mat-error> <ng-content select="[mat-error-date]"></ng-content> </mat-error>
+    </mat-form-field>
+
+    <!-- Start time picker -->
+    <mat-form-field [appearance]="appearance()">
+        <mat-label>{{ startTimeLabel() }}</mat-label>
+        <input matInput [matTimepicker]="startTimepicker" [ngModel]="startTime"
+            (ngModelChange)="onStartTimeChange($event)" [ngModelOptions]="{ updateOn: 'blur' }"
+            [disabled]="disabled || !selectedDate" [matTimepickerMin]="startTimeMin()"
+            [matTimepickerMax]="startTimeMax()" (blur)="onBlur()" />
+        <mat-timepicker #startTimepicker [options]="startTimeOptions()" [interval]="timeInterval()" />
+        <mat-timepicker-toggle [for]="startTimepicker" matSuffix />
+
+        <mat-hint> <ng-content select="[mat-hint-start-time]"></ng-content> </mat-hint>
+        <mat-error> <ng-content select="[mat-error-start-time]"></ng-content> </mat-error>
+    </mat-form-field>
+
+    <!-- End time picker -->
+    <mat-form-field [appearance]="appearance()">
+        <mat-label>{{ endTimeLabel() }}</mat-label>
+        <input matInput [matTimepicker]="endTimepicker" [ngModel]="endTime" (ngModelChange)="onEndTimeChange($event)"
+            [ngModelOptions]="{ updateOn: 'blur' }" [disabled]="disabled || !selectedDate"
+            [matTimepickerMin]="endTimeMin()" [matTimepickerMax]="endTimeMax()" (blur)="onBlur()" />
+        <mat-timepicker #endTimepicker [options]="endTimeOptions()" [interval]="timeInterval()" />
+        <mat-timepicker-toggle [for]="endTimepicker" matSuffix />
+
+        <mat-hint> <ng-content select="[mat-hint-end-time]"></ng-content> </mat-hint>
+        <mat-error> <ng-content select="[mat-error-end-time]"></ng-content> </mat-error>
+    </mat-form-field>
+</div>
