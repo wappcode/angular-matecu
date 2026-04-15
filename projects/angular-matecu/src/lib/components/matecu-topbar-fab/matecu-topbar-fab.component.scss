@@ -13,7 +13,13 @@
   &.mobile-style {
     position: absolute;
     transform: translate(0);
-    bottom: var(--mtb-fab-mobile-bottom-position, 20px);
-    right: var(--mtb-fab-mobile-right-position, 20px);
+    bottom: var(
+      --matecu-topbar-fab-mobile-bottom-position,
+      var(--mtb-fab-mobile-bottom-position, 20px)
+    );
+    right: var(
+      --matecu-topbar-fab-mobile-right-position,
+      var(--mtb-fab-mobile-right-position, 20px)
+    );
   }
 }

@@ -1,7 +1,7 @@
 :host {
   display: flex;
   height: 100%;
-  min-height: var(--mtb-bar-height, 64px);
+  min-height: var(--matecu-topbar-header-column-bar-height, var(--mtb-bar-height, 64px));
   &[right-row] {
     justify-content: flex-end;
   }

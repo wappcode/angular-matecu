@@ -1,4 +1,9 @@
 :host {
+  --matecu-topbar-action-bar-height: var(--mtb-bar-height, 64px);
+  --matecu-topbar-action-padding: var(--mtb-action-padding, 10px);
+  --matecu-topbar-action-margin: var(--mtb-action-margin, 0px);
+
+  /* Mantener variables originales para compatibilidad */
   --mtb-bar-height: 64px;
   --mtb-action-padding: 10px;
   --mtb-action-margin: 0px;
@@ -13,7 +18,7 @@
   height: 100%;
   display: flex;
   align-items: flex-start;
-  max-height: var(--mtb-bar-height);
-  padding: var(--mtb-action-padding);
-  margin: var(--mtb-action-margin);
+  max-height: var(--matecu-topbar-action-bar-height, var(--mtb-bar-height));
+  padding: var(--matecu-topbar-action-padding, var(--mtb-action-padding));
+  margin: var(--matecu-topbar-action-margin, var(--mtb-action-margin));
 }

@@ -910,14 +910,14 @@ Ajustar los colores y los estilos en el archivo de css del componente o el archi
 // global
 :root {
   // ...
-  --mtb-primary-color: red;
+  --matecu-topbar-layout-primary-color: red;
   // ...
 }
 
 // en el componente
 :host {
   // ...
-  --mtb-primary-color: red;
+  --matecu-topbar-layout-primary-color: red;
   // ...
 }
 ```
@@ -930,13 +930,13 @@ Componente principal
 
 #### Variables de estilos
 
-- --mtb-border : Borde
-- --mtb-margin : Margen
-- --mtb-width : Ancho
-- --mtb-height : Alto
-- --mtb-primary-color : Color principal (Color de la barra)
-- --mtb-bar-height : Alto de la barra
-- --mtb-bar-prominent-height : Alto de la barra en modo prominente
+- --matecu-topbar-layout-border : Borde
+- --matecu-topbar-layout-margin : Margen
+- --matecu-topbar-layout-width : Ancho
+- --matecu-topbar-layout-height : Alto
+- --matecu-topbar-layout-primary-color : Color principal (Color de la barra)
+- --matecu-topbar-layout-bar-height : Alto de la barra
+- --matecu-topbar-layout-bar-prominent-height : Alto de la barra en modo prominente
 
 ### Inputs
 
@@ -959,9 +959,9 @@ Crea una fila para agregar contenido en el encabezado, pueden agregarse hasta 2 
 
 #### Variables de estilos
 
-- `--mtb-row-padding`
-- `--mtb-row-margin`
-- `--mtb-row-width`
+- `--matecu-topbar-header-row-padding`
+- `--matecu-topbar-header-row-margin`
+- `--matecu-topbar-header-row-max-width`
 
 ### MatecuTopbarHeaderColumn
 
@@ -973,8 +973,8 @@ Crea un contenedor para agregar acciones como links o botones preferentemente en
 
 #### Variables de estilos
 
-- `--mtb-action-padding`
-- `--mtb-action-margin`
+- `--matecu-topbar-action-padding`
+- `--matecu-topbar-action-margin`
 
 ### MatecuTopbarFab
 
@@ -982,8 +982,8 @@ Crea un contenedor para agregar un botón (FAB)
 
 #### Variables de estilos
 
-- `--mtb-fab-mobile-bottom-position`: Posición relativa a la parte inferior del componente principal que se aplica cuando están activos los estilos para dispositivos móviles.
-- `--mtb-fab-mobile-right-position`: Posición relativa a la parte inferior del componente MatecuTopbarLayout
+- `--matecu-topbar-fab-mobile-bottom-position`: Posición relativa a la parte inferior del componente principal que se aplica cuando están activos los estilos para dispositivos móviles.
+- `--matecu-topbar-fab-mobile-right-position`: Posición relativa a la parte inferior del componente MatecuTopbarLayout
 
 #### Inputs
 
@@ -1011,8 +1011,8 @@ Crea un contenedor para agregar un título a la página.
 
 #### Variables de estilos
 
-- `--mtb-title-padding`
-- `--mtb-title-margin`
+- `--matecu-topbar-title-padding`
+- `--matecu-topbar-title-margin`
 
 ### MatecuTopbarBody
 
@@ -1020,10 +1020,122 @@ Crea un contenedor para agregar el contenido de la página
 
 #### Variables de estilos
 
-- `--mtb-body-padding`: Padding para el contenido
-- `--mtb-body-background`: Fondo del contenido
-- `--mtb-body-padding-button`: Padding inferior (Es utilizado para asignar un espacio al Botón principal (FAB) cuando tiene asignados los estilos para dispositivos móviles)
+- `--matecu-topbar-body-padding`: Padding para el contenido
+- `--matecu-topbar-body-background`: Fondo del contenido
+- `--matecu-topbar-body-padding-button`: Padding inferior (Es utilizado para asignar un espacio al Botón principal (FAB) cuando tiene asignados los estilos para dispositivos móviles)
 
 ```
 
+```
+
+## Variables CSS de Personalización
+
+La librería Angular-Matecu utiliza variables CSS personalizadas que permiten personalizar la apariencia de los componentes. Estas variables pueden ser sobreescritas en tu aplicación para ajustar los estilos según tus necesidades.
+
+### matecu-topbar-layout
+
+Variables para el componente principal de layout con barra superior:
+
+- `--matecu-topbar-layout-border`: Define el borde del contenedor principal (default: `none`)
+- `--matecu-topbar-layout-margin`: Margen exterior del contenedor (default: `0px`)
+- `--matecu-topbar-layout-width`: Ancho del contenedor (default: `100%`)
+- `--matecu-topbar-layout-height`: Altura total del contenedor (default: `100vh`)
+- `--matecu-topbar-layout-primary-color`: Color de fondo de la barra superior (default: `#3f51b5`)
+- `--matecu-topbar-layout-bar-text-color`: Color del texto en la barra superior (default: `#fff`)
+- `--matecu-topbar-layout-bar-height`: Altura mínima de la barra superior (default: `64px`)
+- `--matecu-topbar-layout-bar-prominent-height`: Altura de la barra en modo prominente (default: `128px`)
+
+### matecu-topbar-body
+
+Variables para personalizar el área de contenido principal:
+
+- `--matecu-topbar-body-padding`: Padding interno del contenido (default: `30px`)
+- `--matecu-topbar-body-background`: Color de fondo del contenido (default: `auto`)
+- `--matecu-topbar-body-padding-button`: Padding inferior para espacio del FAB móvil (default: `60px`)
+
+### matecu-topbar-fab
+
+Variables para el botón flotante (FAB):
+
+- `--matecu-topbar-fab-mobile-bottom-position`: Posición inferior en modo móvil (default: `20px`)
+- `--matecu-topbar-fab-mobile-right-position`: Posición derecha en modo móvil (default: `20px`)
+
+### matecu-topbar-action
+
+Variables para los contenedores de acciones/botones:
+
+- `--matecu-topbar-action-bar-height`: Altura máxima de los contenedores de acciones (default: `64px`)
+- `--matecu-topbar-action-padding`: Padding interno de las acciones (default: `10px`)
+- `--matecu-topbar-action-margin`: Margen externo de las acciones (default: `0px`)
+
+### matecu-topbar-header-row
+
+Variables para las filas del encabezado:
+
+- `--matecu-topbar-header-row-padding`: Padding de las filas del encabezado (default: `0px`)
+- `--matecu-topbar-header-row-margin`: Margen de las filas del encabezado (default: `0`)
+- `--matecu-topbar-header-row-max-width`: Ancho máximo de las filas (default: `100%`)
+- `--matecu-topbar-header-row-min-width`: Ancho mínimo de las filas (default: `320px`)
+- `--matecu-topbar-header-row-bar-height`: Altura mínima de las columnas en las filas (default: `64px`)
+
+### matecu-topbar-header-column
+
+Variables para las columnas del encabezado:
+
+- `--matecu-topbar-header-column-bar-height`: Altura mínima de las columnas (default: `64px`)
+
+### matecu-topbar-search
+
+Variables para el componente de búsqueda en la barra superior:
+
+- `--matecu-topbar-search-bar-color`: Color base del texto (default: `#fff`)
+- `--matecu-topbar-search-margin`: Margen del componente de búsqueda (default: `10px`)
+- `--matecu-topbar-search-color`: Color del texto en el campo de búsqueda (default: valor de `--matecu-topbar-search-bar-color`)
+- `--matecu-topbar-search-width`: Ancho del campo de búsqueda (default: `200px`)
+- `--matecu-topbar-search-height`: Altura del campo de búsqueda (default: `40px`)
+- `--matecu-topbar-search-padding`: Padding interno del campo (default: `3px 35px`)
+- `--matecu-topbar-search-border`: Borde del campo de búsqueda (default: `none`)
+- `--matecu-topbar-search-width-large`: Ancho expandido al enfocar (default: `290px`)
+- `--matecu-topbar-search-border-bottom-color`: Color del borde inferior en modo móvil (default: `#ededed`)
+- `--matecu-topbar-search-mobile-color`: Color del texto en modo móvil (default: `#000`)
+
+### matecu-topbar-title
+
+Variables para el componente de título en la barra superior:
+
+- `--matecu-topbar-title-bar-color`: Color base del texto (default: `#fff`)
+- `--matecu-topbar-title-margin`: Margen del componente de título (default: `10px`)
+- `--matecu-topbar-title-color`: Color del texto del título (default: valor de `--matecu-topbar-title-bar-color`)
+- `--matecu-topbar-title-width`: Ancho del campo si es editable (default: `200px`)
+- `--matecu-topbar-title-height`: Altura del campo si es editable (default: `40px`)
+- `--matecu-topbar-title-padding`: Padding interno del campo (default: `3px 35px`)
+- `--matecu-topbar-title-border`: Borde del campo si es editable (default: `none`)
+- `--matecu-topbar-title-width-large`: Ancho expandido al enfocar (default: `290px`)
+- `--matecu-topbar-title-border-bottom-color`: Color del borde inferior en modo móvil (default: `#ededed`)
+- `--matecu-topbar-title-mobile-color`: Color del texto en modo móvil (default: `#000`)
+
+### matecu-autocomplete
+
+Variables para personalizar el componente de autocompletado:
+
+- `--matecu-autocomplete-create-option-color`: Color del texto para la opción "Crear nuevo" (default: `#407d14`)
+
+#### Ejemplo de uso:
+
+```css
+:root {
+  /* Layout principal */
+  --matecu-topbar-layout-primary-color: #2196f3;
+  --matecu-topbar-layout-bar-height: 72px;
+  --matecu-topbar-layout-bar-text-color: #ffffff;
+
+  /* Contenido */
+  --matecu-topbar-body-padding: 20px;
+  --matecu-topbar-body-background: #f5f5f5;
+
+  /* Búsqueda */
+  --matecu-topbar-search-width: 250px;
+  --matecu-topbar-search-border: 1px solid rgba(255,255,255,0.3);
+
+  /* Autocomplete */
 ```
